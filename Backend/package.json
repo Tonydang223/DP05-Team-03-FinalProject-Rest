@@ -1,0 +1,57 @@
+{
+  "name": "rest",
+  "version": "1.0.0",
+  "description": "rest-fp",
+  "main": "main.js",
+  "scripts": {
+    "start": "node src/main.js",
+    "dev": "nodemon src/main.js",
+    "format": "prettier --write ./**/*.{md,json,js} --config ./.prettierrc",
+    "lint:staged": "lint-staged",
+    "lint": "eslint ./src --ext .js --quiet --fix --ignore-path ./.gitignore",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tonydang223/DP05-Team-03-FinalProject-Rest.git"
+  },
+  "keywords": [
+    "rest"
+  ],
+  "author": "haidanghn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tonydang223/DP05-Team-03-FinalProject-Rest/issues"
+  },
+  "homepage": "https://github.com/Tonydang223/DP05-Team-03-FinalProject-Rest#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
+    "cloudinary": "^1.35.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "helmet": "^6.1.4",
+    "mongoose": "^7.0.3",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "path": "^0.12.7",
+    "rotating-file-stream": "^3.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.38.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "lint-staged": "^13.2.1",
+    "nodemon": "^2.0.22",
+    "prettier": "^2.8.7"
+  },
+  "lint-staged": {
+    "./**/*.{js,json,md}": [
+      "yarn lint",
+      "yarn format",
+      "git add ."
+    ]
+  }
+}

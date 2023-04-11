@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "baseUrl": ".",
+    "paths": {
+      "@app/*": ["src/*"],
+      "@pages/*": ["src/pages/*"]
+    },
+    "strict": true,
+    "jsx": "react-jsx"
+  }
+}
