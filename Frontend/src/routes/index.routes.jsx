@@ -23,7 +23,7 @@ const AppRouter = (req, res) => {
         <Route path='/' exact element={<Layouts />}>
           {/* admin route */}
           <Route path='/admin'>
-            <Route path='/admin' exact element={<Workspaces />} />
+            <Route path='/admin/workspaces' exact element={<Workspaces />} />
           </Route>
 
           {/* manager route */}
