@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table } from 'antd';
-import '../../assets/AdminPage.css';
+import '../../assets/Workspaces.css';
 
 const dataSource = [
   {
@@ -35,7 +35,7 @@ const columns = [
   },
 ];
 
-export default function AdminPage() {
+export default function Workspaces() {
   return (
     <Table dataSource={dataSource} columns={columns} pagination={false} className='custom-table' />
   );
