@@ -1,0 +1,22 @@
+.custom-table {
+    margin-top: 20px;
+    margin-left: 50px;
+  }
+  
+  .ant-table {
+    font-size: 16px;
+  }
+  
+  .ant-table-thead > tr > th {
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .ant-table-tbody > tr > td {
+    text-align: center;
+  }
+  
+  .ant-table-row:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  

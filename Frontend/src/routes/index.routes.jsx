@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layouts from '../layouts/index.layouts';
-import AdminPage from '../pages/admin/index.admin';
+import AdminPage from '../pages/admin/AdminPage';
 import ManagerPage from '../pages/manager/index.manager';
 import StaffPage from '../pages/staff/index.staff';
 import LandingPage from '../pages/landing/index.landing';
