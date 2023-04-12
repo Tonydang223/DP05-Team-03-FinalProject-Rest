@@ -1,0 +1,84 @@
+.workspace-container .workspace-text {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  .workspace-container .wrap-btn {
+    padding-bottom: 20px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .workspace-container .wrap-btn .btn-workspace {
+    float: right;
+    background-color: #1677ff;
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  
+  .btn-space {
+    background-color: #1677ff;
+    color: #fff;
+    font-weight: 500;
+    font-size: 12px;
+  }
+  
+  .workspace-container .head-wrap {
+    margin-bottom: 16px;
+    margin-left: 3px;
+  }
+  
+  .table-container {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+  
+  @media (max-width: 576px) {
+    .table-container {
+      padding: 0 10px;
+    }
+    .workspace-text {
+      max-width: 100%;
+    }
+    .wrap-btn {
+      padding: 0 10px;
+    }
+  }
+  
+  @media (min-width: 576px) and (max-width: 768px) {
+    .table-container {
+      padding: 0 20px;
+    }
+    .workspace-text {
+      max-width: 80%;
+    }
+    .wrap-btn {
+      padding: 0 20px;
+    }
+  }
+  
+  @media (min-width: 768px) and (max-width: 978px) {
+    .table-container {
+      padding: 0 30px;
+    }
+    .workspace-text {
+      max-width: 60%;
+    }
+    .wrap-btn {
+      padding: 0 30px;
+    }
+  }
+  
+  @media (min-width: 978px) {
+    .table-container {
+      padding: 0 40px;
+    }
+    .workspace-text {
+      max-width: 40%;
+    }
+    .wrap-btn {
+      padding: 0 40px;
+    }
+  }
