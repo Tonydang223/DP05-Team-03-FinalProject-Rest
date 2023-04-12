@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layouts from '../layouts/index.layouts';
 import ManagerPage from '../pages/manager/index.manager';
+import AdminPage from '../pages/admin/index.admin';
 import StaffPage from '../pages/staff/index.staff';
 import LandingPage from '../pages/landing/index.landing';
 import LoginPage from '../pages/auth/index.auth';
@@ -11,6 +12,7 @@ import GroupDetailsPage from '../pages/manager/groupDetails.manager';
 import Workspaces from '../pages/admin/Workspaces';
 import WorkspaceDetails from '../pages/admin/WorkspaceDetails';
 import AdminPage from '../pages/admin/index.admin';
+import MemberDetails from '../pages/manager/MemberDetails';
 
 const AppRouter = (req, res) => {
   return (
@@ -34,6 +36,7 @@ const AppRouter = (req, res) => {
           <Route path='/manager'>
             <Route path='/manager/groups' exact element={<ManagerPage />} />
             <Route path='/manager/days_off' exact element={<AdminPage />} />
+            <Route path='/manager/member-details' exact element={<MemberDetails />} />
           </Route>
 
           {/* staff route */}
