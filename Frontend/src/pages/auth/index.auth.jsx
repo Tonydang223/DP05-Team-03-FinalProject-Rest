@@ -75,6 +75,12 @@ function LoginPage() {
                     {
                       min: 8,
                     },
+                    {
+                      validator: (_, value) =>
+                        !value.includes(" ")
+                          ? Promise.resolve()
+                          : Promise.reject(new Error("No spaces allowed"))
+                    }
                   ]}
                   hasFeedback
                 >
