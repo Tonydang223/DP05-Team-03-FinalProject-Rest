@@ -1,0 +1,8 @@
+.ant-layout-sider-trigger {
+    background: #fbe6cb !important;
+}
+
+.ant-layout-sider-trigger:hover {
+    background:  #c29252 !important;
+    color: aliceblue !important;
+}

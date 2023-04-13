@@ -1,16 +1,26 @@
 import React from 'react';
-import Header from './Header/Header';
+import Navbar from './Header/Header';
 import Footer from './Footer/Footer';
 import SideBar from './Sidebar/Sidebar';
+
+import {Layout} from 'antd';
 import { Outlet, Navigate, useLocation } from 'react-router-dom';
+import MainContent from './MainContent/MainContent';
 
 export default function Layouts() {
   return (
-    <div className='App'>
-      <Header />
+    <Layout
+        style={{
+          minHeight: '100vh',
+        }}
+    >
       <SideBar />
+      <Layout className="site-layout">
+      <Navbar/>
+      <MainContent/>
       <Outlet />
-      <Footer />
-    </div>
+          <Footer />
+      </Layout>
+    </Layout>
   );
 }
