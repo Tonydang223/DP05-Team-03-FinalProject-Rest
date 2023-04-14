@@ -18,7 +18,7 @@ const columns = [
     dataIndex: 'master',
   },
 ];
-
+const nameFull = "Huy";
 const data = [
   {
     key: '1',
