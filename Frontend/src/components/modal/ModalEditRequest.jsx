@@ -1,15 +1,15 @@
-import React from 'react'
-import {Input, Modal} from 'antd'
+import React from 'react';
+import { Input, Modal } from 'antd';
 
-const ModalEditRequest = ({open, onOk, onCancel}) => {
+const ModalEditRequest = ({ open, onOk, onCancel }) => {
   return (
     <>
-        <Modal open={open} onOk={onOk} onCancel={onCancel}>
-            <h4>Reason for revert </h4>
-            <Input.TextArea placeholder="Need more detail"/>
-        </Modal>
+      <Modal open={open} onOk={onOk} onCancel={onCancel}>
+        <h4>Reason for revert </h4>
+        <Input.TextArea placeholder='Need more detail' />
+      </Modal>
     </>
-  )
-}
+  );
+};
 
-export default ModalEditRequest
+export default ModalEditRequest;
