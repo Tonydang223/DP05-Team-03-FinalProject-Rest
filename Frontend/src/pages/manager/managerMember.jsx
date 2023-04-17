@@ -43,7 +43,8 @@ const data = [
 const onChange = (pagination) => {
   console.log('params', pagination);
 };
-const [isModalOpen, setIsModalOpen] = useState(false);
+export default function ManagerPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [isTitle, setTitle] = useState('');
 
@@ -59,7 +60,6 @@ const [isModalOpen, setIsModalOpen] = useState(false);
   const handleCancelAdd = () => {
     setIsModalOpen(false);
   };
-export default function ManagerPage() {
   return (
     <>
     <Content
