@@ -1,5 +1,6 @@
 import React from 'react'
 import {Layout, Breadcrumb, theme} from 'antd'
+import AccountTable from '../../components/accountTable/AccountTable'
 
 const {Content} = Layout;
 
@@ -18,8 +19,8 @@ const MainContent = () => {
               margin: '16px 0',
             }}
           >
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
+            <Breadcrumb.Item>Account</Breadcrumb.Item>
+            <Breadcrumb.Item>Request</Breadcrumb.Item>
           </Breadcrumb>
           <div
             style={{
@@ -28,7 +29,7 @@ const MainContent = () => {
               background: colorBgContainer,
             }}
           >
-            Bill is a cat.
+            <AccountTable/>
           </div>
         </Content>
   )
