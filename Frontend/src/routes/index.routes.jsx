@@ -5,6 +5,7 @@ import ManagerPage from '../pages/manager/index.manager';
 import StaffPage from '../pages/staff/index.staff';
 import LandingPage from '../pages/landing/index.landing';
 import LoginPage from '../pages/auth/index.auth';
+import { DayoffDetails } from '../pages/staff/dayoffDetails.staff';
 
 const AppRouter = (req, res) => {
   return (
@@ -30,6 +31,9 @@ const AppRouter = (req, res) => {
           {/* staff route */}
           <Route path='/staff'>
             <Route path='/staff' exact element={<StaffPage />} />
+            <Route path='/staff/dayoff' exact>
+              <Route path='/staff/dayoff/details' exact element={<DayoffDetails />} />
+            </Route>
           </Route>
         </Route>
       </Routes>
