@@ -13,11 +13,7 @@
   background: #fff;
   border-radius: 10px;
   width: 80vw;
-<<<<<<< HEAD
   height: 87%;
-=======
-  height: 85vh;
->>>>>>> 0c22b3d (Fix Login UI, Responsive)
   margin-top: 50px;
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
   overflow: auto;
@@ -66,11 +62,7 @@
 /* Login other method */
 
 .login-other-method {
-<<<<<<< HEAD
   margin-top: 25px;
-=======
-  margin-top: 20px;
->>>>>>> 0c22b3d (Fix Login UI, Responsive)
   margin-bottom: 20px;
   text-align: center;
   display: flex;
@@ -198,11 +190,7 @@
     height: 50px;
   }
   .right-form-login .title-login {
-<<<<<<< HEAD
     font-size: 24px;
-=======
-    font-size: 28px;
->>>>>>> 0c22b3d (Fix Login UI, Responsive)
   }
   .left-image-form .right-form-login .text-welcome {
     text-align: center;
@@ -224,13 +212,10 @@
   }
 }
 @media (max-width: 466px) {
-<<<<<<< HEAD
   .login-other-method {
     flex-direction: column;
   }
 
-=======
->>>>>>> 0c22b3d (Fix Login UI, Responsive)
   .link-change-password {
     max-width: 100% !important;
     margin-left: 25px;
