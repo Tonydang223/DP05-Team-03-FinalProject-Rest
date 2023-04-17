@@ -7,7 +7,6 @@ import { Col, Row, Form, Input, Button, Checkbox, Image } from 'antd';
 import { Typography } from 'antd';
 import { AiOutlineMail } from 'react-icons/ai';
 import { RiLockPasswordLine } from 'react-icons/ri';
-import IconGoogle from '../../assets/img/icons-google.png';
 import ImageLogin from '../../assets/img/image_login.jpg';
 import { GoogleLogin } from '@react-oauth/google';
 
