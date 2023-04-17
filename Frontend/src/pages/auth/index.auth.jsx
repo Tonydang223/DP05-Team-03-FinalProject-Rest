@@ -28,7 +28,11 @@ function LoginPage() {
           <Row justify='center'>
             <Col span={12} className='col-image-login'>
               <div className='image-login'>
+<<<<<<< HEAD
                 <Image justify='center' src={ImageLogin} alt='Image Login' preview={false} />
+=======
+                <Image align justify='center' src={ImageLogin} alt='Image Login' preview={false} />
+>>>>>>> 0c22b3d (Fix Login UI, Responsive)
               </div>
             </Col>
             <Col span={9} className='right-form-login'>
@@ -83,6 +87,7 @@ function LoginPage() {
                     type='password'
                   />
                 </Form.Item>
+<<<<<<< HEAD
                 <Row
                   style={{ alignItems: 'baseline' }}
                   justify='space-between'
@@ -94,6 +99,13 @@ function LoginPage() {
                   <Col className='link-change-password'>
                     <a href='/'>Change password</a>
                   </Col>
+=======
+                <Row align justify='space-between' className='option-and-link-change'>
+                  <Col className='col-checkbox'>
+                    <Checkbox className='checkbox-remember-me'>Remember me</Checkbox>
+                  </Col>
+                  <Col className='link-change-password'>Change password</Col>
+>>>>>>> 0c22b3d (Fix Login UI, Responsive)
                 </Row>
                 <Button
                   block
