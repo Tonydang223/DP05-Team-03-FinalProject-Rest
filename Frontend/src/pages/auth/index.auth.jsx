@@ -83,7 +83,6 @@ function LoginPage() {
                     type='password'
                   />
                 </Form.Item>
-
                 <Row
                   style={{ alignItems: 'baseline' }}
                   justify='space-between'
