@@ -82,11 +82,17 @@ function LoginPage() {
                     type='password'
                   />
                 </Form.Item>
-                <Row align justify='space-between' className='option-and-link-change'>
+                <Row
+                  style={{ alignItems: 'baseline' }}
+                  justify='space-between'
+                  className='option-and-link-change'
+                >
                   <Col className='col-checkbox'>
                     <Checkbox className='checkbox-remember-me'>Remember me</Checkbox>
                   </Col>
-                  <Col className='link-change-password'>Change password</Col>
+                  <Col className='link-change-password'>
+                    <a href='/'>Change password</a>
+                  </Col>
                 </Row>
                 <Button
                   block
