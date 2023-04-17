@@ -33,12 +33,13 @@ const data = [
     name: 'John Brown',
     members: 'Jim Green',
     master: 'Vo Van Thin',
+    sorter: (a, b) => a.name.length - b.name.length,
+    width: '30%',
   },
   {
-    key: '3',
-    name: 'Joe Black',
-    members: 'hi',
-    master: 'Vo Van Thin',
+    title: 'Email',
+    dataIndex: 'email',
+    width: '40%',
   },
 ];
 
