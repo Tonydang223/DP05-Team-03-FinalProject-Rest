@@ -17,7 +17,7 @@ export default function Layouts() {
       <SideBar />
       <Layout className='site-layout'>
         <Navbar />
-        <MainContent />
+  
         <Outlet />
         <Footer />
       </Layout>

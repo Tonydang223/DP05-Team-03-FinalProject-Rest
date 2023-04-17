@@ -29,7 +29,7 @@ const data = [
   },
 ];
 
-const AccountTable = () => {
+const AccountTable = ({role}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isTitle, setTitle] = useState('');
@@ -130,7 +130,7 @@ const AccountTable = () => {
   ];
   return (
     <>
-      <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={data} scroll={{ x: true }}/>
       <ModalApproveRequest
         title={isTitle}
         open={isModalOpen}
