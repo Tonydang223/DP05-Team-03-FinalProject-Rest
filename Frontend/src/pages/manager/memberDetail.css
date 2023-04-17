@@ -1,0 +1,65 @@
+
+.form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  margin-left: -100px;
+  margin-top: 100px;
+}
+
+@media (max-width: 576px) {
+  .ant-form-item {
+    margin-bottom: 10px !important;
+  }
+  .ant-form-item-label {
+    text-align: left !important;
+    margin-bottom: 0 !important;
+    font-size: 16px !important;
+  }
+  .ant-form-item-control {
+    font-size: 16px !important;
+  }
+  .ant-form-item-control-input {
+    height: 40px !important;
+    padding: 8px 11px !important;
+  }
+  .ant-btn {
+    font-size: 16px !important;
+    height: 40px !important;
+    padding: 8px 15px !important;
+  }
+}
+@media (min-width: 576px) and (max-width: 768px) {
+  .ant-form-item {
+    margin-bottom: 12px !important;
+  }
+  .ant-form-item-label {
+    text-align: left !important;
+    margin-bottom: 0 !important;
+    font-size: 16px !important;
+  }
+  .ant-form-item-control {
+    font-size: 16px !important;
+  }
+  .ant-form-item-control-input {
+    height: 40px !important;
+    padding: 8px 11px !important;
+  }
+  .ant-btn {
+    font-size: 16px !important;
+    height: 40px !important;
+    padding: 8px 15px !important;
+  }
+}
+@media (min-width: 768px) and (max-width: 992px) {
+  .ant-form-item {
+    margin-bottom: 16px !important;
+  }
+  .ant-form-item-label {
+    text-align: right !important;
+    margin-bottom: 0 !important;
+    font-size: 18px !important;
+  }
+  .ant-form-item-control {
+    font-size: 18px !important;
+  }
+}
