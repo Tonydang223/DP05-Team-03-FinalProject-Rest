@@ -21,22 +21,13 @@ function LoginPage() {
     <div className='login-form-bg'>
       <div className='form-login'>
         <div className='logo-form-login'>
-          <Image
-            src={Logo}
-            alt='LogoLogo'
-            className='img-logo'
-            preview={false}
-          />
+          <Image src={Logo} alt='LogoLogo' className='img-logo' preview={false} />
         </div>
         <div className='left-image-form'>
           <Row justify='center'>
             <Col span={12} className='col-image-login'>
               <div className='image-login'>
-                <Image
-                  src={ImageLogin}
-                  alt='Image Login'
-                  preview={false}
-                />
+                <Image align justify='center' src={ImageLogin} alt='Image Login' preview={false} />
               </div>
             </Col>
             <Col span={9} className='right-form-login'>
@@ -91,13 +82,11 @@ function LoginPage() {
                     type='password'
                   />
                 </Form.Item>
-                <Row className='option-and-link-change'>
-                  <Col span={14} className="col-checkbox">
+                <Row align justify='space-between' className='option-and-link-change'>
+                  <Col className='col-checkbox'>
                     <Checkbox className='checkbox-remember-me'>Remember me</Checkbox>
                   </Col>
-                  <Col span={10} className='link-change-password'>
-                    Change password
-                  </Col>
+                  <Col className='link-change-password'>Change password</Col>
                 </Row>
                 <Button
                   block
@@ -109,7 +98,7 @@ function LoginPage() {
                   Login
                 </Button>
                 <div className='login-other-method'>
-                  <Text className='text-other-method'>Or you can join with:</Text>
+                  <Text className='text-other-method'>Or you can join with</Text>
                   <div className='icons-method'>
                     <img src={IconGoogle} alt='' />
                   </div>
