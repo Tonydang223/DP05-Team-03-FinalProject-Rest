@@ -2,3 +2,7 @@
     background: white!important;
     border-left: 10px solid #fbe6cb;
 }
+
+.custom-button:focus {
+    outline: 0px;
+}

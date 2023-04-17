@@ -3,23 +3,23 @@ import Navbar from './Header/Header';
 import Footer from './Footer/Footer';
 import SideBar from './Sidebar/Sidebar';
 
-import {Layout} from 'antd';
+import { Layout } from 'antd';
 import { Outlet, Navigate, useLocation } from 'react-router-dom';
 import MainContent from './MainContent/MainContent';
 
 export default function Layouts() {
   return (
     <Layout
-        style={{
-          minHeight: '100vh',
-        }}
+      style={{
+        minHeight: '100vh',
+      }}
     >
       <SideBar />
-      <Layout className="site-layout">
-      <Navbar/>
-      <MainContent/>
-      <Outlet />
-          <Footer />
+      <Layout className='site-layout'>
+        <Navbar />
+        <MainContent />
+        <Outlet />
+        <Footer />
       </Layout>
     </Layout>
   );
