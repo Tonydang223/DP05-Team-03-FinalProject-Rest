@@ -25,9 +25,7 @@ function LoginPage() {
             src={Logo}
             alt='LogoLogo'
             className='img-logo'
-            preview={{
-              visible: false,
-            }}
+            preview={false}
           />
         </div>
         <div className='left-image-form'>
@@ -37,9 +35,7 @@ function LoginPage() {
                 <Image
                   src={ImageLogin}
                   alt='Image Login'
-                  preview={{
-                    visible: false,
-                  }}
+                  preview={false}
                 />
               </div>
             </Col>
