@@ -1,5 +1,17 @@
 import React from 'react';
+import {Layout} from 'antd';
 
-export default function Footer() {
-  return <div>Footer</div>;
+const {Footer} = Layout;
+
+export default function FooterDash() {
+  var today = new Date(); 
+  return <>
+        <Footer
+          style={{
+            textAlign: 'center',
+          }}
+        >
+          Copyright ©{today.getFullYear()} Design by Pho Thin Team
+        </Footer>
+  </>;
 }
