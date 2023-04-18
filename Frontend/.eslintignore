@@ -4,3 +4,4 @@ dist/
 .eslintrc.js
 env.d.ts
 .commitlintrc.js
+yarn.lock/
