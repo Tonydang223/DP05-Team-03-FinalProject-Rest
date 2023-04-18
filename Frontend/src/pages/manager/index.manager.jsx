@@ -22,9 +22,9 @@ const nameFull = "Huy";
 const data = [
   {
     key: '1',
-    name: 'name',
-    members: 'John Brown',
-    master: 'Vo Van Thin',
+    name: {BsFillPersonFill} + nameFull.charAt(0),
+    age: 32,
+    address: 'New York No. 1 Lake Park',
   },
   {
     key: '2',
