@@ -7,10 +7,17 @@ import { Outlet, Navigate, useLocation } from 'react-router-dom';
 
 export default function Layouts() {
   return (
-    <Layout className='site-layout'>
-      <Navbar />
-      <Outlet />
-      <Footer />
+    <Layout
+      style={{
+        minHeight: '100vh',
+      }}
+    >
+      <SideBar />
+      <Layout className='site-layout'>
+        <Navbar />
+        <Outlet />
+        <Footer />
+      </Layout>
     </Layout>
   );
 }
