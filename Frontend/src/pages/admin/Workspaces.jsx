@@ -1,6 +1,8 @@
 import React from 'react';
-import { Form, Layout, Breadcrumb, theme, Row, Col, Table } from 'antd';
+import { Form, Layout, Breadcrumb, theme, Row, Col, Table, Typography, Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import ModalAll from '../../components/modal/ModalAll';
+import { useState } from 'react';
 
 const { Content } = Layout;
 const layout = {
@@ -24,8 +26,8 @@ const Workspaces = () => {
       dataIndex: 'managers',
       render: () => (
         <>
-          <UserOutlined />
-          <UserOutlined />
+          <Avatar size='small' icon={<UserOutlined />} />{' '}
+          <Avatar size='small' icon={<UserOutlined />} />
         </>
       ),
     },
@@ -34,6 +36,22 @@ const Workspaces = () => {
     token: { colorBgContainer },
   } = theme.useToken();
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [isTitle, setTitle] = useState('');
+
+  const showAddApprove = () => {
+    setIsModalOpen(true);
+    setTitle('Add_Workspace');
+  };
+
+  const handApproveAdd = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancelAdd = () => {
+    setIsModalOpen(false);
+  };
   return (
     <Content
       style={{
@@ -57,6 +75,33 @@ const Workspaces = () => {
         }}
       >
         <div>
+          <Typography.Title
+            underline
+            level={1}
+            style={{ fontSize: '18px', marginLeft: '29px', float: 'left', color: '#1677ff' }}
+          >
+            Branding
+          </Typography.Title>
+          <button
+            title={isTitle}
+            onClick={showAddApprove}
+            style={{ marginLeft: '800px', backgroundColor: '#1677ff', color: 'white' }}
+          >
+            + New Workspace
+          </button>
+          <ModalAll
+            name={isTitle}
+            open={isModalOpen}
+            onOk={handApproveAdd}
+            onCancel={handleCancelAdd}
+          />
+          <Avatar
+            size='large'
+            icon={<UserOutlined />}
+            style={{ marginRight: '100px', float: 'right' }}
+          />
+        </div>
+        <div>
           <Form
             {...layout}
             name='nest-messages'
@@ -65,7 +110,7 @@ const Workspaces = () => {
               maxWidth: 600,
             }}
           >
-            <div style={{ marginLeft: '50px' }}>
+            <div style={{ marginLeft: '50px', marginTop: '100px' }}>
               <Row>
                 <Col xs={24} sm={24} md={24} lg={18} xl={18}>
                   <Table dataSource={dataSource} columns={columns} pagination={false} />
