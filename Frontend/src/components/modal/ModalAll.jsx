@@ -1,5 +1,13 @@
 import React from 'react';
 import { Modal, Input, Form, Button } from 'antd';
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
+const animatedComponents = makeAnimated();
+const options = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' }
+]
 const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
 
   return (
@@ -25,7 +33,7 @@ const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
 
       {name === 'CreateGroup' && (
         <Modal open={open} type={type} onCancel={onCancel} footer={null}>
-          <h2 style={{ textAlign: 'center', paddingBottom: '10px' }}>Create a new group</h2>
+          <h2 style={{ textAlign: 'center', paddingBottom: '10px', fontSize: '30px', fontWeight: '600' }}>Create a new group</h2>
 
           <Form
             name='basic'
@@ -44,12 +52,12 @@ const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
             autoComplete='off'
           >
             <Form.Item
-              label='Username'
-              name='username'
+              label='Name group'
+              name='groupname'
               rules={[
                 {
                   required: true,
-                  message: 'Please input your username!',
+                  message: 'Please input name of group',
                 },
               ]}
               hasFeedback
@@ -58,34 +66,21 @@ const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
             </Form.Item>
 
             <Form.Item
-              label='Password'
-              name='password'
+              label='Add member'
+              name='addPeople'
               rules={[
                 {
                   required: true,
-                  message: 'Please input your password!',
+                  message: 'Please add people to group!',
                 },
               ]}
+              hasFeedback
             >
-              <Input.Password />
-            </Form.Item>
-            <Form.Item
-              label='Password'
-              name='password1'
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input your password!',
-                },
-                {
-                  validator: (_, value) =>
-                    !value.includes(" ")
-                      ? Promise.resolve()
-                      : Promise.reject(new Error("No spaces allowed"))
-                }
-              ]}
-            >
-              <Input.Password />
+              <Select
+              closeMenuOnSelect={false}
+              components={animatedComponents}
+              isMulti 
+              options={options} />
             </Form.Item>
             <Form.Item
               wrapperCol={{
@@ -93,11 +88,13 @@ const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
                 span: 16,
               }}
             >
-              <Button type='primary' htmlType='submit'>
-                Submit
-              </Button>
-              <Button type='primary' htmlType='button' onClick={onCancel}>
+              <Button htmlType='button' onClick={onCancel} 
+                     style={{marginRight:'20px',backgroundColor:'red'
+                     ,color:'white',fontWeight:'bold'}}>
                 Cancel
+              </Button>
+              <Button type='primary' htmlType='submit' style={{fontWeight:'bold'}}>
+                Submit
               </Button>
             </Form.Item>
           </Form>

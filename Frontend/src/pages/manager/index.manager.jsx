@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Table } from 'antd';
-import { Layout, Breadcrumb, theme, Button } from 'antd';
+import { Layout, Breadcrumb, theme, Button, Typography, Space, Row, Col } from 'antd';
 import ModalAll from '../../../src/components/modal/ModalAll';
+const { Title, Text } = Typography;
+import './index.manager.css';
 const { Content } = Layout;
 
 const columns = [
@@ -48,10 +50,6 @@ export default function ManagerPage() {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isTitle, setTitle] = useState('');
   const [isSubmit, setSubmit] = useState('');
-
-  console.log(
-    isSubmit
-  );
   // Create Modal
   const CreateGroup = () => {
     setIsCreateOpen(true);
@@ -87,7 +85,16 @@ export default function ManagerPage() {
           background: colorBgContainer,
         }}
       >
-        <Button title={isTitle} onClick={CreateGroup}>Create group</Button>
+        <Space wrap className="section1">
+          <Row className="row">
+            <Col xl={16} lg={16} xxl={23} md={11} sm={7} className="col-title">
+              <Title className="title">Manager Group</Title>
+            </Col>
+            <Col xl={8} lg={8} xxl={1} md={13} sm={17} className="col-button">
+              <Button className="button-create-group" role="button" title={isTitle} onClick={CreateGroup}>Create new group</Button>
+            </Col>
+          </Row>
+        </Space>
         <Table columns={columns} dataSource={data} />
       <ModalAll
         name={isTitle}
