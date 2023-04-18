@@ -1,0 +1,63 @@
+.title-form-log-off {
+  text-transform: uppercase;
+  font-size: 28px;
+  font-weight: bold;
+  margin-left: 40px;
+  padding-bottom: 20px;
+}
+.form-log-off{
+    margin-left: 40px;
+}
+.type-day-off {
+  font-weight: 700;
+}
+.day-from {
+  margin-top: 45px !important;
+  font-weight: 700;
+}
+.day-to {
+  margin-top: 25px !important;
+  font-weight: 700;
+}
+.quantity {
+  margin-top: 25px !important;
+  font-weight: 700;
+}
+.reason {
+  margin-top: 25px !important;
+  font-weight: 700;
+}
+.day-start-off {
+  width: 200px;
+}
+.select {
+  width: 200px !important;
+}
+.day-end-off {
+  width: 200px;
+}
+.input-quantity {
+  width: 200px;
+}
+.text-area {
+  width: 200px;
+}
+.button-send:focus {
+  outline: none !important;
+}
+.button-cancel:active {
+  outline: none;
+}
+.button-cancel:focus {
+  outline: none !important;
+}
+@media (max-width: 866px){
+  .day-to {
+    margin-top: 90px !important;
+  }
+}
+@media (max-width: 779px) {
+  .type-day-off {
+    margin-right: 10px;
+  }
+}
