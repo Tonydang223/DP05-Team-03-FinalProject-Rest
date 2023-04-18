@@ -27,7 +27,6 @@ const AppRouter = (req, res) => {
 
           {/* manager route */}
           <Route path='/manager'>
-            <Route path='/manager' exact element={<ManagerPage />} />
             <Route path='/manager/create-group' exact element={<CreateGroup />} />
           </Route>
 
