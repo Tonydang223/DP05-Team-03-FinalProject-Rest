@@ -6,6 +6,7 @@ import StaffPage from '../pages/staff/index.staff';
 import LandingPage from '../pages/landing/index.landing';
 import LoginPage from '../pages/auth/index.auth';
 import { DayoffDetails } from '../pages/staff/dayoffDetails.staff';
+import ChangePassword from '../pages/auth/ChangePassword/ChangePassword';
 
 const AppRouter = (req, res) => {
   return (
@@ -16,7 +17,7 @@ const AppRouter = (req, res) => {
 
         {/* auth route */}
         <Route path='/login' exact element={<LoginPage />} />
-
+        <Route path='/change-password' exact element={<ChangePassword />} />
         <Route path='/' exact element={<Layouts />}>
           {/* admin route */}
           <Route path='/admin'>
