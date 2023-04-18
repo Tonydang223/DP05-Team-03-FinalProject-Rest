@@ -5,8 +5,6 @@ import SideBar from './Sidebar/Sidebar';
 
 import { Layout } from 'antd';
 import { Outlet, Navigate, useLocation } from 'react-router-dom';
-import MainContent from './MainContent/MainContent';
-
 export default function Layouts() {
   return (
     <Layout
@@ -17,7 +15,7 @@ export default function Layouts() {
       <SideBar />
       <Layout className='site-layout'>
         <Navbar />
-        <MainContent />
+  
         <Outlet />
         <Footer />
       </Layout>

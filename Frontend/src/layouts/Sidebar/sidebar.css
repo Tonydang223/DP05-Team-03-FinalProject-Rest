@@ -6,3 +6,9 @@
     background:  #c29252 !important;
     color: aliceblue !important;
 }
+
+@media screen and (max-width: 1200px){
+    .ant-layout-sider-trigger {
+        display: none;
+    }
+}

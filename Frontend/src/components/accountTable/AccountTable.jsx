@@ -1,8 +1,14 @@
 import { React, useState } from 'react';
-import { Space, Table } from 'antd';
-import { CheckCircleFilled, CloseCircleFilled, EditFilled } from '@ant-design/icons';
-import ModalApproveRequest from '../modal/ModalApproveRequest';
-import ModalEditRequest from '../modal/ModalEditRequest';
+import { Space, Table, Button } from 'antd';
+import {
+  CheckCircleFilled,
+  CloseCircleFilled,
+  EditFilled,
+  CheckOutlined,
+  CloseOutlined,
+  UndoOutlined,
+} from '@ant-design/icons';
+import ModalAll from '../modal/ModalAll';
 
 //   fake data
 const data = [
@@ -29,7 +35,7 @@ const data = [
   },
 ];
 
-const AccountTable = () => {
+const AccountTable = ({ role }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isTitle, setTitle] = useState('');
@@ -49,6 +55,7 @@ const AccountTable = () => {
   // Edit modal
   const showEdit = () => {
     setIsEditOpen(true);
+    setTitle('Edit');
   };
 
   const handleApproveEdit = () => {
@@ -115,7 +122,7 @@ const AccountTable = () => {
       key: 'action',
       render: (_, record) => (
         <Space size='middle'>
-          <a style={{ fontSize: '20px' }} title='Edit' onClick={showEdit}>
+          <a style={{ fontSize: '20px' }} title={isTitle} onClick={showEdit}>
             <EditFilled />
           </a>
           <a style={{ fontSize: '20px' }} title={isTitle} onClick={showModalApprove}>
@@ -130,20 +137,38 @@ const AccountTable = () => {
   ];
   return (
     <>
-      <Table columns={columns} dataSource={data} />
-      <ModalApproveRequest
+      <Space style={{ marginBottom: '10px' }}>
+        <Button>
+          <CheckOutlined /> Approved day off
+        </Button>
+        <Button>
+          <CloseOutlined /> Reject day off
+        </Button>
+        <Button>
+          <UndoOutlined /> Reverted day off
+        </Button>
+      </Space>
+      <Table columns={columns} dataSource={data} scroll={{ x: true }} />
+      <ModalAll
+        name={isTitle}
         title={isTitle}
         open={isModalOpen}
         onOk={handleApprove}
         onCancel={handleCancel}
       />
-      <ModalApproveRequest
+      <ModalAll
+        name={isTitle}
         title={isTitle}
         open={isModalOpen}
         onOk={handleReject}
         onCancel={handleCancelReject}
       />
-      <ModalEditRequest open={isEditOpen} onOk={handleApproveEdit} onCancel={handleCancelEdit} />
+      <ModalAll
+        name={isTitle}
+        open={isEditOpen}
+        onOk={handleApproveEdit}
+        onCancel={handleCancelEdit}
+      />
     </>
   );
 };
