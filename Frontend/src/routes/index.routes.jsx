@@ -49,6 +49,10 @@ const AppRouter = (req, res) => {
             </Route>
           </Route>
           <Route path='*' element={<PageNotFound />} />
+
+          <Route path='/accountdetail'>
+            <Route path='/accountdetail' exact element={<AccountDetailPage />} />
+          </Route>
         </Route>
       </Routes>
     </Router>

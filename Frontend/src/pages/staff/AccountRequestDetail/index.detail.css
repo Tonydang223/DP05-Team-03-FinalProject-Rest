@@ -1,0 +1,18 @@
+.Information-Row {
+  padding-bottom: 30px;
+  padding-left: 20px;
+}
+
+.Title-Row {
+  padding-left: 20px;
+  padding-bottom: 30px;
+  font-size: 100%;
+  font-weight: 800;
+}
+
+.Action-Row {
+  padding-top: 50px;
+  padding-left: 20px;
+  font-size: 100%;
+  font-weight: 800;
+}
