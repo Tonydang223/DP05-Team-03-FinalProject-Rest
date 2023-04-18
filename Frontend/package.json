@@ -12,6 +12,7 @@
     "lint:staged": "lint-staged"
   },
   "dependencies": {
+    "@react-oauth/google": "^0.10.0",
     "@reduxjs/toolkit": "^1.9.3",
     "antd": "^5.4.2",
     "react": "^18.2.0",

@@ -13,7 +13,7 @@
   background: #fff;
   border-radius: 10px;
   width: 80vw;
-  height: 85%;
+  height: 87%;
   margin-top: 50px;
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
   overflow: auto;
@@ -62,7 +62,7 @@
 /* Login other method */
 
 .login-other-method {
-  margin-top: 20px;
+  margin-top: 25px;
   margin-bottom: 20px;
   text-align: center;
   display: flex;
@@ -212,6 +212,10 @@
   }
 }
 @media (max-width: 466px) {
+  .login-other-method {
+    flex-direction: column;
+  }
+
   .link-change-password {
     max-width: 100% !important;
     margin-left: 25px;

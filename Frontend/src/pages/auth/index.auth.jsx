@@ -9,6 +9,7 @@ import { AiOutlineMail } from 'react-icons/ai';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import IconGoogle from '../../assets/img/icons-google.png';
 import ImageLogin from '../../assets/img/image_login.jpg';
+import { GoogleLogin } from '@react-oauth/google';
 
 const { Title, Text } = Typography;
 
@@ -27,7 +28,7 @@ function LoginPage() {
           <Row justify='center'>
             <Col span={12} className='col-image-login'>
               <div className='image-login'>
-                <Image align justify='center' src={ImageLogin} alt='Image Login' preview={false} />
+                <Image justify='center' src={ImageLogin} alt='Image Login' preview={false} />
               </div>
             </Col>
             <Col span={9} className='right-form-login'>
@@ -106,7 +107,15 @@ function LoginPage() {
                 <div className='login-other-method'>
                   <Text className='text-other-method'>Or you can join with</Text>
                   <div className='icons-method'>
-                    <img src={IconGoogle} alt='' />
+                    {/* <img src={IconGoogle} alt='' /> */}
+                    <GoogleLogin
+                      onSuccess={(credentialResponse) => {
+                        console.log(credentialResponse);
+                      }}
+                      onError={() => {
+                        console.log('Login Failed');
+                      }}
+                    />
                   </div>
                 </div>
               </Form>
