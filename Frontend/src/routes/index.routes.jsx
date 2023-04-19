@@ -8,6 +8,7 @@ import LoginPage from '../pages/auth/index.auth';
 import { DayoffDetails } from '../pages/staff/dayoffDetails.staff';
 import ChangePassword from '../pages/auth/ChangePassword/ChangePassword';
 import LogOffForm from '../pages/staff/LogOff/LogOffForm';
+import GroupDetailsPage from '../pages/manager/groupDetails.manager';
 
 const AppRouter = (req, res) => {
   return (
@@ -28,6 +29,9 @@ const AppRouter = (req, res) => {
           {/* manager route */}
           <Route path='/manager'>
             <Route path='/manager' exact element={<ManagerPage />} />
+            <Route path='/manager/group' exact>
+              <Route path='/manager/group/details' exact element={<GroupDetailsPage />} />
+            </Route>
           </Route>
 
           {/* staff route */}
