@@ -1,9 +1,8 @@
 import React from 'react';
 import AccountTable from '../../components/accountTable/AccountTable';
-import {Layout, Breadcrumb, theme} from 'antd'
+import { Layout, Breadcrumb, theme } from 'antd';
 export default function AdminPage() {
-  
-  const {Content} = Layout;
+  const { Content } = Layout;
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -11,8 +10,7 @@ export default function AdminPage() {
     <>
       <Content
         style={{
-          margin: '0 16px',
-
+          margin: '0 45px',
         }}
       >
         <Breadcrumb
@@ -26,7 +24,7 @@ export default function AdminPage() {
         <div
           style={{
             padding: 24,
-            minHeight: 600,
+            minHeight: 530,
             background: colorBgContainer,
           }}
         >
