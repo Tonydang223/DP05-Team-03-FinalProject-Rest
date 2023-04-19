@@ -95,7 +95,7 @@ export default function ManagerPage() {
             </Col>
           </Row>
         </Space>
-        <Table columns={columns} dataSource={data} />
+        <Table columns={columns} dataSource={data} scroll={{ x: true }} />
       <ModalAll
         name={isTitle}
         open={isCreateOpen}
