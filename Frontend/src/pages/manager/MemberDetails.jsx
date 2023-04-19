@@ -1,6 +1,8 @@
 import React from 'react';
-import { Form, Input, Layout, Breadcrumb, theme } from 'antd';
+import { Form, Input, Layout, Breadcrumb, theme, Typography } from 'antd';
 import ButtonComponents from '../../components/ButtonComponents.jsx';
+import { useState } from 'react';
+import ModalAll from '../../components/modal/ModalAll';
 // import './memberDetail.css';
 const { Content } = Layout;
 const layout = {
@@ -15,6 +17,24 @@ const MemberDetails = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [isTitle, setTitle] = useState('');
+
+  const showAddApprove = () => {
+    setIsModalOpen(true);
+    setTitle('Add_Member');
+  };
+
+  const handApproveAdd = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancelAdd = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <Content
       style={{
@@ -37,6 +57,28 @@ const MemberDetails = () => {
           background: colorBgContainer,
         }}
       >
+        <div>
+          <Typography.Title
+            underline
+            level={1}
+            style={{ fontSize: '18px', marginLeft: '29px', float: 'left', color: '#1677ff' }}
+          >
+            Branding
+          </Typography.Title>
+          <button
+            title={isTitle}
+            onClick={showAddApprove}
+            style={{ marginLeft: '800px', backgroundColor: '#1677ff', color: 'white' }}
+          >
+            + New Workspace
+          </button>
+          <ModalAll
+            name={isTitle}
+            open={isModalOpen}
+            onOk={handApproveAdd}
+            onCancel={handleCancelAdd}
+          />
+        </div>
         <div>
           <Form
             {...layout}
@@ -61,7 +103,6 @@ const MemberDetails = () => {
             <Form.Item name={['user', 'name']} label='Slack Id'>
               <Input placeholder='12345' />
             </Form.Item>
-           
           </Form>
         </div>
 
