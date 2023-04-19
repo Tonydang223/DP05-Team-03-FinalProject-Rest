@@ -9,6 +9,7 @@ import { AiOutlineMail } from 'react-icons/ai';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import IconGoogle from '../../assets/img/icons-google.png';
 import ImageLogin from '../../assets/img/image_login.jpg';
+import { GoogleLogin } from '@react-oauth/google';
 
 const { Title, Text } = Typography;
 
@@ -21,22 +22,13 @@ function LoginPage() {
     <div className='login-form-bg'>
       <div className='form-login'>
         <div className='logo-form-login'>
-          <Image
-            src={Logo}
-            alt='LogoLogo'
-            className='img-logo'
-            preview={false}
-          />
+          <Image src={Logo} alt='LogoLogo' className='img-logo' preview={false} />
         </div>
         <div className='left-image-form'>
           <Row justify='center'>
             <Col span={12} className='col-image-login'>
               <div className='image-login'>
-                <Image
-                  src={ImageLogin}
-                  alt='Image Login'
-                  preview={false}
-                />
+                <Image justify='center' src={ImageLogin} alt='Image Login' preview={false} />
               </div>
             </Col>
             <Col span={9} className='right-form-login'>
@@ -77,10 +69,10 @@ function LoginPage() {
                     },
                     {
                       validator: (_, value) =>
-                        !value.includes(" ")
+                        !value.includes(' ')
                           ? Promise.resolve()
-                          : Promise.reject(new Error("No spaces allowed"))
-                    }
+                          : Promise.reject(new Error('No spaces allowed')),
+                    },
                   ]}
                   hasFeedback
                 >
@@ -91,12 +83,17 @@ function LoginPage() {
                     type='password'
                   />
                 </Form.Item>
-                <Row className='option-and-link-change'>
-                  <Col span={14} className="col-checkbox">
+
+                <Row
+                  style={{ alignItems: 'baseline' }}
+                  justify='space-between'
+                  className='option-and-link-change'
+                >
+                  <Col className='col-checkbox'>
                     <Checkbox className='checkbox-remember-me'>Remember me</Checkbox>
                   </Col>
-                  <Col span={10} className='link-change-password'>
-                    Change password
+                  <Col className='link-change-password'>
+                    <a href='/'>Change password</a>
                   </Col>
                 </Row>
                 <Button
@@ -109,9 +106,17 @@ function LoginPage() {
                   Login
                 </Button>
                 <div className='login-other-method'>
-                  <Text className='text-other-method'>Or you can join with:</Text>
+                  <Text className='text-other-method'>Or you can join with</Text>
                   <div className='icons-method'>
-                    <img src={IconGoogle} alt='' />
+                    {/* <img src={IconGoogle} alt='' /> */}
+                    <GoogleLogin
+                      onSuccess={(credentialResponse) => {
+                        console.log(credentialResponse);
+                      }}
+                      onError={() => {
+                        console.log('Login Failed');
+                      }}
+                    />
                   </div>
                 </div>
               </Form>

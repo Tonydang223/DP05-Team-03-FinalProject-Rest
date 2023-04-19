@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import { Space, Table, Button } from 'antd';
+import { Space, Table, Button, Row, Col } from 'antd';
 import {
   CheckCircleFilled,
   CloseCircleFilled,
@@ -137,7 +137,7 @@ const AccountTable = ({ role }) => {
   ];
   return (
     <>
-      <Space style={{ marginBottom: '10px' }}>
+      <Row style={{ marginBottom: '20px', gap: '10px' }}>
         <Button>
           <CheckOutlined /> Approved day off
         </Button>
@@ -147,7 +147,7 @@ const AccountTable = ({ role }) => {
         <Button>
           <UndoOutlined /> Reverted day off
         </Button>
-      </Space>
+      </Row>
       <Table columns={columns} dataSource={data} scroll={{ x: true }} />
       <ModalAll
         name={isTitle}

@@ -6,13 +6,17 @@
   background: url('../src/assets/img/background.jpg');
   background-size: cover;
 }
+.right-form-login h1 {
+  font-size: 30px;
+}
 .form-login {
   background: #fff;
-  border-radius: 35px;
-  width: 65vw;
-  height: 85vh;
-  margin-top: 65px;
+  border-radius: 10px;
+  width: 80vw;
+  height: 87%;
+  margin-top: 50px;
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  overflow: auto;
 }
 .logo-form-login .img-logo {
   width: 100px;
@@ -20,12 +24,12 @@
   margin-top: 20px;
   margin-left: 20px;
 }
-.left-image-form .image-login img {
-  height: 450px;
-  width: 480px;
+.left-image-form {
+  margin-top: -10px;
 }
-.right-form-login {
-  padding-right: 20px;
+.left-image-form .image-login img {
+  height: 355px;
+  width: 500px;
 }
 .right-form-login .title-login {
   font-weight: bold;
@@ -54,33 +58,31 @@
   font-size: 16px;
   text-decoration: none;
 }
-.right-form-login .button-login:hover {
-  background-color: #7fffd4;
-  color: #000;
-  text-decoration: none;
-  outline: none;
-}
-.right-form-login .button-login:focus {
-  outline: none;
-}
 
 /* Login other method */
 
 .login-other-method {
-  margin-top: 15px;
+  margin-top: 25px;
+  margin-bottom: 20px;
   text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 .login-other-method .text-other-method {
   font-size: 14px;
-  font-weight: bold;
+  color: rgb(112, 112, 112);
 }
 .login-other-method .icons-method img {
-  width: 40px;
-  height: 33px;
+  width: 30px;
+  height: 30px;
   padding-left: 0;
   padding-top: 0;
-  margin-top: 10px;
-  padding-right: 10px;
+}
+
+.ant-form-item-explain-error {
+  margin-bottom: 10px;
+  margin-top: 5px;
 }
 
 /* Responsive form login of website */
@@ -128,18 +130,9 @@
     width: 320px;
     padding-right: 0px;
   }
-  .right-form-login .option-and-link-change {
-    display: block;
-  }
   .link-change-password {
     max-width: 100% !important;
     margin-left: 25px;
-  }
-  .login-other-method .icons-method img {
-    width: 35px;
-    height: 30px;
-    margin-top: 10px;
-    padding-right: 10px;
   }
 }
 @media (min-width: 920px) and (max-width: 991px) {
@@ -162,8 +155,8 @@
     font-size: 12px;
   }
   .right-form-login .form-email-password input {
-    height: 30px;
-    font-size: 12px;
+    height: 33px;
+    font-size: 13px;
   }
   .checkbox-remember-me {
     font-size: 12px !important;
@@ -178,17 +171,11 @@
     max-width: 100% !important;
     margin-left: 25px;
   }
-  .right-form-login .option-and-link-change {
-    display: block;
-  }
-  .login-other-method .icons-method img {
-    width: 30px;
-    height: 25px;
-    margin-top: 10px;
-    padding-right: 10px;
-  }
 }
 @media (max-width: 919px) {
+  .logo-form-login {
+    margin-bottom: 30px;
+  }
   .login-form-bg .form-login .left-image-form .col-image-login {
     display: none;
   }
@@ -203,8 +190,7 @@
     height: 50px;
   }
   .right-form-login .title-login {
-    font-size: 28px;
-    text-align: center;
+    font-size: 24px;
   }
   .left-image-form .right-form-login .text-welcome {
     text-align: center;
@@ -218,10 +204,6 @@
   .right-form-login .button-login {
     width: 100%;
   }
-  .login-other-method .icons-method img {
-    width: 30px;
-    height: 25px;
-  } 
   .link-change-password {
     font-size: 12px !important;
   }
@@ -229,10 +211,11 @@
     font-size: 12px !important;
   }
 }
-@media (max-width: 466px){
-  .right-form-login .option-and-link-change {
-    display: block;
+@media (max-width: 466px) {
+  .login-other-method {
+    flex-direction: column;
   }
+
   .link-change-password {
     max-width: 100% !important;
     margin-left: 25px;
