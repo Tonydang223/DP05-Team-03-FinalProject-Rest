@@ -10,7 +10,7 @@ export default function Navbar() {
       <Header>
         <Row justify='end'>
           <Col xl={18}></Col>
-          <Col xl={2}>
+          <Col xl={4}>
             <Button className="custom-button" type='primary'>Log off</Button>
           </Col>
           <Col xl={2}>
