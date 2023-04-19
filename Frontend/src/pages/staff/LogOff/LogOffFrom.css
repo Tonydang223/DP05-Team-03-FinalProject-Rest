@@ -24,7 +24,7 @@
   font-weight: 700;
 }
 .reason {
-  margin-top: 25px !important;
+  margin-top: 35px !important;
   font-weight: 700;
 }
 .day-start-off {
@@ -51,13 +51,39 @@
 .button-cancel:focus {
   outline: none !important;
 }
-@media (max-width: 866px){
+.ant-form-item-explain-error{
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+/* @media (max-width: 779px) and (min-width: 743px) {
+  .day-from {
+    margin-top: 25px !important;
+  }
+} */
+@media (max-width: 743px) {
+  .day-from {
+    margin-top: 40px !important;
+  }
   .day-to {
-    margin-top: 90px !important;
+    margin-top: 92px !important;
   }
 }
-@media (max-width: 779px) {
-  .type-day-off {
-    margin-right: 10px;
+@media (max-width: 741px){
+  .day-from {
+    margin-top: 20px !important;
+  }
+}
+@media (max-width: 576px){
+  .day-from {
+    margin-top: 40px !important;
+  }
+}
+@media (max-width: 525px){
+  .title-form-log-off{
+    font-size: 22px !important;
+    text-align: center;
+  }
+  .day-from {
+    margin-top: 20px !important;
   }
 }

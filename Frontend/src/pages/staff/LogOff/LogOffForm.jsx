@@ -39,10 +39,10 @@ const LogOffForm = () => {
           background: colorBgContainer,
         }}
       >
-        <div>
+        <div scroll={{ x: true }}>
           <Title className='title-form-log-off'>Log off form</Title>
           <Row className="form-log-off">
-            <Col xl={6} lg={6} md={6} sm={6} xs={4}>
+            <Col xl={6} lg={6} md={6} sm={6} xs={10}>
               <Space direction='vertical'>
                 <div className='type-day-off'>
                   <Text>Type of day off</Text>
@@ -61,7 +61,7 @@ const LogOffForm = () => {
                 </div>
               </Space>
             </Col>
-            <Col xl={18} lg={18} md={18} sm={18} xs={20}>
+            <Col xl={18} lg={18} md={18} sm={18} xs={14}>
               <Form>
                 <Form.Item className='log-off'>
                   <Radio.Group onChange={onChange} value={value}>

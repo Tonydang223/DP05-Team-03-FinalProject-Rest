@@ -7,6 +7,7 @@ import LandingPage from '../pages/landing/index.landing';
 import LoginPage from '../pages/auth/index.auth';
 import { DayoffDetails } from '../pages/staff/dayoffDetails.staff';
 import ChangePassword from '../pages/auth/ChangePassword/ChangePassword';
+import LogOffForm from '../pages/staff/LogOff/LogOffForm';
 
 const AppRouter = (req, res) => {
   return (
@@ -32,6 +33,7 @@ const AppRouter = (req, res) => {
           {/* staff route */}
           <Route path='/staff'>
             <Route path='/staff' exact element={<StaffPage />} />
+            <Route path='/staff/log_off_form' exact element={<LogOffForm />} />
             <Route path='/staff/dayoff' exact>
               <Route path='/staff/dayoff/details' exact element={<DayoffDetails />} />
             </Route>
