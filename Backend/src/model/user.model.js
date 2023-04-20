@@ -36,10 +36,6 @@ const user = new Schema({
     enum: ROLES,
     required: true,
   },
-  isMaster: {
-    type: Boolean,
-    default: false,
-  },
   slackId: {
     type: String,
   },

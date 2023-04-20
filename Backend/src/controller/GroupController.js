@@ -1,3 +1,4 @@
+const { ROLES } = require('../config/constants');
 const GroupModel = require('../model/group.model');
 
 class GroupController {
@@ -18,51 +19,34 @@ class GroupController {
   }
   async addMembers(req, res) {
     try {
-      if (Array.isArray(req.body) && req.body.length <= 1)
-        return res.status(400).json({ message: 'Please add any member!' });
-      let newMembers = [];
-      for (const member of req.body) {
-        newMembers.push(member._id);
-      }
-
+      const { masters, members, name } = req.body;
       const existedMembers = await GroupModel.findOne({
         _id: req.params.id,
       });
+      const arrayIds = (arr, fieldArr) => {
+        if (Array.isArray(arr) && arr.length > 0) {
+          return arr
+            .filter((v) => ![ROLES[0], ROLES[1]].includes(v.role))
+            .map((i) => i._id)
+            .filter((member) =>
+              existedMembers._doc[`${fieldArr}`]?.length === 0
+                ? member
+                : !existedMembers._doc[`${fieldArr}`]?.includes(member),
+            );
+        }
+      };
+      const masterIds = arrayIds(masters, 'masters');
+      const memberIds = arrayIds(members, 'members');
+
       if (!existedMembers) return res.status(400).json({ message: 'Group not found!' });
 
-      newMembers = newMembers.filter((member) =>
-        existedMembers._doc.added_users.length === 0
-          ? member
-          : !existedMembers._doc.added_users?.includes(member),
-      );
-
-      if (newMembers.length >= 1) {
-        const addedUsers = await GroupModel.findOneAndUpdate(
-          { _id: req.params.id },
-          { $push: { added_users: { $each: newMembers } } },
-          { new: true },
-        ).populate('added_users', '-password');
-
-        res
-          .status(200)
-          .json({ message: 'Added users successfully!', data: addedUsers._doc.added_users });
-      } else {
-        res.status(400).json({ message: 'Added users is existed!' });
-      }
-    } catch (error) {
-      res.status(500).send({ message: error.message });
-    }
-  }
-  async update(req, res) {
-    try {
-      const updatedGroup = await GroupModel.findOneAndUpdate(
+      const addedUsers = await GroupModel.findOneAndUpdate(
         { _id: req.params.id },
-        { $set: { name: req.body.name } },
+        { $push: { masters: { $each: masterIds }, members: { $each: memberIds } }, $set: { name } },
         { new: true },
-      ).populate('added_users', '-password');
-      res
-        .status(200)
-        .json({ message: 'Update the group successfully!', data: { ...updatedGroup._doc } });
+      ).populate('masters members', '-password');
+
+      res.status(200).json({ message: 'Added users successfully!', data: { ...addedUsers._doc } });
     } catch (error) {
       res.status(500).send({ message: error.message });
     }

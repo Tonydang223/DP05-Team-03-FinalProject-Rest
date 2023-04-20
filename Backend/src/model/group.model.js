@@ -12,7 +12,8 @@ const group = new Schema({
     default: new Date(),
   },
   workspace: { type: mongoose.Types.ObjectId, ref: 'workspace' },
-  added_users: [{ type: mongoose.Types.ObjectId, ref: 'user' }],
+  masters: [{ type: mongoose.Types.ObjectId, ref: 'user' }],
+  members: [{ type: mongoose.Types.ObjectId, ref: 'user' }],
 });
 
 module.exports = mongoose.model('group', group);

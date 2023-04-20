@@ -13,7 +13,6 @@ const approve = new Schema({
     default: new Date(),
   },
   user: { type: mongoose.Types.ObjectId, ref: 'user' },
-  group: { type: mongoose.Types.ObjectId, ref: 'group' },
 });
 
 module.exports = mongoose.model('approve', approve);

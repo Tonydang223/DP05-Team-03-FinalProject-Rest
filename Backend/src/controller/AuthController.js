@@ -13,18 +13,22 @@ class AuthController {
       if (!user) return res.status(409).json({ message: 'The user is not existed!' });
       const checkPass = await bcrypt.compareSync(password, user.password);
       if (!checkPass) return res.status(400).json({ message: 'The password not match!' });
-      delete user.password;
+
+      const userProfile = { ...user._doc };
+      delete userProfile.password;
 
       const token = accessToken({ _id: user._id, role: user.role });
-      res.status(200).json({ message: 'Login sucessfully!', user, token });
+      res.status(200).json({ message: 'Login sucessfully!', data: { ...userProfile }, token });
     } catch (error) {
       res.status(500).send({ message: error.message });
     }
   }
   async changePassword(req, res) {
-    const { password } = req.body;
+    const { password, idUser } = req.body;
     try {
-      const user = await UserModel.findById({ _id: req.usr._id });
+      const user = await UserModel.findById({
+        _id: idUser ? idUser : req.usr._id,
+      });
       const salt = await bcrypt.genSalt(10);
       const hashPassword = await bcrypt.hash(password, salt);
 

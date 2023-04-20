@@ -8,11 +8,9 @@ const request = new Schema({
   time: { type: String, require: true },
   reason: { type: String, require: true },
   quantity: { type: Number, require: true },
-  status: { type: String, require: true, enum: STATUS_REQUEST },
+  status: { type: String, require: true, enum: STATUS_REQUEST, default: 'Pending' },
   type_of_work: { type: String, require: true},
   user: { type: mongoose.Types.ObjectId, ref: 'user' },
-  group: { type: mongoose.Types.ObjectId, ref: 'group'},
-  history: [{ type: mongoose.Types.ObjectId, ref: 'history' }],
   create_at: {
     type: Date,
     default: new Date(),

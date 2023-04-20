@@ -21,9 +21,12 @@ class UserController {
         { $push: { user: user._id } },
         { new: true },
       );
-      await user.save();
+      const savedUser = await user.save();
 
-      res.status(200).send({ message: 'Created user successfully!', user });
+      const newUser = { ...savedUser._doc };
+      delete newUser.password;
+
+      res.status(200).send({ message: 'Created user successfully!', data: { ...newUser } });
     } catch (error) {
       res.status(500).send({ message: error.message });
     }
@@ -61,6 +64,14 @@ class UserController {
         { new: true },
       );
       res.status(200).json({ message: 'Delete successfully!', data: { ...userDeleted } });
+    } catch (error) {
+      res.status(500).send({ message: error.message });
+    }
+  }
+  async getProfile(req, res) {
+    try {
+      const user = await UserModel.findOne({ _id: req.usr._id }).select('-password');
+      res.status(200).json({ message: 'Get user successfully', data: { ...user._doc } });
     } catch (error) {
       res.status(500).send({ message: error.message });
     }
