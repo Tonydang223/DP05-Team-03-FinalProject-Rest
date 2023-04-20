@@ -6,10 +6,9 @@ const animatedComponents = makeAnimated();
 const options = [
   { value: 'chocolate', label: 'Chocolate' },
   { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' }
-]
+  { value: 'vanilla', label: 'Vanilla' },
+];
 const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
-
   return (
     <>
       {name === 'Approve' && (
@@ -33,7 +32,16 @@ const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
 
       {name === 'CreateGroup' && (
         <Modal open={open} type={type} onCancel={onCancel} footer={null}>
-          <h2 style={{ textAlign: 'center', paddingBottom: '10px', fontSize: '30px', fontWeight: '600' }}>Create a new group</h2>
+          <h2
+            style={{
+              textAlign: 'center',
+              paddingBottom: '10px',
+              fontSize: '25px',
+              fontWeight: '600',
+            }}
+          >
+            Create a new group
+          </h2>
 
           <Form
             name='basic'
@@ -77,10 +85,11 @@ const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
               hasFeedback
             >
               <Select
-              closeMenuOnSelect={false}
-              components={animatedComponents}
-              isMulti 
-              options={options} />
+                closeMenuOnSelect={false}
+                components={animatedComponents}
+                isMulti
+                options={options}
+              />
             </Form.Item>
             <Form.Item
               wrapperCol={{
@@ -88,12 +97,18 @@ const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
                 span: 16,
               }}
             >
-              <Button htmlType='button' onClick={onCancel} 
-                     style={{marginRight:'20px',backgroundColor:'red'
-                     ,color:'white',fontWeight:'bold'}}>
+              <Button
+                htmlType='button'
+                onClick={onCancel}
+                style={{
+                  marginRight: '20px',
+                  backgroundColor: 'red',
+                  color: 'white',
+                }}
+              >
                 Cancel
               </Button>
-              <Button type='primary' htmlType='submit' style={{fontWeight:'bold'}}>
+              <Button type='primary' htmlType='submit'>
                 Submit
               </Button>
             </Form.Item>

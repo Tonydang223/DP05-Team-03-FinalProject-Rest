@@ -19,7 +19,7 @@ export default function AdminPage() {
           }}
         >
           <Breadcrumb.Item>Account</Breadcrumb.Item>
-          <Breadcrumb.Item>Request</Breadcrumb.Item>
+          <Breadcrumb.Item>Days off Request</Breadcrumb.Item>
         </Breadcrumb>
         <div
           style={{
