@@ -44,6 +44,14 @@ class WorkspController {
       res.status(500).send({ message: error.message });
     }
   }
+  async getWorkspaces(req, res) {
+    try {
+      const workspaces = await WorkSpaceModel.find().populate('user', '-password');
+      res.status(200).json({ message: 'Get workspaces successfully!', data: [...workspaces] });
+    } catch (error) {
+      res.status(500).send({ message: error.message });
+    }
+  }
 }
 
 module.exports = new WorkspController();

@@ -112,7 +112,10 @@ class RequestController {
       let mastersRelateUser = [];
       const groupMasterAppended = await groupModel.find();
 
-      if ([STATUS_REQUEST[0], STATUS_REQUEST[1]].includes(request.status)) {
+      if (
+        [STATUS_REQUEST[0], STATUS_REQUEST[1]].includes(request.status) ||
+        moment(request.from).format('L') < moment().format('L')
+      ) {
         return res.status(400).json({ message: 'The request was rejected or approved!' });
       }
 
@@ -181,7 +184,10 @@ class RequestController {
     try {
       const { reason } = req.body;
       const request = await RequestModel.findOne({ _id: req.params.id });
-      if (request.status !== STATUS_REQUEST[0])
+      if (
+        request.status !== STATUS_REQUEST[0] ||
+        moment(request.from).format('L') < moment().format('L')
+      )
         return res.status(400).json({ message: 'The request was rejected' });
       console.log(req.usr._id);
       console.log(request.user);
@@ -205,19 +211,16 @@ class RequestController {
       res.status(500).json({ message: error.message });
     }
   }
-  async checkStatusRequest(req, res) {
+  async getAllRequests(req, res) {
     try {
-      let request = await RequestModel.findOne({ _id: req.params.id });
-
-      if (moment(request.to).format('L') < moment().format('L')) {
-        request = await RequestModel.findOneAndUpdate(
-          { _id: req.params.id },
-          { $set: { status: STATUS_REQUEST[1] } },
-        );
-      }
-      res
-        .status(200)
-        .json({ message: 'Get the status the request successfully!', data: { ...request._doc } });
+      await RequestModel.updateMany(
+        { from: { $lt: new Date() } },
+        { $set: { status: STATUS_REQUEST[1] } },
+        { multi: true },
+      ).then(async () => {
+        const requests = await RequestModel.find();
+        res.status(200).json({ message: 'Get the requests successfully!', data: [...requests] });
+      });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

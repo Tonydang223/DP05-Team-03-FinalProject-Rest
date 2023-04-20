@@ -1,3 +1,4 @@
+const { ROLES } = require('../config/constants');
 const { upload } = require('../config/uploadCloud');
 const UserModel = require('../model/user.model');
 const WorkspaceModel = require('../model/workspace.model');
@@ -72,6 +73,14 @@ class UserController {
     try {
       const user = await UserModel.findOne({ _id: req.usr._id }).select('-password');
       res.status(200).json({ message: 'Get user successfully', data: { ...user._doc } });
+    } catch (error) {
+      res.status(500).send({ message: error.message });
+    }
+  }
+  async getUsers(req, res) {
+    try {
+      const users = await UserModel.find({ role: ROLES[2] });
+      res.status(200).json({ message: 'Get users successfully', data: [...users] });
     } catch (error) {
       res.status(500).send({ message: error.message });
     }

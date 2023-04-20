@@ -8,6 +8,6 @@ router.post('/create', userAuthPermission([ROLES[2]]), RequestController.createR
 router.post('/update/:id', userAuthPermission([ROLES[2]]), RequestController.updateRequest);
 router.post('/approve/:id', userAuthPermission([ROLES[2]]), RequestController.aprroveRequest);
 router.post('/revert/:id', userAuthPermission([ROLES[2]]), RequestController.revertRequest);
-router.get('/status/:id', userAuthPermission(), RequestController.checkStatusRequest);
+router.get('/getAll', userAuthPermission(), RequestController.getAllRequests);
 
 module.exports = router;

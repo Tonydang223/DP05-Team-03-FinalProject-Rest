@@ -51,6 +51,14 @@ class GroupController {
       res.status(500).send({ message: error.message });
     }
   }
+  async getGroups(req, res) {
+    try {
+      const groups = await GroupModel.find().populate('members masters workspace', '-password');
+      res.status(200).json({ message: 'Get groups successfully', data: [...groups] });
+    } catch (error) {
+      res.status(500).send({ message: error.message });
+    }
+  }
 }
 
 module.exports = new GroupController();

@@ -9,5 +9,6 @@ router.post('/update', userAuthPermission(), upload.single('avatar'), UserContro
 router.post('/create/:id', userAuthPermission([ROLES[0], ROLES[1]]), UserController.createUser);
 router.post('/delete/:id', userAuthPermission([ROLES[0]]), UserController.deleteUser);
 router.get('/getProfile', userAuthPermission(), UserController.getProfile);
+router.get('/getAll', userAuthPermission(), UserController.getUsers);
 
 module.exports = router;
