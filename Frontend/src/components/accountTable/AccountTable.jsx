@@ -83,6 +83,11 @@ const AccountTable = ({ role }) => {
 
   const columns = [
     {
+      title: 'No.',
+      dataIndex: 'key',
+      key: 'key',
+    },
+    {
       title: 'Resquest for date',
       dataIndex: 'request_for_date',
       key: 'request_for_date',
@@ -123,13 +128,13 @@ const AccountTable = ({ role }) => {
       render: (_, record) => (
         <Space size='middle'>
           <a style={{ fontSize: '20px' }} title={isTitle} onClick={showEdit}>
-            <EditFilled />
+            <EditFilled style={{ color: 'blue' }} />
           </a>
           <a style={{ fontSize: '20px' }} title={isTitle} onClick={showModalApprove}>
-            <CheckCircleFilled />
+            <CheckCircleFilled style={{ color: 'green' }} />
           </a>
           <a style={{ fontSize: '20px' }} title={isTitle} onClick={showModalReject}>
-            <CloseCircleFilled />
+            <CloseCircleFilled style={{ color: 'red' }} />
           </a>
         </Space>
       ),
@@ -137,7 +142,7 @@ const AccountTable = ({ role }) => {
   ];
   return (
     <>
-      <Row style={{ marginBottom: '20px', gap: '10px' }}>
+      <Row style={{ marginBottom: '20px', gap: '10px', justifyContent: 'center' }}>
         <Button>
           <CheckOutlined /> Approved day off
         </Button>

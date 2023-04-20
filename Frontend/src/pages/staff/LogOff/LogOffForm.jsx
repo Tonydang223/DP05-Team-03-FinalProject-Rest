@@ -21,7 +21,7 @@ const LogOffForm = () => {
   return (
     <Content
       style={{
-        margin: '0 16px',
+        margin: '0 45px',
       }}
     >
       <Breadcrumb
@@ -35,13 +35,11 @@ const LogOffForm = () => {
       <div
         style={{
           padding: 24,
-          minHeight: 600,
           background: colorBgContainer,
         }}
       >
         <div scroll={{ x: true }}>
-          <Title className='title-form-log-off'>Log off form</Title>
-          <Row className="form-log-off">
+          <Row className='form-log-off'>
             <Col xl={6} lg={6} md={6} sm={6} xs={10}>
               <Space direction='vertical'>
                 <div className='type-day-off'>
@@ -98,9 +96,9 @@ const LogOffForm = () => {
                     hasFeedback
                   >
                     <Select
-                      className="select"
+                      className='select'
                       showSearch
-                      placeholder='Choose a time off work in 1 day'
+                      placeholder='Time off Duration'
                       optionFilterProp='children'
                       filterOption={(input, option) =>
                         (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
@@ -135,6 +133,7 @@ const LogOffForm = () => {
                 >
                   <DatePicker className='day-end-off' />
                 </Form.Item>
+
                 <Form.Item
                   className='log-off'
                   name={'quantity'}
