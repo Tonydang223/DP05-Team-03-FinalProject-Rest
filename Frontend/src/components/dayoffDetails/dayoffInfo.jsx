@@ -8,16 +8,26 @@ export const DayoffInfo = () => {
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
   };
+  const layout = {
+    labelCol: {
+      span: 6,
+    },
+    wrapperCol: {
+      span: 16,
+    },
+  };
   return (
     <div>
       <Descriptions title='Basic Infomation' />
       <Form
+        {...layout}
         name='normal_login'
         className='login-form'
         initialValues={{
           remember: true,
         }}
         onFinish={onFinish}
+        colon={false}
       >
         <Form.Item name='startDate' label='From'>
           <Input className='form-input' bordered={false} disabled={true} />

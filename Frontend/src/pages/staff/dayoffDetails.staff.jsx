@@ -1,20 +1,54 @@
 import React from 'react';
-import { Col, Row } from 'antd';
+import { Col, Row, Layout, Breadcrumb, theme } from 'antd';
 import { DayoffInfo } from '../../components/dayoffDetails/dayoffInfo';
 import { DayoffHistory } from '../../components/dayoffDetails/dayoffHistory';
 import '../../components/dayoffDetails/dayoffDetails.css';
+import { Link } from 'react-router-dom';
 
 export const DayoffDetails = () => {
+  const { Content } = Layout;
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
+
   return (
-    <div>
-      <Row>
-        <Col span={12}>
-          <DayoffInfo />
-        </Col>
-        <Col span={12}>
-          <DayoffHistory />
-        </Col>
-      </Row>
-    </div>
+    <>
+      <Content
+        style={{
+          margin: '0 16px',
+        }}
+      >
+        <Breadcrumb
+          style={{
+            margin: '16px 0',
+          }}
+        >
+          <Breadcrumb.Item>
+            <Link to='/staff'>Account</Link>
+          </Breadcrumb.Item>
+
+          <Breadcrumb.Item>
+            <Link to='/staff/dayoff'>Dayoff</Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to='/staff/dayoff/details'>Details</Link>
+          </Breadcrumb.Item>
+        </Breadcrumb>
+        <Row
+          style={{
+            padding: 24,
+            minHeight: 600,
+            background: colorBgContainer,
+          }}
+        >
+          <Col span={12}>
+            <DayoffInfo />
+          </Col>
+          <Col span={12}>
+            <DayoffHistory />
+          </Col>
+        </Row>
+      </Content>
+    </>
   );
 };
