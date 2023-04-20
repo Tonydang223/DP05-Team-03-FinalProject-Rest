@@ -1,8 +1,6 @@
 const WorkSpaceModel = require('../model/workspace.model');
 
-class WorkSpaceController {
-  constructor() {}
-
+class WorkspController {
   async create(req, res) {
     const { name, status } = req.body;
     try {
@@ -48,4 +46,4 @@ class WorkSpaceController {
   }
 }
 
-module.exports = new WorkSpaceController();
+module.exports = new WorkspController();

@@ -1,4 +1,4 @@
-const { upload } = require('../config/\bcloudinary');
+const { upload } = require('../config/uploadCloud');
 const UserModel = require('../model/user.model');
 const WorkspaceModel = require('../model/workspace.model');
 
