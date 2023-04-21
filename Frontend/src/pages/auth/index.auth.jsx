@@ -1,19 +1,64 @@
 import React from 'react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import 'antd/dist/reset.css';
 import './auth.login.css';
 import Logo from '../../assets/img/logo.png';
-import { Col, Row, Form, Input, Button, Checkbox, Image } from 'antd';
+import { Col, Row, Form, Input, Button, Checkbox, Image, Alert } from 'antd';
 import { Typography } from 'antd';
 import { AiOutlineMail } from 'react-icons/ai';
 import { RiLockPasswordLine } from 'react-icons/ri';
+import IconGoogle from '../../assets/img/icons-google.png';
 import ImageLogin from '../../assets/img/image_login.jpg';
 import { GoogleLogin } from '@react-oauth/google';
+import { loginFunc } from '../../services/axios';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setLoggedInUser } from '../../redux/slice/userSlice';
 
 const { Title, Text } = Typography;
 
 function LoginPage() {
   const inputFocus = useRef(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const renderRoute = (isLoggedIn, userRole) => {
+    if (isLoggedIn) {
+      switch (userRole) {
+        case 'Admin':
+          navigate('/admin');
+          break;
+        case 'Manager':
+          navigate('/manager');
+          break;
+        case 'Staff':
+          navigate('/staff');
+          break;
+      }
+    }
+  };
+
+  const handleLogin = async (values) => {
+    try {
+      const response = await loginFunc(values);
+      const { token, data: loggedInUser } = response.data;
+      console.log('🚀 ~ file: index.auth.jsx:45 ~ handleLogin ~ loggedInUser:', loggedInUser);
+
+      // dispatch(setLoggedInUser(loggedInUser));
+
+      if (!token) return;
+
+      localStorage.setItem('access_token', token);
+
+      if (localStorage.getItem('access_token')) {
+        renderRoute(true, response.data.data.role);
+      }
+    } catch (error) {
+      console.log('🚀 ~ file: index.auth.jsx:25 ~ onFinish ~ error:', error);
+      alert('Incorrect. Password please enter again!');
+    }
+  };
+
   useEffect(() => {
     inputFocus.current.focus();
   }, []);
@@ -36,9 +81,15 @@ function LoginPage() {
                 To keep connected with us please login with your personal information email address
                 and password
               </Text>
-              <Form className='form-email-password'>
+              <Form
+                className='form-email-password'
+                initialValues={{
+                  remember: true,
+                }}
+                onFinish={handleLogin}
+              >
                 <Form.Item
-                  name={'Email'}
+                  name={'email'}
                   rules={[
                     {
                       required: true,
@@ -57,14 +108,14 @@ function LoginPage() {
                   />
                 </Form.Item>
                 <Form.Item
-                  name={'Password'}
+                  name={'password'}
                   rules={[
                     {
                       required: true,
                       message: 'Please input your password',
                     },
                     {
-                      min: 8,
+                      min: 3,
                     },
                     {
                       validator: (_, value) =>

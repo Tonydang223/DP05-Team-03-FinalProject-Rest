@@ -133,7 +133,6 @@ const LogOffForm = () => {
                 >
                   <DatePicker className='day-end-off' />
                 </Form.Item>
-
                 <Form.Item
                   className='log-off'
                   name={'quantity'}
