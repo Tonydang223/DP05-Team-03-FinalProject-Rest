@@ -12,7 +12,6 @@ export default function Layouts() {
         minHeight: '100vh',
       }}
     >
-      <SideBar />
       <Layout className='site-layout'>
         <Navbar />
         <Outlet />

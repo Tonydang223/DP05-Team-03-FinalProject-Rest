@@ -85,7 +85,7 @@ const Workspaces = () => {
           <button
             title={isTitle}
             onClick={showAddApprove}
-            style={{ marginLeft: '800px', backgroundColor: '#1677ff', color: 'white' }}
+            style={{ marginLeft: '990px', backgroundColor: '#1677ff', color: 'white' }}
           >
             + New Workspace
           </button>

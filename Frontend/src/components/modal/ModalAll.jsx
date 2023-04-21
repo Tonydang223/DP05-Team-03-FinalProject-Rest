@@ -116,6 +116,32 @@ const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
           </Form>
         </Modal>
       )}
+
+      {name === 'Add_Workspace' && (
+        <Modal title='Add New Workspace' open={open} onOk={onOk} onCancel={onCancel}>
+          <Form.Item
+            label='Workspace Name'
+            name='name'
+            rules={[{ required: true, message: 'Please input workspace name' }]}
+          >
+            <Input placeholder='Workspace Name' />
+          </Form.Item>
+          <Form.Item
+            label='Slack Id'
+            name='id'
+            rules={[{ required: true, message: 'Please input slack id' }]}
+          >
+            <Input placeholder='Slack Id' style={{ marginLeft: '72px', width: '315px' }} />
+          </Form.Item>
+          <Form.Item
+            label='Member Name'
+            name='member'
+            rules={[{ required: true, message: 'Please input member name' }]}
+          >
+            <Input placeholder='Member' style={{ marginLeft: '17px', width: '315px' }} />
+          </Form.Item>
+        </Modal>
+      )}
     </>
   );
 };
