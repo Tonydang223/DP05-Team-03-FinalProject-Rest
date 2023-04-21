@@ -5,6 +5,9 @@ export const userSlice = createSlice({
   initialState: {},
   reducer: {
     setLoggedInUser: (state, action) => {
+      console.log(state, 'state');
+      console.log('🚀 ~ file: userSlice.jsx:11 ~ action:', action.payload);
+
       return action.payload;
     },
   },
