@@ -4,6 +4,7 @@ import { Layout, Avatar, Menu } from 'antd';
 import AvatarIcon from '../../assets/avatar.png';
 import './header.css';
 import HeaderLogo from '../../assets/logoHeader.png';
+import { Link } from 'react-router-dom';
 const { Header } = Layout;
 
 function getItem(label, key, icon, children) {
@@ -15,18 +16,20 @@ function getItem(label, key, icon, children) {
   };
 }
 const items = [
-  getItem('Account', 'sub1', <UserOutlined />, [
-    getItem('Dashboard', '1'),
-    getItem('Requests', '2'),
-    getItem('Days off', '3'),
+  getItem('Account', 'account', <UserOutlined />, [
+    getItem(<Link to='/'>Dashboard</Link>, 'dashboard'),
+    getItem(<Link to='/staff/log_off_form'>Requests</Link>, 'requests'),
+    getItem(<Link to='/manager/days_off'>Days off</Link>, 'daysoff'),
   ]),
-  getItem('Manager', 'sub2', <TeamOutlined />, [
-    getItem('Member', '4'),
-    getItem('Groups', '5'),
-    getItem('Notifications', '6'),
-    getItem('Sync', '7'),
+  getItem('Manager', 'manager', <TeamOutlined />, [
+    getItem(<Link to='/staff'>Member</Link>, 'member'),
+    getItem(<Link to='/manager/groups'>Groups</Link>, 'groups'),
+    getItem(<Link to='/staff'>Notifications</Link>, 'notifications'),
+    getItem(<Link to='/staff'>Sync</Link>, 'sync'),
   ]),
-  getItem('Administrator', 'sub3', <CustomerServiceOutlined />, [getItem('Workspaces', ' 8')]),
+  getItem('Administrator', 'administrator', <CustomerServiceOutlined />, [
+    getItem(<Link to='/admin/workspaces'>Workspaces</Link>, ' workspaces'),
+  ]),
   getItem(
     undefined,
     'sub4',
@@ -36,7 +39,7 @@ const items = [
       size={35}
       src={AvatarIcon}
     />,
-    [getItem('My Profile', '9'), getItem('Logout', '10')],
+    [getItem(<Link to='/staff'>My Profile</Link>, '9'), getItem('Logout', '10')],
   ),
 ];
 

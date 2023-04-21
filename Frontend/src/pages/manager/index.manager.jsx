@@ -20,11 +20,11 @@ const columns = [
     dataIndex: 'master',
   },
 ];
-const nameFull = "Huy";
+const nameFull = 'Huy';
 const data = [
   {
     key: '1',
-    name:nameFull.charAt(0),
+    name: nameFull.charAt(0),
     age: 32,
     address: 'New York No. 1 Lake Park',
   },
@@ -40,7 +40,6 @@ const data = [
     members: 'hi',
     master: 'Vo Van Thin',
   },
-
 ];
 
 export default function ManagerPage() {
@@ -67,7 +66,7 @@ export default function ManagerPage() {
   return (
     <Content
       style={{
-        margin: '0 16px',
+        margin: '0 45px',
       }}
     >
       <Breadcrumb
@@ -76,32 +75,36 @@ export default function ManagerPage() {
         }}
       >
         <Breadcrumb.Item>Manager</Breadcrumb.Item>
-        <Breadcrumb.Item>Manager </Breadcrumb.Item>
+        <Breadcrumb.Item>Groups</Breadcrumb.Item>
       </Breadcrumb>
       <div
         style={{
           padding: 24,
-          minHeight: 600,
+          minHeight: 530,
           background: colorBgContainer,
         }}
       >
-        <Space wrap className="section1">
-          <Row className="row">
-            <Col xl={16} lg={16} xxl={23} md={11} sm={7} className="col-title">
-              <Title className="title">Manager Group</Title>
-            </Col>
-            <Col xl={8} lg={8} xxl={1} md={13} sm={17} className="col-button">
-              <Button className="button-create-group" role="button" title={isTitle} onClick={CreateGroup}>Create new group</Button>
+        <Space wrap className='section1'>
+          <Row className='row'>
+            <Col xl={8} lg={8} xxl={1} md={13} sm={17} className='col-button'>
+              <Button
+                // className='button-create-group'
+                role='button'
+                title={isTitle}
+                onClick={CreateGroup}
+              >
+                Create new group
+              </Button>
             </Col>
           </Row>
         </Space>
         <Table columns={columns} dataSource={data} scroll={{ x: true }} />
-      <ModalAll
-        name={isTitle}
-        open={isCreateOpen}
-        onCancel={handleCancelCreate}
-        type={isSubmit}
-      />
+        <ModalAll
+          name={isTitle}
+          open={isCreateOpen}
+          onCancel={handleCancelCreate}
+          type={isSubmit}
+        />
       </div>
     </Content>
   );

@@ -36,7 +36,7 @@ const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
             style={{
               textAlign: 'center',
               paddingBottom: '10px',
-              fontSize: '30px',
+              fontSize: '25px',
               fontWeight: '600',
             }}
           >
@@ -104,12 +104,11 @@ const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
                   marginRight: '20px',
                   backgroundColor: 'red',
                   color: 'white',
-                  fontWeight: 'bold',
                 }}
               >
                 Cancel
               </Button>
-              <Button type='primary' htmlType='submit' style={{ fontWeight: 'bold' }}>
+              <Button type='primary' htmlType='submit'>
                 Submit
               </Button>
             </Form.Item>

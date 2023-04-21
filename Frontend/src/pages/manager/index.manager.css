@@ -1,10 +1,10 @@
-.row{
+.row {
   width: 1000px;
 }
-.section1{
+.section1 {
   padding-bottom: 20px;
 }
-.title{
+.title {
   font-size: 28px !important;
 }
 .button-create-group {
@@ -37,16 +37,20 @@
   transform: scale(1.05) rotate(-1deg);
   color: green !important;
 }
-.button-create-group:focus{
+.button-create-group:focus {
   outline: none;
 }
 @media (max-width: 576px) {
-  .col-title{
+  .col-title {
     display: none;
   }
 }
-@media (min-width: 1246px){
-  .button-create-group{
+@media (min-width: 1246px) {
+  .button-create-group {
     margin-left: 350px;
   }
+}
+
+ul.ant-pagination.ant-table-pagination.ant-table-pagination-right {
+  justify-content: center !important;
 }
