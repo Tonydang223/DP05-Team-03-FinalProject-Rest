@@ -28,7 +28,7 @@ const items = [
     getItem(<Link to='/staff'>Sync</Link>, 'sync'),
   ]),
   getItem('Administrator', 'administrator', <CustomerServiceOutlined />, [
-    getItem(<Link to='/staff'>Workspaces</Link>, ' workspaces'),
+    getItem(<Link to='/admin/workspaces'>Workspaces</Link>, ' workspaces'),
   ]),
   getItem(
     undefined,

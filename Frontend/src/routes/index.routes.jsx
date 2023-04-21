@@ -10,7 +10,7 @@ import LogOffForm from '../pages/staff/LogOff/LogOffForm';
 import GroupDetailsPage from '../pages/manager/groupDetails.manager';
 import Workspaces from '../pages/admin/Workspaces';
 import WorkspaceDetails from '../pages/admin/WorkspaceDetails';
-import AdminPage from '@app/pages/admin/index.admin';
+import AdminPage from '../pages/admin/index.admin';
 
 const AppRouter = (req, res) => {
   return (
@@ -22,6 +22,7 @@ const AppRouter = (req, res) => {
         {/* auth route */}
         <Route path='/login' exact element={<LoginPage />} />
         <Route path='/change-password' exact element={<ChangePassword />} />
+
         <Route path='/' exact element={<Layouts />}>
           {/* admin route */}
           <Route path='/admin'>
