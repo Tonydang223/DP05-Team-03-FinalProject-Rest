@@ -3,3 +3,5 @@ node_modules
 #lock
 package-lock.json
 yarn.lock
+yarn-error.lock
+.env

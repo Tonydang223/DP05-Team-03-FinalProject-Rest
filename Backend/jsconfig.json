@@ -1,11 +1,8 @@
 {
-    "compilerOptions": {
-      "target": "ESNext",
-      "baseUrl": ".",
-      "paths": {
-        "@/*": ["src/*"],
-      },
-      "strict": true,
-    }
+  "compilerOptions": {
+    "target": "ESNext",
+    "strict": true,
+    "sourceMap": true,
+    "noEmit": true
+  }
 }
-  
