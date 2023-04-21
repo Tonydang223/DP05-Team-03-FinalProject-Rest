@@ -87,12 +87,7 @@ export default function ManagerPage() {
         <Space wrap className='section1'>
           <Row className='row'>
             <Col xl={8} lg={8} xxl={1} md={13} sm={17} className='col-button'>
-              <Button
-                // className='button-create-group'
-                role='button'
-                title={isTitle}
-                onClick={CreateGroup}
-              >
+              <Button role='button' title={isTitle} onClick={CreateGroup}>
                 Create new group
               </Button>
             </Col>
