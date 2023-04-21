@@ -10,6 +10,7 @@ import LogOffForm from '../pages/staff/LogOff/LogOffForm';
 import GroupDetailsPage from '../pages/manager/groupDetails.manager';
 import Workspaces from '../pages/admin/Workspaces';
 import WorkspaceDetails from '../pages/admin/WorkspaceDetails';
+import AdminPage from '@app/pages/admin/index.admin';
 
 const AppRouter = (req, res) => {
   return (
@@ -30,10 +31,8 @@ const AppRouter = (req, res) => {
 
           {/* manager route */}
           <Route path='/manager'>
-            <Route path='/manager' exact element={<ManagerPage />} />
-            <Route path='/manager/group' exact>
-              <Route path='/manager/group/details' exact element={<GroupDetailsPage />} />
-            </Route>
+            <Route path='/manager/groups' exact element={<ManagerPage />} />
+            <Route path='/manager/days_off' exact element={<AdminPage />} />
           </Route>
 
           {/* staff route */}
