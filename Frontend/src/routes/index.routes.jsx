@@ -9,6 +9,7 @@ import ChangePassword from '../pages/auth/ChangePassword/ChangePassword';
 import LogOffForm from '../pages/staff/LogOff/LogOffForm';
 import GroupDetailsPage from '../pages/manager/groupDetails.manager';
 import Workspaces from '../pages/admin/Workspaces';
+import WorkspaceDetails from '../pages/admin/WorkspaceDetails';
 
 const AppRouter = (req, res) => {
   return (
@@ -24,6 +25,7 @@ const AppRouter = (req, res) => {
           {/* admin route */}
           <Route path='/admin'>
             <Route path='/admin/workspaces' exact element={<Workspaces />} />
+            <Route path='/admin/workspace-details' exact element={<WorkspaceDetails />} />
           </Route>
 
           {/* manager route */}
