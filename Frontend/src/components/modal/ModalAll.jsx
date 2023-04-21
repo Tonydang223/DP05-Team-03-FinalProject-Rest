@@ -142,6 +142,58 @@ const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
           </Form.Item>
         </Modal>
       )}
+
+      {name === 'Add_Manager' && (
+        <Modal title='Add New Manager' open={open} onOk={onOk} onCancel={onCancel}>
+          <Form.Item
+            label='Manager Name'
+            name='name'
+            rules={[{ required: true, message: 'Please input your name' }]}
+          >
+            <Input placeholder='Manager Name' />
+          </Form.Item>
+          <Form.Item
+            label='Email'
+            name='email'
+            rules={[{ required: true, message: 'Please input your email' }]}
+          >
+            <Input placeholder='Email' style={{ marginLeft: '74px', width: '330px' }} />
+          </Form.Item>
+          <Form.Item
+            label='Password'
+            name='password'
+            rules={[{ required: true, message: 'Please input password' }]}
+          >
+            <Input placeholder='Password' style={{ marginLeft: '44px', width: '330px' }} />
+          </Form.Item>
+        </Modal>
+      )}
+
+      {name === 'Edit_Password' && (
+        <Modal open={open} onOk={onOk} onCancel={onCancel}>
+          <Form.Item
+            label='Old Password'
+            name='oldpassword'
+            rules={[{ required: true, message: 'Please input your old password' }]}
+            style={{ marginTop: '20px' }}
+          >
+            <Input placeholder='Old Password' style={{ marginLeft: '10px', width: '300px' }} />
+          </Form.Item>
+          <Form.Item
+            label='New Password'
+            name='newpassword'
+            rules={[{ required: true, message: 'Please input your new password' }]}
+          >
+            <Input placeholder='New Password' style={{ marginLeft: '2px', width: '299px' }} />
+          </Form.Item>
+        </Modal>
+      )}
+
+      {name === 'Delete_Password' && (
+        <Modal open={open} onOk={onOk} onCancel={onCancel}>
+          <p>Are you sure to delete?</p>
+        </Modal>
+      )}
     </>
   );
 };
