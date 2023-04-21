@@ -1,14 +1,12 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layouts from '../layouts/index.layouts';
 import ManagerPage from '../pages/manager/index.manager';
-import AdminPage from '../pages/admin/index.admin';
 import StaffPage from '../pages/staff/index.staff';
 import LandingPage from '../pages/landing/index.landing';
 import LoginPage from '../pages/auth/index.auth';
 import { DayoffDetails } from '../pages/staff/dayoffDetails.staff';
 import ChangePassword from '../pages/auth/ChangePassword/ChangePassword';
 import LogOffForm from '../pages/staff/LogOff/LogOffForm';
-import GroupDetailsPage from '../pages/manager/groupDetails.manager';
 import Workspaces from '../pages/admin/Workspaces';
 import WorkspaceDetails from '../pages/admin/WorkspaceDetails';
 import AdminPage from '../pages/admin/index.admin';
