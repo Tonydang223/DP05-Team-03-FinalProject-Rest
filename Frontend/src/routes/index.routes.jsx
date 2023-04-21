@@ -27,7 +27,8 @@ const AppRouter = (req, res) => {
 
           {/* manager route */}
           <Route path='/manager'>
-            <Route path='/manager' exact element={<ManagerPage />} />
+            <Route path='/manager/groups' exact element={<ManagerPage />} />
+            <Route path='/manager/days_off' exact element={<AdminPage />} />
           </Route>
 
           {/* staff route */}
