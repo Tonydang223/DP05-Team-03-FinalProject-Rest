@@ -5,6 +5,8 @@ const { STATUS_REQUEST } = require('../config/constants');
 const groupModel = require('../model/group.model');
 const approveModel = require('../model/approve.model');
 
+// Create a new instance of the WebClient class
+
 class RequestController {
   async createRequest(req, res) {
     try {
