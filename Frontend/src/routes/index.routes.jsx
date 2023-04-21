@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layouts from '../layouts/index.layouts';
-import AdminPage from '../pages/admin/index.admin';
 import ManagerPage from '../pages/manager/index.manager';
 import StaffPage from '../pages/staff/index.staff';
 import LandingPage from '../pages/landing/index.landing';
@@ -9,6 +8,7 @@ import { DayoffDetails } from '../pages/staff/dayoffDetails.staff';
 import ChangePassword from '../pages/auth/ChangePassword/ChangePassword';
 import LogOffForm from '../pages/staff/LogOff/LogOffForm';
 import GroupDetailsPage from '../pages/manager/groupDetails.manager';
+import Workspaces from '../pages/admin/Workspaces';
 
 const AppRouter = (req, res) => {
   return (
@@ -23,7 +23,7 @@ const AppRouter = (req, res) => {
         <Route path='/' exact element={<Layouts />}>
           {/* admin route */}
           <Route path='/admin'>
-            <Route path='/admin' exact element={<AdminPage />} />
+            <Route path='/admin/workspaces' exact element={<Workspaces />} />
           </Route>
 
           {/* manager route */}
