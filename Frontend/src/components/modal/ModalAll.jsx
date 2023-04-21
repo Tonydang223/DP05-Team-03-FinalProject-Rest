@@ -31,34 +31,19 @@ const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
       )}
 
       {name === 'CreateGroup' && (
-        <Modal open={open} type={type} onCancel={onCancel} footer={null}>
+        <Modal open={open} onCancel={onCancel} footer={null}>
           <h2
             style={{
               textAlign: 'center',
               paddingBottom: '10px',
-              fontSize: '25px',
+              fontSize: '23px',
               fontWeight: '600',
             }}
           >
             Create a new group
           </h2>
 
-          <Form
-            name='basic'
-            labelCol={{
-              span: 8,
-            }}
-            wrapperCol={{
-              span: 16,
-            }}
-            style={{
-              maxWidth: 600,
-            }}
-            initialValues={{
-              remember: true,
-            }}
-            autoComplete='off'
-          >
+          <Form name='basic' autoComplete='off'>
             <Form.Item
               label='Name group'
               name='groupname'
@@ -72,7 +57,6 @@ const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
             >
               <Input />
             </Form.Item>
-
             <Form.Item
               label='Add member'
               name='addPeople'
@@ -117,28 +101,62 @@ const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
       )}
 
       {name === 'Add_Workspace' && (
-        <Modal title='Add New Workspace' open={open} onOk={onOk} onCancel={onCancel}>
-          <Form.Item
-            label='Workspace Name'
-            name='name'
-            rules={[{ required: true, message: 'Please input workspace name' }]}
+        <Modal open={open} onOk={onOk} onCancel={onCancel} footer={null}>
+          <h2
+            style={{
+              textAlign: 'center',
+              paddingBottom: '10px',
+              fontSize: '23px',
+              fontWeight: '600',
+            }}
           >
-            <Input placeholder='Workspace Name' />
-          </Form.Item>
-          <Form.Item
-            label='Slack Id'
-            name='id'
-            rules={[{ required: true, message: 'Please input slack id' }]}
-          >
-            <Input placeholder='Slack Id' style={{ marginLeft: '72px', width: '315px' }} />
-          </Form.Item>
-          <Form.Item
-            label='Member Name'
-            name='member'
-            rules={[{ required: true, message: 'Please input member name' }]}
-          >
-            <Input placeholder='Member' style={{ marginLeft: '17px', width: '315px' }} />
-          </Form.Item>
+            Add new workspace
+          </h2>
+
+          <Form name='basic' autoComplete='off'>
+            <Form.Item
+              label='Workspace Name'
+              name='name'
+              rules={[{ required: true, message: 'Please input workspace name' }]}
+            >
+              <Input placeholder='Workspace Name' />
+            </Form.Item>
+            <Form.Item
+              label='Slack Id'
+              name='id'
+              rules={[{ required: true, message: 'Please input slack id' }]}
+            >
+              <Input placeholder='Slack Id' style={{ marginLeft: '72px', width: '315px' }} />
+            </Form.Item>
+            <Form.Item
+              label='Member Name'
+              name='member'
+              rules={[{ required: true, message: 'Please input member name' }]}
+            >
+              <Input placeholder='Member' style={{ marginLeft: '17px', width: '315px' }} />
+            </Form.Item>
+            <Form.Item
+              wrapperCol={{
+                offset: 8,
+                span: 16,
+              }}
+            >
+              <Button
+                htmlType='button'
+                onClick={onCancel}
+                style={{
+                  marginRight: '20px',
+                  backgroundColor: 'red',
+                  color: 'white',
+                }}
+              >
+                Cancel
+              </Button>
+              <Button type='primary' htmlType='submit'>
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
         </Modal>
       )}
 
@@ -193,6 +211,7 @@ const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
           <p>Are you sure to delete?</p>
         </Modal>
       )}
+
       {name === 'Add_Member' && (
         <Modal title={title} open={open} onOk={onOk} onCancel={onCancel}>
           <p>Are you sure to {title}?</p>

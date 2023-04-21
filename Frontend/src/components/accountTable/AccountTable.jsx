@@ -123,8 +123,8 @@ const AccountTable = ({ role }) => {
       //   ),
     },
     {
-      title: 'Action',
-      key: 'action',
+      title: 'Actions',
+      key: 'actions',
       render: (_, record) => (
         <Space size='middle'>
           <a style={{ fontSize: '20px' }} title={isTitle} onClick={showEdit}>

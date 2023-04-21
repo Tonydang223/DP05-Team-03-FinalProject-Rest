@@ -5,7 +5,7 @@ import { DayoffHistory } from '../../components/dayoffDetails/dayoffHistory';
 import '../../components/dayoffDetails/dayoffDetails.css';
 import { Link } from 'react-router-dom';
 
-export const DayoffDetails = () => {
+export default function DayoffDetails() {
   const { Content } = Layout;
   const {
     token: { colorBgContainer },
@@ -51,4 +51,4 @@ export const DayoffDetails = () => {
       </Content>
     </>
   );
-};
+}

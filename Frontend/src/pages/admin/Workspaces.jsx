@@ -1,8 +1,9 @@
 import React from 'react';
-import { Form, Layout, Breadcrumb, theme, Row, Col, Table, Typography, Avatar } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { Form, Layout, Breadcrumb, theme, Row, Col, Table, Button, Avatar, Space } from 'antd';
+import { UserOutlined, InfoCircleFilled } from '@ant-design/icons';
 import ModalAll from '../../components/modal/ModalAll';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const { Content } = Layout;
 const layout = {
@@ -31,6 +32,17 @@ const Workspaces = () => {
         </>
       ),
     },
+    {
+      title: 'Actions',
+      key: 'actions',
+      render: (_, record) => (
+        <Space size='middle'>
+          <Link to='/admin/workspace-details' style={{ fontSize: '20px' }} title={isTitle}>
+            <InfoCircleFilled style={{ color: '#1677FF' }} />
+          </Link>
+        </Space>
+      ),
+    },
   ];
   const {
     token: { colorBgContainer },
@@ -52,10 +64,11 @@ const Workspaces = () => {
   const handleCancelAdd = () => {
     setIsModalOpen(false);
   };
+
   return (
     <Content
       style={{
-        margin: '0 16px',
+        margin: '0 45px',
       }}
     >
       <Breadcrumb
@@ -64,41 +77,24 @@ const Workspaces = () => {
         }}
       >
         <Breadcrumb.Item>Manager</Breadcrumb.Item>
-        <Breadcrumb.Item>Members</Breadcrumb.Item>
-        <Breadcrumb.Item>Detail</Breadcrumb.Item>
+        <Breadcrumb.Item>All Workspaces</Breadcrumb.Item>
       </Breadcrumb>
       <div
         style={{
           padding: 24,
-          minHeight: 600,
+          minHeight: 530,
           background: colorBgContainer,
         }}
       >
         <div>
-          <Typography.Title
-            underline
-            level={1}
-            style={{ fontSize: '18px', marginLeft: '29px', float: 'left', color: '#1677ff' }}
-          >
-            Branding
-          </Typography.Title>
-          <button
-            title={isTitle}
-            onClick={showAddApprove}
-            style={{ marginLeft: '990px', backgroundColor: '#1677ff', color: 'white' }}
-          >
-            + New Workspace
-          </button>
+          <Button role='button' title={isTitle} onClick={showAddApprove}>
+            Add new workspace
+          </Button>
           <ModalAll
             name={isTitle}
             open={isModalOpen}
             onOk={handApproveAdd}
             onCancel={handleCancelAdd}
-          />
-          <Avatar
-            size='large'
-            icon={<UserOutlined />}
-            style={{ marginRight: '100px', float: 'right' }}
           />
         </div>
         <div>
