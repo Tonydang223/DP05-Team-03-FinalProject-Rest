@@ -193,6 +193,11 @@ const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
           <p>Are you sure to delete?</p>
         </Modal>
       )}
+      {name === 'Add_Member' && (
+        <Modal title={title} open={open} onOk={onOk} onCancel={onCancel}>
+          <p>Are you sure to {title}?</p>
+        </Modal>
+      )}
     </>
   );
 };

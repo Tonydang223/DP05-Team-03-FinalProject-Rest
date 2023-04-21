@@ -7,10 +7,10 @@ import LoginPage from '../pages/auth/index.auth';
 import { DayoffDetails } from '../pages/staff/dayoffDetails.staff';
 import ChangePassword from '../pages/auth/ChangePassword/ChangePassword';
 import LogOffForm from '../pages/staff/LogOff/LogOffForm';
-import GroupDetailsPage from '../pages/manager/groupDetails.manager';
 import Workspaces from '../pages/admin/Workspaces';
 import WorkspaceDetails from '../pages/admin/WorkspaceDetails';
 import AdminPage from '../pages/admin/index.admin';
+import MemberDetails from '../pages/manager/MemberDetails';
 
 const AppRouter = (req, res) => {
   return (
@@ -34,6 +34,7 @@ const AppRouter = (req, res) => {
           <Route path='/manager'>
             <Route path='/manager/groups' exact element={<ManagerPage />} />
             <Route path='/manager/days_off' exact element={<AdminPage />} />
+            <Route path='/manager/member-details' exact element={<MemberDetails />} />
           </Route>
 
           {/* staff route */}
