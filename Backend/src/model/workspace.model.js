@@ -13,6 +13,10 @@ const workspace = new Schema({
     default: 'open',
     enum: STATUS_WORKSPACE,
   },
+  isMappingByEmail: {
+    type: Boolean,
+    default: false,
+  },
   user: [{ type: mongoose.Types.ObjectId, ref: 'user' }],
   create_at: {
     type: Date,

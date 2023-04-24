@@ -1,11 +1,12 @@
 const RequestModel = require('../model/request.model');
 const moment = require('moment');
 const historyModel = require('../model/history.model');
-const { STATUS_REQUEST } = require('../config/constants');
+const { STATUS_REQUEST, MAIN_CHANNELS } = require('../config/constants');
 const groupModel = require('../model/group.model');
 const approveModel = require('../model/approve.model');
 const { addRows } = require('../utils/googleSheet');
-
+const { getMainChannels, pushMessage } = require('../config/slackBot');
+const { formatStringNotiRequest } = require('../utils/index');
 class RequestController {
   async createRequest(req, res) {
     try {
@@ -32,16 +33,26 @@ class RequestController {
       if (checkExistedVals.length >= 1)
         return res.status(400).json({ message: 'The request created before!' });
 
-      const request = await RequestModel(newRequestVal);
+      const request = new RequestModel(newRequestVal);
       const createHistory = await request.populate('user', '-password');
       await request.save();
 
-      const history = await historyModel({
+      const history = new historyModel({
         request: createHistory._id,
-        created_request: { ...createHistory._doc },
+        created_request: {
+          ...createHistory._doc,
+          userName: `${createHistory._doc.user.firstName} ${createHistory._doc.user.lastName}`,
+        },
         updated_request: null,
+        action: 'Created',
       });
       await history.save();
+
+      //noti
+      const mainChannels = await getMainChannels(MAIN_CHANNELS);
+      const notis = [...mainChannels, createHistory._doc.user.slackId];
+
+      await pushMessage(notis, formatStringNotiRequest(createHistory));
 
       res
         .status(200)
@@ -89,6 +100,7 @@ class RequestController {
       const history = new historyModel({
         request: oldRequest._id,
         created_request: { ...oldRequest._doc },
+        action: 'Updated',
       });
       await history.save();
 
@@ -98,7 +110,17 @@ class RequestController {
         { new: true },
       );
 
-      await history.updateOne({ $set: { updated_request: { ...updated._doc } } }, { new: true });
+      await history.updateOne(
+        {
+          $set: {
+            updated_request: {
+              ...updated._doc,
+              userName: `${updated._doc.user.firstName} ${updated._doc.user.lastName}`,
+            },
+          },
+        },
+        { new: true },
+      );
       res
         .status(200)
         .json({ message: 'The request was updated successfully!', data: { ...updated._doc } });
@@ -150,19 +172,22 @@ class RequestController {
         savedApprove = await createApprove.save().then(async (t) => {
           const approves = await approveModel.find({ request: req.params.id });
           if (approves.length === mastersRelateUser.length) {
+            let updateSta;
             if (approves.findIndex((v) => v.type_approve === STATUS_REQUEST[1]) > 0) {
-              await RequestModel.findOneAndUpdate(
+              updateSta = await RequestModel.findOneAndUpdate(
                 { _id: req.params.id },
                 { $set: { status: STATUS_REQUEST[1] } },
                 { new: true },
-              );
+              ).populate('user', '-password');
             } else {
-              const apprReq = await RequestModel.findOneAndUpdate(
+              updateSta = await RequestModel.findOneAndUpdate(
                 { _id: req.params.id },
                 { $set: { status: STATUS_REQUEST[0] } },
                 { new: true },
               ).populate('user', '-password');
-              const { _id, user, ...requ } = apprReq._doc;
+
+              // add to google sheet
+              const { _id, user, ...requ } = updateSta._doc;
               delete requ['__v'];
               Object.keys(requ).forEach((k) => {
                 if (requ[k] instanceof Date) {
@@ -186,13 +211,22 @@ class RequestController {
 
               await addRows([{ ...convertUpperCaseHeader }], header);
             }
+            // noti
+            const mainChannels = await getMainChannels(MAIN_CHANNELS);
+            const notis = [...mainChannels, updateSta._doc.user.slackId];
+
+            await pushMessage(notis, formatStringNotiRequest(updateSta));
           }
           return t.populate('user request', '-password');
         });
       }
       const history = new historyModel({
         request: req.params.id,
-        approved_request: { ...savedApprove._doc },
+        approved_request: {
+          ...savedApprove._doc,
+          userName: `${savedApprove._doc.user.firstName} ${savedApprove._doc.user.lastName}`,
+        },
+        action: type_approve,
       });
       history.save();
       res.status(200).json({
@@ -206,25 +240,43 @@ class RequestController {
   async revertRequest(req, res) {
     try {
       const { reason } = req.body;
-      const request = await RequestModel.findOne({ _id: req.params.id });
+      const request = await RequestModel.findOne({ _id: req.params.id }).populate(
+        'user',
+        '-password',
+      );
+
+      // noti
+      const mainChannels = await getMainChannels(MAIN_CHANNELS);
+      const notis = [...mainChannels, request._doc.user.slackId];
+
       if (
         request.status !== STATUS_REQUEST[0] ||
         moment(request.from).format('L') < moment().format('L')
-      )
+      ) {
+        await pushMessage(notis, `${formatStringNotiRequest(request)} \n content: Revert fail!`);
         return res.status(400).json({ message: 'The request was rejected' });
-      console.log(req.usr._id);
-      console.log(request.user);
-      if (req.usr._id !== request.user.toString())
+      }
+      if (req.usr._id !== request.user._id.toString())
         return res.status(400).json({ message: 'The request is not yours' });
+
       const revertStatus = await RequestModel.findOneAndUpdate(
         { _id: req.params.id },
         { $set: { status: STATUS_REQUEST[2] } },
         { new: true },
-      );
+      ).populate('user', '-password');
       await approveModel.deleteMany({ request: req.params.id });
+      await pushMessage(
+        notis,
+        `${formatStringNotiRequest(revertStatus)} \n reasonRevert: ${reason}`,
+      );
       const history = new historyModel({
         request: req.params.id,
-        reverted_request: { ...revertStatus._doc, reason },
+        reverted_request: {
+          ...revertStatus._doc,
+          reason,
+          userName: `${revertStatus._doc.user.firstName} ${revertStatus._doc.user.lastName}`,
+        },
+        action: 'Reverted',
       });
       history.save();
       res
@@ -255,6 +307,20 @@ class RequestController {
       res.status(200).json({
         message: 'Get approves of the request successfully!',
         data: [...approvesOfRequest],
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+  async getHistories(req, res) {
+    try {
+      const requestHistories = await historyModel
+        .find({ request: req.params.id })
+        .sort({ created_at: 1 });
+
+      res.status(200).json({
+        message: 'Get histories of the request successfully!',
+        data: [...requestHistories],
       });
     } catch (error) {
       res.status(500).json({ message: error.message });

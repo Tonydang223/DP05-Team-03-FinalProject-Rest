@@ -10,5 +10,6 @@ router.post('/approve/:id', userAuthPermission([ROLES[2]]), RequestController.ap
 router.post('/revert/:id', userAuthPermission([ROLES[2]]), RequestController.revertRequest);
 router.get('/getAll', userAuthPermission(), RequestController.getAllRequests);
 router.get('/getApproves/:id', userAuthPermission(), RequestController.getApprovesOfRequest);
+router.get('/getHistories/:id', userAuthPermission(), RequestController.getHistories);
 
 module.exports = router;

@@ -38,6 +38,7 @@ const user = new Schema({
   },
   slackId: {
     type: String,
+    require: true,
   },
   createdAt: {
     type: Date,

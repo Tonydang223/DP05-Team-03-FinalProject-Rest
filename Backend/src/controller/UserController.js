@@ -1,27 +1,33 @@
 const { ROLES } = require('../config/constants');
+const { web } = require('../config/slackBot');
 const { upload } = require('../config/uploadCloud');
 const UserModel = require('../model/user.model');
 const WorkspaceModel = require('../model/workspace.model');
 
 class UserController {
   async createUser(req, res) {
-    const { firstName, lastName, email, password, role } = req.body;
     try {
+      const { firstName, lastName, email, password, role, slackId } = req.body;
+      const result = await web.users.list();
+      const usrs = result.members.filter((v) => !v.is_admin && !v.is_bot && v.profile.email);
+      const workSpace = await WorkspaceModel.findById({ _id: req.params.id });
+      if (slackId && !usrs.map((v) => v.id).includes(slackId)) {
+        if (workSpace.isMappingByEmail && usrs.findIndex((i) => i.profile.email === email) === -1) {
+          return res.status(400).json({ message: 'The email is not included in slack!' });
+        }
+        return res.status(400).json({ message: 'The slackId is not existed!' });
+      }
       const existedUser = await UserModel.findOne({ email });
       if (existedUser) return res.status(400).json({ message: 'User already exists!' });
       const user = new UserModel({
         firstName,
         lastName,
-        slackId: '123',
+        slackId,
         email,
         password,
         role,
       });
-      await WorkspaceModel.findOneAndUpdate(
-        { _id: req.params.id },
-        { $push: { user: user._id } },
-        { new: true },
-      );
+      await workSpace.update({ $push: { user: user._id } }, { new: true });
       const savedUser = await user.save();
 
       const newUser = { ...savedUser._doc };
