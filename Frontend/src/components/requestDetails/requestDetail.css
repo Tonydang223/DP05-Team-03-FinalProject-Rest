@@ -1,0 +1,45 @@
+/* Request Info */
+
+.ant-form-item .ant-form-item-label > label {
+  font-size: 16px;
+}
+
+.ant-form-item-label > label {
+  font-weight: bold;
+}
+
+.ant-descriptions .ant-descriptions-title {
+  font-size: 30px;
+}
+
+.info-form-button {
+  margin: 0 10px 0 10px;
+}
+
+/* Request histories */
+
+.history-heading {
+  margin: 0;
+  border-left: 4px solid blueviolet;
+  padding: 0 5px 0 5px;
+}
+
+h5:where(.css-dev-only-do-not-override-htwhyh).ant-typography,
+div:where(.css-dev-only-do-not-override-htwhyh).ant-typography-h5,
+div:where(.css-dev-only-do-not-override-htwhyh).ant-typography-h5 > textarea,
+:where(.css-dev-only-do-not-override-htwhyh).ant-typography h5 {
+  color: blueviolet;
+}
+
+:where(.css-dev-only-do-not-override-htwhyh).ant-typography {
+  color: #a9a9a9;
+  font-weight: 500;
+}
+
+:where(.css-dev-only-do-not-override-htwhyh).ant-space-vertical {
+  margin: 0 20px;
+}
+
+.ant-col-12 {
+  padding: 40px 60px 40px 60px;
+}

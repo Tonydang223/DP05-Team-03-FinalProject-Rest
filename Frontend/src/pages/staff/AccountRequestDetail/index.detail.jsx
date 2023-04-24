@@ -1,17 +1,17 @@
 import React from 'react';
 import { Col, Row } from 'antd';
-import { DayoffInfo } from '../../../../src/components/dayoffDetails/dayoffInfo';
-import { DayoffHistory } from '../../../../src/components/dayoffDetails/dayoffHistory';
+import { RequestInfo } from '../../../../src/components/requestDetails/requestInfo';
+import { RequestHistory } from '../../../../src/components/requestDetails/requestHistory';
 
 export default function AccountDetailPage() {
   return (
     <div>
       <Row>
         <Col span={12}>
-          <DayoffInfo />
+          <RequestInfo />
         </Col>
         <Col span={12}>
-          <DayoffHistory />
+          <RequestHistory />
         </Col>
       </Row>
     </div>
