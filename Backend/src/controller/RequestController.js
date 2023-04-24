@@ -4,8 +4,7 @@ const historyModel = require('../model/history.model');
 const { STATUS_REQUEST } = require('../config/constants');
 const groupModel = require('../model/group.model');
 const approveModel = require('../model/approve.model');
-
-// Create a new instance of the WebClient class
+const { addRows } = require('../utils/googleSheet');
 
 class RequestController {
   async createRequest(req, res) {
@@ -158,11 +157,34 @@ class RequestController {
                 { new: true },
               );
             } else {
-              await RequestModel.findOneAndUpdate(
+              const apprReq = await RequestModel.findOneAndUpdate(
                 { _id: req.params.id },
                 { $set: { status: STATUS_REQUEST[0] } },
                 { new: true },
+              ).populate('user', '-password');
+              const { _id, user, ...requ } = apprReq._doc;
+              delete requ['__v'];
+              Object.keys(requ).forEach((k) => {
+                if (requ[k] instanceof Date) {
+                  requ[k] = moment(requ[k]).format('LL');
+                }
+              });
+              const valueAddToSheet = {
+                id: _id.toString(),
+                name: `${user.firstName} ${user.lastName}`,
+                email: user.email,
+                ...requ,
+              };
+              const convertUpperCaseHeader = Object.entries(valueAddToSheet).reduce(
+                (a, [key, value]) => {
+                  a[key.charAt(0).toUpperCase() + key.slice(1)] = value;
+                  return a;
+                },
+                {},
               );
+              const header = Object.keys(convertUpperCaseHeader).map((key) => key);
+
+              await addRows([{ ...convertUpperCaseHeader }], header);
             }
           }
           return t.populate('user request', '-password');
@@ -177,7 +199,6 @@ class RequestController {
         message: 'The approve was successfully!',
         data: { ...savedApprove._doc },
       });
-      console.log(mastersRelateUser);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -222,6 +243,18 @@ class RequestController {
       ).then(async () => {
         const requests = await RequestModel.find();
         res.status(200).json({ message: 'Get the requests successfully!', data: [...requests] });
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+  async getApprovesOfRequest(req, res) {
+    try {
+      const approvesOfRequest = await approveModel.find({ request: req.params.id });
+
+      res.status(200).json({
+        message: 'Get approves of the request successfully!',
+        data: [...approvesOfRequest],
       });
     } catch (error) {
       res.status(500).json({ message: error.message });
