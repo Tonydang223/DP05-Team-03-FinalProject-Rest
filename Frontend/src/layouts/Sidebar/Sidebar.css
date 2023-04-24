@@ -6,7 +6,6 @@
   width: 50px !important;
   border: 1px solid rgba(250, 250, 250, 0.14);
   top: 55px;
-  position: absolute;
 }
 
 .ant-layout-sider-collapsed .ant-layout-sider-trigger {
@@ -18,6 +17,24 @@
 .ant-layout-sider-trigger:hover {
   background: white !important;
   color: #12131a !important;
+}
+
+.user-login {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+
+.user-name {
+  color: #acadaf;
+  margin-bottom: 0px;
+}
+
+.ant-layout-sider-collapsed .user-name {
+  display: none;
 }
 
 @media screen and (min-width: 1200px) {

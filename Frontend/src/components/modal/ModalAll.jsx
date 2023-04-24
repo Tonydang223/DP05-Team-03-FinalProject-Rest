@@ -131,15 +131,25 @@ const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
               label='Slack Id'
               name='id'
               rules={[{ required: true, message: 'Please input slack id' }]}
+              style={{
+                width: '80%',
+                marginLeft: '77px',
+                marginTop: '40px',
+              }}
             >
-              <Input placeholder='Slack Id' style={{ marginLeft: '72px', width: '315px' }} />
+              <Input placeholder='Slack Id' style={{ width: '106%' }} />
             </Form.Item>
             <Form.Item
               label='Member Name'
               name='member'
               rules={[{ required: true, message: 'Please input member name' }]}
+              style={{
+                width: '80%',
+                marginLeft: '23px',
+                marginTop: '40px',
+              }}
             >
-              <Input placeholder='Member' style={{ marginLeft: '17px', width: '315px' }} />
+              <Input placeholder='Member' style={{ width: '130%' }} />
             </Form.Item>
             <Form.Item
               wrapperCol={{
@@ -151,6 +161,7 @@ const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
                 htmlType='button'
                 onClick={onCancel}
                 style={{
+                  marginTop: '15px',
                   marginRight: '20px',
                   backgroundColor: 'red',
                   color: 'white',

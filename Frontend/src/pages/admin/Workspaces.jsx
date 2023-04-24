@@ -1,9 +1,11 @@
 import React from 'react';
-import { Form, Layout, Breadcrumb, theme, Row, Col, Table, Button, Avatar, Space } from 'antd';
+import { Form, Layout, Breadcrumb, theme, Table, Button, Avatar, Space } from 'antd';
 import { UserOutlined, InfoCircleFilled } from '@ant-design/icons';
 import ModalAll from '../../components/modal/ModalAll';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { fetchWorkspaces } from './../../services/axiosInstance';
 
 const { Content } = Layout;
 const layout = {
@@ -11,9 +13,17 @@ const layout = {
   wrapperCol: { span: 16 },
 };
 const Workspaces = () => {
-  const onFinish = (values) => {
-    console.log('Success:', values);
+  //fetch data
+  const getAllWorkspaces = async () => {
+    const res = await fetchWorkspaces();
+    console.log(res);
   };
+
+  useEffect(() => {
+    getAllWorkspaces();
+  }, []);
+
+  //Data
   const dataSource = [
     { key: 1, name: 'ST Software', state: 'Active', managers: '' },
     { key: 2, name: 'Devplus', state: 'Inactive', managers: '' },
@@ -44,20 +54,27 @@ const Workspaces = () => {
       ),
     },
   ];
+
+  //UI Theme
   const {
     token: { colorBgContainer },
   } = theme.useToken();
 
+  //State
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [isTitle, setTitle] = useState('');
+
+  //Actions
+  const onFinish = (values) => {
+    console.log('Success:', values);
+  };
 
   const showAddApprove = () => {
     setIsModalOpen(true);
     setTitle('Add_Workspace');
   };
 
-  const handApproveAdd = () => {
+  const handleApproveAdd = () => {
     setIsModalOpen(false);
   };
 
@@ -65,6 +82,7 @@ const Workspaces = () => {
     setIsModalOpen(false);
   };
 
+  //JSX
   return (
     <Content
       style={{
@@ -75,29 +93,38 @@ const Workspaces = () => {
         style={{
           margin: '16px 0',
         }}
-      >
-        <Breadcrumb.Item>Manager</Breadcrumb.Item>
-        <Breadcrumb.Item>All Workspaces</Breadcrumb.Item>
-      </Breadcrumb>
+        items={[
+          {
+            title: 'Admin',
+          },
+          {
+            title: 'Workspaces',
+          },
+        ]}
+      />
+
       <div
         style={{
           padding: 24,
-          minHeight: 530,
+          minHeight: 600,
           background: colorBgContainer,
         }}
       >
         <div>
-          <Button role='button' title={isTitle} onClick={showAddApprove}>
+          <Button
+            role='button'
+            title={isTitle}
+            onClick={showAddApprove}
+            style={{ marginBottom: '20px', display: 'flex', justifyContent: 'center' }}
+          >
             Add new workspace
           </Button>
           <ModalAll
             name={isTitle}
             open={isModalOpen}
-            onOk={handApproveAdd}
+            onOk={handleApproveAdd}
             onCancel={handleCancelAdd}
           />
-        </div>
-        <div>
           <Form
             {...layout}
             name='nest-messages'
@@ -105,16 +132,9 @@ const Workspaces = () => {
             style={{
               maxWidth: 600,
             }}
-          >
-            <div style={{ marginLeft: '50px', marginTop: '100px' }}>
-              <Row>
-                <Col xs={24} sm={24} md={24} lg={18} xl={18}>
-                  <Table dataSource={dataSource} columns={columns} pagination={false} />
-                </Col>
-              </Row>
-            </div>
-          </Form>
+          />
         </div>
+        <Table columns={columns} dataSource={dataSource} scroll={{ x: true }} />
       </div>
     </Content>
   );

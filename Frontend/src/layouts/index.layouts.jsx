@@ -21,19 +21,17 @@ export default function Layouts() {
     getProfile();
   }, []);
 
-  return localStorage.getItem('access_token') ? (
+  return localStorage.getItem('authorization') ? (
     <Layout
       style={{
         minHeight: '100vh',
       }}
     >
       <SideBar />
-      <Layout className='site-layout'>
-        {/* <Navbar /> */}
-        <ProtectedRoute>
-          <Outlet style={{ backgroundColor: '#fafafa' }} />
-        </ProtectedRoute>
-      </Layout>
+      {/* <Navbar /> */}
+      <ProtectedRoute>
+        <Outlet style={{ backgroundColor: '#fafafa' }} />
+      </ProtectedRoute>
     </Layout>
   ) : (
     <Navigate to='/login' replace state={{ from: location }} />

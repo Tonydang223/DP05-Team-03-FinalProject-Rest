@@ -86,33 +86,18 @@
 }
 
 /* Responsive form login of website */
-@media (min-width: 1247px) and (max-width: 1350px) {
+@media (max-width: 1350px) {
   .left-image-form .image-login img {
     height: 400px;
     width: 380px;
   }
-}
-@media (min-width: 1201px) and (max-width: 1246px) {
-  .form-login {
-    background: #fff;
-    border-radius: 35px;
-    width: 65vw;
-    height: 90vh;
-    margin-top: 65px;
-    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-    margin-top: 60px;
-  }
-  .logo-form-login .img-logo {
-    width: 80px;
-    height: 80px;
-  }
-  .left-image-form .image-login img {
-    height: 400px;
-    width: 380px;
+
+  .ant-col.ant-col-12.col-image-login {
+    display: none;
   }
 }
 
-@media (min-width: 992px) and (max-width: 1200px) {
+@media (max-width: 1200px) {
   .logo-form-login .img-logo {
     width: 60px;
     height: 60px;
@@ -135,7 +120,7 @@
     margin-left: 25px;
   }
 }
-@media (min-width: 920px) and (max-width: 991px) {
+@media (max-width: 991px) {
   .logo-form-login .img-logo {
     width: 50px;
     height: 50px;
