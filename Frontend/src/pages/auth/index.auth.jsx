@@ -43,22 +43,21 @@ function LoginPage() {
     try {
       const response = await loginFunc(values);
       const { token, data: loggedInUser } = response.data;
-      // console.log('🚀 ~ file: index.auth.jsx:46 ~ handleLogin ~ token:', token);
-      console.log('🚀 ~ file: index.auth.jsx:45 ~ handleLogin ~ loggedInUser:', loggedInUser);
-
-      dispatch(setAuth(loggedInUser));
-      dispatch(login(token));
 
       if (!token) return;
 
+      dispatch(login());
+      // dispatch(setAuth(loggedInUser));
+
       localStorage.setItem('access_token', token);
       localStorage.setItem('user_role', loggedInUser.role);
+
+      // navigate('/');
 
       if (localStorage.getItem('access_token')) {
         renderRoute(true, response.data.data.role);
       }
     } catch (error) {
-      console.log('🚀 ~ file: index.auth.jsx:25 ~ onFinish ~ error:', error);
       alert('Incorrect. Password please enter again!');
     }
   };
