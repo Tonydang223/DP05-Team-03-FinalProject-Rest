@@ -1,17 +1,9 @@
-import {
-  UserOutlined,
-  TeamOutlined,
-  CustomerServiceOutlined,
-  LogoutOutlined,
-  StarFilled,
-  ArrowRightOutlined,
-} from '@ant-design/icons';
-import { Layout, Menu, Image, Button, Divider, Drawer, Avatar } from 'antd';
+import { UserOutlined, TeamOutlined, CustomerServiceOutlined, StarFilled } from '@ant-design/icons';
+import { Layout, Menu, Image, Avatar } from 'antd';
 import { useState } from 'react';
 import './sidebar.css';
 import sidebarLogo from '../../assets/sidebarLogo.png';
 import collapedLogo from '../../assets/collapedLogo.png';
-
 import { Link } from 'react-router-dom';
 import AvatarIcon from '../../assets/avatar.png';
 import ModalAll from '../../components/modal/ModalAll';
@@ -102,15 +94,6 @@ export default function SideBar() {
   const onCollapse = (collapsed) => {
     setCollapsed(collapsed);
   };
-  // responsive
-  const onBreakpoint = (broken) => {
-    setIsMobile(broken);
-    if (broken) {
-      setCollapsed(true);
-    } else {
-      setCollapsed(false);
-    }
-  };
 
   return (
     <>
@@ -128,7 +111,10 @@ export default function SideBar() {
           style={collapsed ? { marginBottom: '140px' } : { marginBottom: '50px' }}
         />
         <Menu style={{ backgroundColor: '#12131a' }} theme='dark' items={items} />
-        <Divider></Divider>
+        <div className='user-login'>
+          <Avatar className='user-avatar' size={40} src={AvatarIcon} />
+          <h3 className='user-name'>Hi! Manager</h3>
+        </div>
       </Sider>
       <ModalAll
         name={isTitle}

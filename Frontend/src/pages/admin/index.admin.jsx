@@ -1,11 +1,13 @@
 import React from 'react';
 import AccountTable from '../../components/accountTable/AccountTable';
 import { Layout, Breadcrumb, theme } from 'antd';
+
 export default function AdminPage() {
   const { Content } = Layout;
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
   return (
     <>
       <Content
@@ -19,7 +21,7 @@ export default function AdminPage() {
           }}
         >
           <Breadcrumb.Item>Account</Breadcrumb.Item>
-          <Breadcrumb.Item>Days off Request</Breadcrumb.Item>
+          <Breadcrumb.Item>Workspaces</Breadcrumb.Item>
         </Breadcrumb>
         <div
           style={{
