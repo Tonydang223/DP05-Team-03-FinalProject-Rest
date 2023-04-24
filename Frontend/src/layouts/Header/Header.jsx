@@ -39,7 +39,7 @@ const items = [
       size={35}
       src={AvatarIcon}
     />,
-    [getItem(<Link to='/staff'>My Profile</Link>, '9'), getItem('Logout', '10')],
+    [getItem(<Link to='/profile'>My Profile</Link>, '9'), getItem('Logout', '10')],
   ),
 ];
 

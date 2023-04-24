@@ -230,8 +230,123 @@ const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
       )}
 
       {name === 'Add_Member' && (
-        <Modal title={title} open={open} onOk={onOk} onCancel={onCancel}>
-          <p>Are you sure to {title}?</p>
+        <Modal title={title} open={open} onOk={onOk} onCancel={onCancel} footer={null}>
+          <h2
+            style={{
+              textAlign: 'center',
+              paddingBottom: '10px',
+              fontSize: '25px',
+              fontWeight: '600',
+            }}
+          >
+            Create a new member
+          </h2>
+          <Form
+            name='basic'
+            labelCol={{
+              span: 8,
+            }}
+            wrapperCol={{
+              span: 16,
+            }}
+            style={{
+              maxWidth: 600,
+            }}
+            initialValues={{
+              remember: true,
+            }}
+            autoComplete='off'
+          >
+            <Form.Item
+              label='Name'
+              name='name'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input name of member',
+                },
+              ]}
+              hasFeedback
+            >
+              <Input />
+            </Form.Item>
+
+            <Form.Item
+              label='Email'
+              name='email'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input email of member',
+                },
+                { type: 'email' },
+              ]}
+              hasFeedback
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label='Password'
+              name='password'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input password',
+                },
+                {
+                  validator: (_, value) =>
+                    !value.includes(' ')
+                      ? Promise.resolve()
+                      : Promise.reject(new Error('No spaces allowed')),
+                },
+                {
+                  min:8
+                }
+              ]}
+              hasFeedback
+            >
+              <Input.Password />
+              </Form.Item>
+            {/* <Form.Item
+              label='Add member'
+              name='addPeople'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please add people to group!',
+                },
+              ]}
+              hasFeedback
+            >
+              <Select
+                closeMenuOnSelect={false}
+                components={animatedComponents}
+                isMulti
+                options={options}
+              />
+            </Form.Item> */}
+            <Form.Item
+              wrapperCol={{
+                offset: 8,
+                span: 16,
+              }}
+            >
+              <Button
+                htmlType='button'
+                onClick={onCancel}
+                style={{
+                  marginRight: '20px',
+                  backgroundColor: 'red',
+                  color: 'white',
+                }}
+              >
+                Cancel
+              </Button>
+              <Button type='primary' htmlType='submit'>
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
         </Modal>
       )}
     </>
