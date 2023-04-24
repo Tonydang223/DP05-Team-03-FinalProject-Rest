@@ -13,36 +13,6 @@ import { useDispatch } from 'react-redux';
 
 const { Sider } = Layout;
 
-function getItem(label, key, icon, children) {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  };
-}
-
-const items = [
-  getItem('Account', 'account', <UserOutlined />, [
-    getItem(<Link to='/'>Dashboard</Link>, 'dashboard'),
-    getItem(<Link to='/manager/request'>Requests</Link>, 'requests'),
-    getItem(<Link to='/manager/days_off'>Days off</Link>, 'daysoff'),
-  ]),
-  getItem('Manager', 'manager', <TeamOutlined />, [
-    getItem(<Link to='/staff'>Member</Link>, 'member'),
-    getItem(<Link to='/manager/groups'>Groups</Link>, 'groups'),
-    getItem(<Link to='/staff'>Notifications</Link>, 'notifications'),
-    getItem(<Link to='/staff'>Sync</Link>, 'sync'),
-  ]),
-  getItem('Administrator', 'administrator', <CustomerServiceOutlined />, [
-    getItem(<Link to='/admin/workspaces'>Workspaces</Link>, 'workspaces'),
-  ]),
-  getItem('My Account', 'myAccount', <StarFilled />, [
-    getItem(<Link to='/staff'>My Profile</Link>, 'profile'),
-    getItem('Logout', '10'),
-  ]),
-];
-
 // const item = [
 //   {
 //     label: 'Account',
@@ -91,7 +61,7 @@ export default function SideBar() {
   const items = [
     getItem('Account', 'account', <UserOutlined />, [
       getItem(<Link to='/'>Dashboard</Link>, 'dashboard'),
-      getItem(<Link to='/staff/log_off_form'>Requests</Link>, 'requests'),
+      getItem(<Link to='/manager/request'>Requests</Link>, 'requests'),
       getItem(<Link to='/manager/days_off'>Days off</Link>, 'daysoff'),
     ]),
     getItem('Manager', 'manager', <TeamOutlined />, [

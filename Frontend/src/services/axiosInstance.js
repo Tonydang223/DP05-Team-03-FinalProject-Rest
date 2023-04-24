@@ -7,8 +7,17 @@ export const fetchUser = async () => {
 
 // Workspaces
 export const fetchWorkspaces = () => {
-  axiosInstance.get(`http://localhost:8888/api/workspace/getAll`);
+  axiosInstance.get(`${import.meta.env.VITE_BASE_URL}/workspace/getAll`);
 };
+
+// fetch account request
+
+export const fetchAccountRequest = () => {
+  axiosInstance.get(`${import.meta.env.VITE_BASE_URL}/request/getAll`);
+}
+
+
+
 
 // export const fetchAccountRequest = async () => {
 //   try {
