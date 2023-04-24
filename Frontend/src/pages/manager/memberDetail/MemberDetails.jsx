@@ -1,8 +1,8 @@
 import React from 'react';
 import { Form, Input, Layout, Breadcrumb, theme, Typography } from 'antd';
-import ButtonComponents from '../../components/ButtonComponents.jsx';
+import ButtonComponents from '../../../components/ButtonComponents.jsx';
 import { useState } from 'react';
-import ModalAll from '../../components/modal/ModalAll';
+import ModalAll from '../../../components/modal/ModalAll';
 // import './memberDetail.css';
 const { Content } = Layout;
 const layout = {
