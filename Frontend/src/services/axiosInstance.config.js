@@ -4,8 +4,8 @@ const axiosInstance = axios.create();
 
 axiosInstance.interceptors.request.use(
   function (config) {
-    const access_token = localStorage.getItem('access_token');
-    config.headers.access_token = access_token;
+    const authorization = localStorage.getItem('access_token');
+    config.headers.authorization = `Bearer ${authorization}`;
     return config;
   },
   function (error) {

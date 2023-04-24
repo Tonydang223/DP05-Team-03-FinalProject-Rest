@@ -1,4 +1,4 @@
 import axios from 'axios';
 
 export const loginFunc = async (payload) =>
-  axios.post(`http://localhost:8888/api/auth/login`, payload);
+  axios.post(`${import.meta.env.VITE_BASE_URL}/auth/login`, payload);

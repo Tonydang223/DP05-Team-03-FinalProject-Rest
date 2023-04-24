@@ -13,7 +13,7 @@ import { GoogleLogin } from '@react-oauth/google';
 import { loginFunc } from '../../services/axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setLoggedInUser } from '../../redux/slice/userSlice';
+import { setAuth, login } from '../../redux/slice/userSlice';
 // console.log('🚀 ~ file: index.auth.jsx:45 ~ handleLogin ~ loggedInUser:', loggedInUser);
 
 const { Title, Text } = Typography;
@@ -43,21 +43,21 @@ function LoginPage() {
     try {
       const response = await loginFunc(values);
       const { token, data: loggedInUser } = response.data;
-      // console.log('🚀 ~ file: index.auth.jsx:46 ~ handleLogin ~ token:', token);
-      console.log('🚀 ~ file: index.auth.jsx:45 ~ handleLogin ~ loggedInUser:', loggedInUser);
-
-      dispatch(setLoggedInUser(loggedInUser));
 
       if (!token) return;
 
+      dispatch(login());
+      // dispatch(setAuth(loggedInUser));
+
       localStorage.setItem('access_token', token);
       localStorage.setItem('user_role', loggedInUser.role);
+
+      // navigate('/');
 
       if (localStorage.getItem('access_token')) {
         renderRoute(true, response.data.data.role);
       }
     } catch (error) {
-      console.log('🚀 ~ file: index.auth.jsx:25 ~ onFinish ~ error:', error);
       alert('Incorrect. Password please enter again!');
     }
   };

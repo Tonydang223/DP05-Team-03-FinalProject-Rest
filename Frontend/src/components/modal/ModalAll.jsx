@@ -11,6 +11,12 @@ const options = [
 const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
   return (
     <>
+      {name === 'Logout' && (
+        <Modal title={title} open={open} onOk={onOk} onCancel={onCancel}>
+          <p>Are you sure to {title}?</p>
+        </Modal>
+      )}
+
       {name === 'Approve' && (
         <Modal title={title} open={open} onOk={onOk} onCancel={onCancel}>
           <p>Are you sure to {title}?</p>
