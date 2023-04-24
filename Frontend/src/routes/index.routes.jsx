@@ -10,6 +10,7 @@ import Workspaces from '../pages/admin/Workspaces';
 import WorkspaceDetails from '../pages/admin/WorkspaceDetails';
 import AdminPage from '../pages/admin/index.admin';
 import MemberDetails from '../pages/manager/MemberDetails';
+import ProtectedRoute from './protectedRoute.route';
 
 const AppRouter = (req, res) => {
   return (
@@ -21,20 +22,20 @@ const AppRouter = (req, res) => {
 
         <Route path='/' exact element={<Layouts />}>
           {/* admin route */}
-          <Route path='/admin'>
+          <Route path='/admin' element={<ProtectedRoute role={'Admin'} />}>
             <Route path='/admin/workspaces' exact element={<Workspaces />} />
             <Route path='/admin/workspace-details' exact element={<WorkspaceDetails />} />
           </Route>
 
           {/* manager route */}
-          <Route path='/manager'>
+          <Route path='/manager' element={<ProtectedRoute role={'Manager'} />}>
             <Route path='/manager/groups' exact element={<ManagerPage />} />
             <Route path='/manager/days_off' exact element={<AdminPage />} />
             <Route path='/manager/member-details' exact element={<MemberDetails />} />
           </Route>
 
           {/* staff route */}
-          <Route path='/staff'>
+          <Route path='/staff' element={<ProtectedRoute role={'Staff'} />}>
             <Route path='/staff' exact element={<StaffPage />} />
             <Route path='/staff/log_off_form' exact element={<LogOffForm />} />
             <Route path='/staff/dayoff' exact>

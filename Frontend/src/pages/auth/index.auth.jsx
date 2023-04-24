@@ -14,6 +14,7 @@ import { loginFunc } from '../../services/axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setLoggedInUser } from '../../redux/slice/userSlice';
+// console.log('🚀 ~ file: index.auth.jsx:45 ~ handleLogin ~ loggedInUser:', loggedInUser);
 
 const { Title, Text } = Typography;
 
@@ -42,13 +43,15 @@ function LoginPage() {
     try {
       const response = await loginFunc(values);
       const { token, data: loggedInUser } = response.data;
+      // console.log('🚀 ~ file: index.auth.jsx:46 ~ handleLogin ~ token:', token);
       console.log('🚀 ~ file: index.auth.jsx:45 ~ handleLogin ~ loggedInUser:', loggedInUser);
 
-      // dispatch(setLoggedInUser(loggedInUser));
+      dispatch(setLoggedInUser(loggedInUser));
 
       if (!token) return;
 
       localStorage.setItem('access_token', token);
+      localStorage.setItem('user_role', loggedInUser.role);
 
       if (localStorage.getItem('access_token')) {
         renderRoute(true, response.data.data.role);
@@ -154,6 +157,7 @@ function LoginPage() {
                 >
                   Login
                 </Button>
+
                 <div className='login-other-method'>
                   <Text className='text-other-method'>Or you can join with</Text>
                   <div className='icons-method'>
