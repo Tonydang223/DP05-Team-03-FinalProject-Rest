@@ -45,7 +45,7 @@ const items = [
 
 export default function Navbar() {
   return (
-    <Header style={{ backgroundColor: 'white' }}>
+    <Header>
       <div className='logo'>
         <img src={HeaderLogo} alt='' />
       </div>
