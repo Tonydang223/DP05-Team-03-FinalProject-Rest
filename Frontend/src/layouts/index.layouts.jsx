@@ -6,7 +6,9 @@ import { Layout } from 'antd';
 import { Outlet, Navigate, useLocation } from 'react-router-dom';
 
 export default function Layouts() {
-  return (
+  const location = useLocation();
+
+  return localStorage.getItem('access_token') ? (
     <Layout
       style={{
         minHeight: '100vh',
@@ -18,5 +20,7 @@ export default function Layouts() {
         <Footer />
       </Layout>
     </Layout>
+  ) : (
+    <Navigate to='/login' replace state={{ from: location }} />
   );
 }
