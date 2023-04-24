@@ -63,11 +63,11 @@ export default function ManagerPage() {
     setIsModalOpen(true);
     setTitle('Add_Member');
   };
-
+  
   const handApproveAdd = () => {
     setIsModalOpen(false);
   };
-
+  
   const handleCancelAdd = () => {
     setIsModalOpen(false);
   };
