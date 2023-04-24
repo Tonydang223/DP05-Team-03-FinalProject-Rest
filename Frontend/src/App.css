@@ -1,4 +1,24 @@
-#root {
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;800&family=Poppins:wght@400;500&display=swap');
+
+* {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu,
+    Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.ant-breadcrumb {
+  margin: 30px 0px;
+}
+
+.ant-btn-primary {
+  background-color: #12131a;
+}
+
+.ant-radio-inner {
+  background-color: #12131a !important;
+  border-color: #12131a !important;
+}
+
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -39,4 +59,4 @@
 
 .read-the-docs {
   color: #888;
-}
+} */

@@ -40,26 +40,24 @@ const LogOffForm = () => {
       >
         <div scroll={{ x: true }}>
           <Row className='form-log-off'>
-            <Col xl={6} lg={6} md={6} sm={6} xs={10}>
-              <Space direction='vertical'>
-                <div className='type-day-off'>
-                  <Text>Type of day off</Text>
-                </div>
-                <div className='day-from'>
-                  <Text>From</Text>
-                </div>
-                <div className='day-to'>
-                  <Text>To</Text>
-                </div>
-                <div className='quantity'>
-                  <Text>Quantity</Text>
-                </div>
-                <div className='reason'>
-                  <Text>Reason</Text>
-                </div>
-              </Space>
+            <Col xl={6} lg={6} md={6} sm={6} xs={5}>
+              <div className='type-day-off'>
+                <Text>Type of day off</Text>
+              </div>
+              <div className='day-from'>
+                <Text>From</Text>
+              </div>
+              <div className='day-to'>
+                <Text>To</Text>
+              </div>
+              <div className='quantity'>
+                <Text>Quantity</Text>
+              </div>
+              <div className='reason'>
+                <Text>Reason</Text>
+              </div>
             </Col>
-            <Col xl={18} lg={18} md={18} sm={18} xs={14}>
+            <Col xl={6} lg={6} md={6} sm={6} xs={5}>
               <Form>
                 <Form.Item className='log-off'>
                   <Radio.Group onChange={onChange} value={value}>

@@ -1,9 +1,7 @@
 import React from 'react';
-import Navbar from './Header/Header';
-import Footer from './Footer/Footer';
-
 import { Layout } from 'antd';
 import { Outlet, Navigate, useLocation } from 'react-router-dom';
+import SideBar from './Sidebar/Sidebar';
 
 export default function Layouts() {
   const location = useLocation();
@@ -14,10 +12,10 @@ export default function Layouts() {
         minHeight: '100vh',
       }}
     >
+      <SideBar />
       <Layout className='site-layout'>
-        <Navbar />
-        <Outlet />
-        <Footer />
+        {/* <Navbar /> */}
+        <Outlet style={{ backgroundColor: '#fafafa' }} />
       </Layout>
     </Layout>
   ) : (
