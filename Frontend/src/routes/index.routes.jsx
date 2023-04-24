@@ -13,9 +13,10 @@ import MemberDetails from '../pages/manager/MemberDetails';
 import ProtectedRoute from './protectedRoute.route';
 
 const AppRouter = (req, res) => {
+  const isLoggedIn = localStorage.getItem('access_token');
   return (
     <BrowserRouter>
-      <Routes>
+      <Routes path='/login'>
         {/* auth route */}
         <Route path='/login' exact element={<LoginPage />} />
         <Route path='/change-password' exact element={<ChangePassword />} />

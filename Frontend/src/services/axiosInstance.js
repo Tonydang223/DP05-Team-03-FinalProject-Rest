@@ -1,5 +1,5 @@
 import axiosInstance from './axiosInstance.config';
 
 export const fetchUser = () => {
-  axiosInstance.get(`http://localhost:8888/api/auth`);
+  axiosInstance.get(`${import.meta.env.VITE_BASE_URL}/user/getProfile`);
 };

@@ -13,7 +13,7 @@ import { GoogleLogin } from '@react-oauth/google';
 import { loginFunc } from '../../services/axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setLoggedInUser } from '../../redux/slice/userSlice';
+import { setAuth, login } from '../../redux/slice/userSlice';
 // console.log('🚀 ~ file: index.auth.jsx:45 ~ handleLogin ~ loggedInUser:', loggedInUser);
 
 const { Title, Text } = Typography;
@@ -46,7 +46,8 @@ function LoginPage() {
       // console.log('🚀 ~ file: index.auth.jsx:46 ~ handleLogin ~ token:', token);
       console.log('🚀 ~ file: index.auth.jsx:45 ~ handleLogin ~ loggedInUser:', loggedInUser);
 
-      dispatch(setLoggedInUser(loggedInUser));
+      dispatch(setAuth(loggedInUser));
+      dispatch(login(token));
 
       if (!token) return;
 
