@@ -13,6 +13,7 @@ import ModalAll from '../modal/ModalAll';
 //   fake data
 const data = [
   {
+    id: 1,
     key: '1',
     request_for_date: 'John Brown',
     qty: 32,
