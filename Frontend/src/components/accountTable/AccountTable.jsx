@@ -78,31 +78,30 @@ const AccountTable = ({dataAccountRequest, role, name }) => {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      render: (status) => {
-        
-          switch (status) {
-            case 'Rejected':
-              return (
-                <Tag color="#eb2f06">
-                    {status}
-                </Tag>
-              )
-              break;
-            case 'Approved':
-              return (
-                <Tag color="#583da1">
-                    {status}
-                </Tag>
-              )
-              case 'Pending':
+      render: (status) => {          
+            switch (status) {
+              case 'Rejected':
                 return (
-                  <Tag color="#f6b93b">
+                  <Tag color="#eb2f06">
                       {status}
                   </Tag>
                 )
-            default:
-              break;
-          }
+                break;
+              case 'Approved':
+                return (
+                  <Tag color="#583da1">
+                      {status}
+                  </Tag>
+                )
+                case 'Pending':
+                  return (
+                    <Tag color="#f6b93b">
+                        {status}
+                    </Tag>
+                  )
+              default:
+                break;
+            }
       }
     },
     {

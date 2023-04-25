@@ -25,13 +25,14 @@ const AccountRequest = () => {
                 const userData = usersResponse.data;
                 
                 const requestsWithUserData = result.data.map((request) => {
-                    const user = userData.find((user) => user._id === request.user);
+                    const user = userData.find((user) => user._id === request.user );
                     
                     return { ...request, user };
                   });
                   const requestData = requestsWithUserData.map(async (row) => {
                     // passing id for fetch approve
                     const verifier = await fetchApprove(row._id);
+                    console.log(row.status);
                     return {
                       _id: row._id,
                       request_for_date: `${(row.from && row.to) ? (moment(row.from).format('LL') + ' - ' + moment(row.to).format('LL')) : (moment(row.from).format('LL'))}`,
