@@ -7,6 +7,7 @@ const approveModel = require('../model/approve.model');
 const { addRows } = require('../utils/googleSheet');
 const { getMainChannels, pushMessage } = require('../config/slackBot');
 const { formatStringNotiRequest } = require('../utils/index');
+
 class RequestController {
   async createRequest(req, res) {
     try {
@@ -303,10 +304,22 @@ class RequestController {
   async getApprovesOfRequest(req, res) {
     try {
       const approvesOfRequest = await approveModel.find({ request: req.params.id });
+      const request = await RequestModel.findOne({ _id: req.params.id });
+      let mastersL = [];
+      const groups = await groupModel.find();
+
+      groups
+        .filter((v) => v.masters.includes(request.user) || v.members.includes(request.user))
+        .flatMap((v) => v.masters)
+        .forEach((e) => {
+          if (!mastersL.includes(e.toString())) {
+            mastersL.push(e.toString());
+          }
+        });
 
       res.status(200).json({
         message: 'Get approves of the request successfully!',
-        data: [...approvesOfRequest],
+        data: { approve: [...approvesOfRequest], verifier: mastersL.length },
       });
     } catch (error) {
       res.status(500).json({ message: error.message });
