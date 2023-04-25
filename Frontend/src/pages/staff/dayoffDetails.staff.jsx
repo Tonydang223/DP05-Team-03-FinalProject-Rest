@@ -4,8 +4,11 @@ import { DayoffInfo } from '../../components/dayoffDetails/dayoffInfo';
 import { DayoffHistory } from '../../components/dayoffDetails/dayoffHistory';
 import '../../components/dayoffDetails/dayoffDetails.css';
 import { Link } from 'react-router-dom';
+import { Spinner } from '../../components/LoadingSpinner';
+import { useState } from 'react';
 
 export default function DayoffDetails() {
+  const [loading, setLoading] = useState(false);
   const { Content } = Layout;
   const {
     token: { colorBgContainer },
@@ -48,6 +51,7 @@ export default function DayoffDetails() {
             <DayoffHistory />
           </Col>
         </Row>
+        {/* <Spinner /> */}
       </Content>
     </>
   );
