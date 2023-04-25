@@ -35,7 +35,6 @@ const WorkspaceDetail = () => {
   const [isTitle, setTitle] = useState('');
   const [workspace, setWorkspace] = useState(null);
   const [workspaceManager, setWorkspaceManager] = useState(null);
-
   const [manager, setManager] = useState(null);
 
   const getWorkspace = async (id) => {
@@ -45,7 +44,7 @@ const WorkspaceDetail = () => {
   };
 
   const deleteManagerButton = async () => {
-    await deleteManager(manager);
+    await deleteManager({ manager, id });
   };
 
   useEffect(() => {
