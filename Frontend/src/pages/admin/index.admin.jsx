@@ -68,7 +68,7 @@ export default function AdminPage() {
             background: colorBgContainer,
           }}
         >
-          {isLoading ? <div>Loadding....</div> : <AccountTable name="day-off" dataAccountRequest={data} checkRole={checkRole}/>}
+          {isLoading ? <div>Loading....</div> : <AccountTable name="day-off" dataAccountRequest={data} checkRole={checkRole}/>}
         </div>
       </Content>
     </>
