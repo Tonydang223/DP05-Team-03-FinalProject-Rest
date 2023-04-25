@@ -108,7 +108,7 @@ class RequestController {
         { _id: oldRequest._id },
         { $set: { ...req.body, edit_at: new Date() } },
         { new: true },
-      );
+      ).populate('user', '-password');
 
       await history.updateOne(
         {
