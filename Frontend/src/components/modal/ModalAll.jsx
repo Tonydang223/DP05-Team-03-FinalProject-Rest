@@ -593,6 +593,19 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
               <Input.Password />
             </Form.Item>
             <Form.Item
+              label='Phone Number'
+              name='phoneNumber'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input phone number of member',
+                },
+              ]}
+              hasFeedback
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
               label='Slack Id'
               name='slackId'
               rules={[{ required: true, message: 'Please input manager slack Id' }]}

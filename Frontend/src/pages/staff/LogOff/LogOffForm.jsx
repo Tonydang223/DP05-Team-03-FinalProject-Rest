@@ -38,8 +38,7 @@ const LogOffForm = () => {
     setValue(e.target.value);
   };
   const onFinish = async (values) => {
-    const req = await logOffForm({ ...values });
-    console.log(req);
+    await logOffForm({ ...values });
   };
   return (
     <Content

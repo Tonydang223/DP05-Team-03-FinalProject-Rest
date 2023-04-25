@@ -44,6 +44,20 @@ export const changePasswordUser = async (data) => {
   return alert(response.data.message);
 };
 
+// //Staff create member
+// export const createMember = async (data) => {
+//   const response = await axiosInstance.post(
+//     `http://localhost:8888/api/user/create` ,
+//     JSON.stringify(data),
+//     {
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//     },
+//   );
+//   return response.data.data;
+// };
+
 // Group
 export const fetchGroup = async () => {
   try {
