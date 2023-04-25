@@ -14,17 +14,17 @@ export default function ProtectedRoute({ children, role }) {
   if (accessToken && role === userRole) {
     return <Outlet />;
   }
-  if (accessToken && role !== userRole) {
-    if (userRole === 'Admin') {
-      return <Navigate to='/admin' />;
-    }
-    if (userRole === 'Manager') {
-      return <Navigate to='/manager' />;
-    }
-    if (userRole === 'Staff') {
-      return <Navigate to='/staff' />;
-    }
-  }
+  // if (accessToken && role !== userRole) {
+  //   if (userRole === 'Admin') {
+  //     return <Navigate to='/admin' />;
+  //   }
+  //   if (userRole === 'Manager') {
+  //     return <Navigate to='/manager' />;
+  //   }
+  //   if (userRole === 'Staff') {
+  //     return <Navigate to='/staff' />;
+  //   }
+  // }
 
   if (!accessToken) {
     dispatch(logout());

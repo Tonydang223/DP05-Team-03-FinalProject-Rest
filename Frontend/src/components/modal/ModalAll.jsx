@@ -307,6 +307,19 @@ const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
             >
               <Input.Password />
               </Form.Item>
+              <Form.Item
+              label='Slack Id'
+              name='slack_id'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input slack id',
+                },
+              ]}
+              hasFeedback
+            >
+              <Input />
+              </Form.Item>
             {/* <Form.Item
               label='Add member'
               name='addPeople'
