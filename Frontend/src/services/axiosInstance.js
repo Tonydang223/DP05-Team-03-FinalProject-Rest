@@ -27,6 +27,7 @@ export const addWorkspace = async (workspaceData) => {
     },
   );
   return alert(response.data.message);
+<<<<<<< HEAD
 };
 
 export const setWorkspaceStatus = async (data) => {
@@ -127,6 +128,8 @@ export const fetchApprove = async (id) => {
     console.error();
     throw error;
   }
+=======
+>>>>>>> 3263c1e (Add Manager to workspace done, fix UI IX form for responsive)
 };
 
 export const setWorkspaceStatus = async (data) => {
@@ -143,16 +146,25 @@ export const setWorkspaceStatus = async (data) => {
 };
 
 export const addManager = async (data) => {
+  const json = {
+    email: data.values.email,
+    firstName: data.values.firstName,
+    lastName: data.values.lastName,
+    password: data.values.password,
+    slackId: data.values.slackId,
+    role: 'Manager',
+  };
+
   const response = await axiosInstance.post(
     `http://localhost:8888/api/user/create/${data.id}`,
-    JSON.stringify(data.values),
+    JSON.stringify(json),
     {
       headers: {
         'Content-Type': 'application/json',
       },
     },
   );
-  return response.data.data;
+  return alert(response.data.message);
 };
 
 export const deleteManager = async (data) => {

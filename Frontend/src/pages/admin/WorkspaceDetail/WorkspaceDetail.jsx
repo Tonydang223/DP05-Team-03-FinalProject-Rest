@@ -9,6 +9,7 @@ import {
   setWorkspaceStatus,
   deleteManager,
   resetPasswordManager,
+  addManager,
 } from './../../../services/axiosInstance';
 import { useEffect, useState } from 'react';
 
