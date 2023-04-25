@@ -1,18 +1,5 @@
 import React from 'react';
-import {
-  Form,
-  Input,
-  Switch,
-  Table,
-  Button,
-  Space,
-  Layout,
-  theme,
-  Breadcrumb,
-  Typography,
-  Col,
-  Row,
-} from 'antd';
+import { Table, Button, Space, Layout, theme, Breadcrumb, Typography, Col, Row } from 'antd';
 import './WorkSpaceDetail.css';
 import ModalAll from '../../../components/modal/ModalAll';
 
@@ -22,6 +9,7 @@ import {
   setWorkspaceStatus,
   deleteManager,
   resetPasswordManager,
+  addManager,
 } from './../../../services/axiosInstance';
 import { useEffect, useState } from 'react';
 
@@ -29,7 +17,7 @@ const { Content } = Layout;
 const { Title } = Typography;
 
 const WorkspaceDetail = () => {
-  const { id } = useParams();
+  const { id } = useParams(); //id nay la workspace id truyen tu ben workspace sang
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTitle, setTitle] = useState('');
@@ -54,6 +42,8 @@ const WorkspaceDetail = () => {
   const onFinish = async (values) => {
     isTitle === 'Set_Status' && (await setWorkspaceStatus({ id, values }));
     isTitle === 'Reset_Password' && (await resetPasswordManager({ manager, values }));
+    isTitle === 'Add_Manager' && (await addManager({ id, values }));
+
     setIsModalOpen(false);
   };
 
@@ -61,6 +51,7 @@ const WorkspaceDetail = () => {
     token: { colorBgContainer },
   } = theme.useToken();
 
+  //data
   const columns = [
     {
       title: 'First Name',
@@ -93,31 +84,44 @@ const WorkspaceDetail = () => {
     },
   ];
 
+  //edit manager password
   const showEditPassword = (_id) => {
     setIsModalOpen(true);
     setManager(_id);
     setTitle('Reset_Password');
   };
+
+  //delete manager
   const showDeleteManager = (_id) => {
     setIsModalOpen(true);
     setManager(_id);
     setTitle('Delete_Manager');
   };
 
-  const showAddApprove = () => {
+  //status
+  const showStatusModal = () => {
     setIsModalOpen(true);
     setTitle('Set_Status');
   };
 
-  const handleApproveAdd = () => {
+  //manager
+  const showAddManagerModal = () => {
+    setIsModalOpen(true);
+    setTitle('Add_Manager');
+  };
+
+  //Modal Actions
+  const handleApprove = () => {
     isTitle === 'Delete_Manager' && deleteManagerButton();
     setIsModalOpen(false);
   };
 
-  const handleCancelAdd = () => {
+  const handleCancel = () => {
     setManager(null);
     setIsModalOpen(false);
+    setTitle('');
   };
+
   return (
     <Content
       style={{
@@ -163,10 +167,10 @@ const WorkspaceDetail = () => {
               gap: '5px',
             }}
           >
-            <Button role='button' title={isTitle} onClick={showAddApprove}>
+            <Button role='button' title={isTitle} onClick={showStatusModal}>
               Set Status
             </Button>
-            <Button role='button' title={isTitle} onClick={showAddApprove}>
+            <Button role='button' title={isTitle} onClick={showAddManagerModal}>
               Add Manager
             </Button>
           </div>
@@ -185,8 +189,8 @@ const WorkspaceDetail = () => {
         <ModalAll
           name={isTitle}
           open={isModalOpen}
-          onOk={handleApproveAdd}
-          onCancel={handleCancelAdd}
+          onOk={handleApprove}
+          onCancel={handleCancel}
           onFinish={onFinish}
         />
       </div>

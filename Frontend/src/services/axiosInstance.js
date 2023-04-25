@@ -26,7 +26,7 @@ export const addWorkspace = async (workspaceData) => {
       },
     },
   );
-  return response.data.data;
+  return alert(response.data.message);
 };
 
 export const setWorkspaceStatus = async (data) => {
@@ -43,16 +43,25 @@ export const setWorkspaceStatus = async (data) => {
 };
 
 export const addManager = async (data) => {
+  const json = {
+    email: data.values.email,
+    firstName: data.values.firstName,
+    lastName: data.values.lastName,
+    password: data.values.password,
+    slackId: data.values.slackId,
+    role: 'Manager',
+  };
+
   const response = await axiosInstance.post(
     `http://localhost:8888/api/user/create/${data.id}`,
-    JSON.stringify(data.values),
+    JSON.stringify(json),
     {
       headers: {
         'Content-Type': 'application/json',
       },
     },
   );
-  return response.data.data;
+  return alert(response.data.message);
 };
 
 export const deleteManager = async (data) => {
