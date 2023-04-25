@@ -3,7 +3,12 @@ import { Table, Button, Space, Layout, theme, Breadcrumb, Typography, Col, Row }
 import './WorkSpaceDetail.css';
 import ModalAll from '../../../components/modal/ModalAll';
 import { useParams } from 'react-router-dom';
-import { detailWorkspace, setWorkspaceStatus } from './../../../services/axiosInstance';
+import {
+  detailWorkspace,
+  setWorkspaceStatus,
+  deleteManager,
+  resetPasswordManager,
+} from './../../../services/axiosInstance';
 import { useEffect, useState } from 'react';
 
 import { useParams } from 'react-router-dom';
@@ -36,6 +41,10 @@ const WorkspaceDetail = () => {
 
   const deleteManagerButton = async () => {
     await deleteManager({ manager, id });
+  };
+
+  const deleteManagerButton = async () => {
+    await deleteManager(manager);
   };
 
   useEffect(() => {
