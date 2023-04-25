@@ -15,6 +15,7 @@ import {
 } from 'antd';
 import './WorkSpaceDetail.css';
 import ModalAll from '../../../components/modal/ModalAll';
+
 import { useParams } from 'react-router-dom';
 import {
   detailWorkspace,
@@ -33,11 +34,14 @@ const WorkspaceDetail = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTitle, setTitle] = useState('');
   const [workspace, setWorkspace] = useState(null);
+  const [workspaceManager, setWorkspaceManager] = useState(null);
+
   const [manager, setManager] = useState(null);
 
   const getWorkspace = async (id) => {
     const res = await detailWorkspace(id);
     setWorkspace(res);
+    setWorkspaceManager(res.user.filter((user) => user.role === 'Manager'));
   };
 
   const deleteManagerButton = async () => {
@@ -171,7 +175,7 @@ const WorkspaceDetail = () => {
 
         <Table
           columns={columns}
-          dataSource={workspace?.user}
+          dataSource={workspaceManager}
           pagination={{
             pageSize: 6,
           }}

@@ -39,7 +39,7 @@ export const setWorkspaceStatus = async (data) => {
       },
     },
   );
-  return response.data.data;
+  return alert(response.data.message);
 };
 
 export const addManager = async (data) => {
@@ -57,7 +57,7 @@ export const addManager = async (data) => {
 
 export const deleteManager = async (managerId) => {
   const response = await axiosInstance.post(`http://localhost:8888/api/user/delete/${managerId}`);
-  return response.data.data;
+  return alert(response.data.message);
 };
 
 export const resetPasswordManager = async (data) => {
@@ -71,5 +71,5 @@ export const resetPasswordManager = async (data) => {
       },
     },
   );
-  return response.data.data;
+  return alert(response.data.message);
 };
