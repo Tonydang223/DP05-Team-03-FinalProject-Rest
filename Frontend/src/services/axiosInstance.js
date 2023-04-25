@@ -92,12 +92,11 @@ export const resetPasswordManager = async (data) => {
   return alert(response.data.message);
 };
 
-
 // fetch account request
 export const fetchAccountRequest = async () => {
   try {
     const response = await axiosInstance.get(`${import.meta.env.VITE_BASE_URL}/request/getAll`);
-    console.log(response.data)
+    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -108,28 +107,24 @@ export const fetchAccountRequest = async () => {
 export const fetchInfoUser = async () => {
   try {
     const response = await axiosInstance.get(`${import.meta.env.VITE_BASE_URL}/user/getAll`);
-    console.log(response.data)
+    console.log(response.data);
     return response.data;
-  }
-  catch(error)
-  {
+  } catch (error) {
     console.error();
     throw error;
   }
-}
+};
 
 export const fetchApprove = async (id) => {
   try {
-    const response = await axiosInstance.get(`${import.meta.env.VITE_BASE_URL}/request/getApproves/${id}`);
-    
+    const response = await axiosInstance.get(
+      `${import.meta.env.VITE_BASE_URL}/request/getApproves/${id}`,
+    );
+
     console.log(response.data);
     return response.data;
-  }
-  catch(error)
-  {
+  } catch (error) {
     console.error();
-    throw error
+    throw error;
   }
-}
-
-
+};

@@ -60,7 +60,7 @@ const Workspaces = () => {
             </div>
           </>
         ) : (
-          <p>None</p>
+          <p>N/A</p>
         ),
     },
     {
