@@ -25,6 +25,7 @@ class AuthController {
   }
   async ResetPass(req, res) {
     const { password, idUser } = req.body;
+    console.log(req.body);
     try {
       const user = await UserModel.findOne({
         _id: idUser,

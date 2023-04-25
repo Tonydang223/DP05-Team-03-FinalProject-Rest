@@ -28,7 +28,7 @@
 
 ul.ant-pagination.ant-table-pagination.ant-table-pagination-right {
   justify-content: center !important;
-  margin: 25px 0 !important;
+  margin: 25px 0 0 0 !important;
 }
 
 .ant-space-item svg {

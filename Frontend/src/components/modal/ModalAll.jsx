@@ -1,14 +1,33 @@
-import React from 'react';
-import { Modal, Input, Form, Button } from 'antd';
+import { useRef } from 'react';
+import { Modal, Input, Form, Button, Radio } from 'antd';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
+
 const animatedComponents = makeAnimated();
 const options = [
   { value: 'chocolate', label: 'Chocolate' },
   { value: 'strawberry', label: 'Strawberry' },
   { value: 'vanilla', label: 'Vanilla' },
 ];
-const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
+const formItemLayout = {
+  labelCol: {
+    xs: {
+      span: 24,
+    },
+    sm: {
+      span: 9,
+    },
+  },
+  wrapperCol: {
+    xs: {
+      span: 24,
+    },
+    sm: {
+      span: 30,
+    },
+  },
+};
+const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
   return (
     <>
       {name === 'Logout' && (
@@ -81,12 +100,7 @@ const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
                 options={options}
               />
             </Form.Item>
-            <Form.Item
-              wrapperCol={{
-                offset: 8,
-                span: 16,
-              }}
-            >
+            <Form.Item>
               <Button
                 htmlType='button'
                 onClick={onCancel}
@@ -119,49 +133,70 @@ const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
             Add new workspace
           </h2>
 
-          <Form name='basic' autoComplete='off'>
+          <Form name='basic' autoComplete='off' onFinish={onFinish} {...formItemLayout}>
             <Form.Item
               label='Workspace Name'
               name='name'
               rules={[{ required: true, message: 'Please input workspace name' }]}
+              hasFeedback
             >
               <Input placeholder='Workspace Name' />
             </Form.Item>
-            <Form.Item
-              label='Slack Id'
-              name='id'
-              rules={[{ required: true, message: 'Please input slack id' }]}
-              style={{
-                width: '80%',
-                marginLeft: '77px',
-                marginTop: '40px',
-              }}
-            >
-              <Input placeholder='Slack Id' style={{ width: '106%' }} />
+
+            <Form.Item name='status' label='Status' initialValue='open'>
+              <Radio.Group>
+                <Radio value='open'>open</Radio>
+                <Radio value='close'>close</Radio>
+              </Radio.Group>
             </Form.Item>
-            <Form.Item
-              label='Member Name'
-              name='member'
-              rules={[{ required: true, message: 'Please input member name' }]}
-              style={{
-                width: '80%',
-                marginLeft: '23px',
-                marginTop: '40px',
-              }}
-            >
-              <Input placeholder='Member' style={{ width: '130%' }} />
-            </Form.Item>
-            <Form.Item
-              wrapperCol={{
-                offset: 8,
-                span: 16,
-              }}
-            >
+            <Form.Item style={{ textAlign: 'center' }}>
               <Button
                 htmlType='button'
                 onClick={onCancel}
                 style={{
-                  marginTop: '15px',
+                  marginTop: '10px',
+                  marginRight: '20px',
+                  backgroundColor: 'red',
+                  color: 'white',
+                }}
+              >
+                Cancel
+              </Button>
+              <Button type='primary' htmlType='submit'>
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
+        </Modal>
+      )}
+
+      {name === 'Set_Status' && (
+        <Modal open={open} onOk={onOk} onCancel={onCancel} footer={null}>
+          <h2
+            style={{
+              textAlign: 'center',
+              paddingBottom: '10px',
+              fontSize: '23px',
+              fontWeight: '600',
+            }}
+          >
+            Set Workspace Status
+          </h2>
+
+          <Form name='basic' autoComplete='off' onFinish={onFinish}>
+            <Form.Item name='status' label='Status' initialValue='open'>
+              <Radio.Group defaultValue='open'>
+                <Radio value='open'>open</Radio>
+                <Radio value='close'>close</Radio>
+              </Radio.Group>
+            </Form.Item>
+
+            <Form.Item style={{ textAlign: 'center' }}>
+              <Button
+                htmlType='button'
+                onClick={onCancel}
+                style={{
+                  marginTop: '10px',
                   marginRight: '20px',
                   backgroundColor: 'red',
                   color: 'white',
@@ -178,54 +213,132 @@ const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
       )}
 
       {name === 'Add_Manager' && (
-        <Modal title='Add New Manager' open={open} onOk={onOk} onCancel={onCancel}>
-          <Form.Item
-            label='Manager Name'
-            name='name'
-            rules={[{ required: true, message: 'Please input your name' }]}
+        <Modal open={open} onOk={onOk} onCancel={onCancel} footer={null}>
+          <h2
+            style={{
+              textAlign: 'center',
+              paddingBottom: '10px',
+              fontSize: '23px',
+              fontWeight: '600',
+            }}
           >
-            <Input placeholder='Manager Name' />
-          </Form.Item>
-          <Form.Item
-            label='Email'
-            name='email'
-            rules={[{ required: true, message: 'Please input your email' }]}
-          >
-            <Input placeholder='Email' style={{ marginLeft: '74px', width: '330px' }} />
-          </Form.Item>
-          <Form.Item
-            label='Password'
-            name='password'
-            rules={[{ required: true, message: 'Please input password' }]}
-          >
-            <Input placeholder='Password' style={{ marginLeft: '44px', width: '330px' }} />
-          </Form.Item>
+            Add Manager
+          </h2>
+
+          <Form name='basic' autoComplete='off' onFinish={onFinish} {...formItemLayout}>
+            <Form.Item
+              label='First Name'
+              name='firstName'
+              rules={[{ required: true, message: 'Please input first name' }]}
+              hasFeedback
+            >
+              <Input placeholder='First Name' />
+            </Form.Item>
+            <Form.Item
+              label='Last Name'
+              name='lastName'
+              rules={[{ required: true, message: 'Please input last name' }]}
+              hasFeedback
+            >
+              <Input placeholder='Last Name' />
+            </Form.Item>
+            <Form.Item
+              label='Email'
+              name='email'
+              rules={[
+                {
+                  type: 'email',
+                  message: 'The input is not valid E-mail!',
+                },
+                { required: true, message: 'Please input manager email' },
+              ]}
+              hasFeedback
+            >
+              <Input placeholder='Manager Email' />
+            </Form.Item>
+            <Form.Item
+              label='Password'
+              name='password'
+              rules={[{ required: true, message: 'Please input password' }]}
+              hasFeedback
+            >
+              <Input.Password />
+            </Form.Item>
+            <Form.Item
+              label='Slack Id'
+              name='slackId'
+              rules={[{ required: true, message: 'Please input manager slack Id' }]}
+              hasFeedback
+            >
+              <Input placeholder='U055GG1R132' />
+            </Form.Item>
+            <Form.Item style={{ textAlign: 'center' }}>
+              <Button
+                htmlType='button'
+                onClick={onCancel}
+                style={{
+                  marginTop: '10px',
+                  marginRight: '20px',
+                  backgroundColor: 'red',
+                  color: 'white',
+                }}
+              >
+                Cancel
+              </Button>
+              <Button type='primary' htmlType='submit'>
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
         </Modal>
       )}
 
-      {name === 'Edit_Password' && (
-        <Modal open={open} onOk={onOk} onCancel={onCancel}>
-          <Form.Item
-            label='Old Password'
-            name='oldpassword'
-            rules={[{ required: true, message: 'Please input your old password' }]}
-            style={{ marginTop: '20px' }}
+      {name === 'Reset_Password' && (
+        <Modal open={open} onOk={onOk} onCancel={onCancel} footer={null}>
+          <h2
+            style={{
+              textAlign: 'center',
+              paddingBottom: '10px',
+              fontSize: '23px',
+              fontWeight: '600',
+            }}
           >
-            <Input placeholder='Old Password' style={{ marginLeft: '10px', width: '300px' }} />
-          </Form.Item>
-          <Form.Item
-            label='New Password'
-            name='newpassword'
-            rules={[{ required: true, message: 'Please input your new password' }]}
-          >
-            <Input placeholder='New Password' style={{ marginLeft: '2px', width: '299px' }} />
-          </Form.Item>
+            Reset Password
+          </h2>
+
+          <Form onFinish={onFinish}>
+            <Form.Item
+              label='New Password'
+              name='password'
+              rules={[{ required: true, message: 'Please input new password' }]}
+              hasFeedback
+            >
+              <Input.Password style={{ marginLeft: '2px', width: '299px' }} />
+            </Form.Item>
+            <Form.Item style={{ textAlign: 'center' }}>
+              <Button
+                htmlType='button'
+                onClick={onCancel}
+                style={{
+                  marginTop: '10px',
+                  marginRight: '20px',
+                  backgroundColor: 'red',
+                  color: 'white',
+                }}
+              >
+                Cancel
+              </Button>
+              <Button type='primary' htmlType='submit'>
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
         </Modal>
       )}
 
-      {name === 'Delete_Password' && (
+      {name === 'Delete_Manager' && (
         <Modal open={open} onOk={onOk} onCancel={onCancel}>
-          <p>Are you sure to delete?</p>
+          <p>Are you sure to delete this Manager?</p>
         </Modal>
       )}
 
