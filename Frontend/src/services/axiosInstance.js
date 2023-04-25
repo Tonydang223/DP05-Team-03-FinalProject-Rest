@@ -90,6 +90,8 @@ export const resetPasswordManager = async (data) => {
     },
   );
   return alert(response.data.message);
+};
+
 
 // fetch account request
 export const fetchAccountRequest = async () => {
