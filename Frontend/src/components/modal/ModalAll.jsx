@@ -557,7 +557,6 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
           </Form>
         </Modal>
       )}
-
       {name === 'ChangePassword' && (
         <Modal title={title} open={open} onOk={onOk} onCancel={onCancel} footer={null}>
           <h2

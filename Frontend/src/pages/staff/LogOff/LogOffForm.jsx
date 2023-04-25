@@ -9,14 +9,35 @@ const { Content } = Layout;
 const { TextArea } = Input;
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { logOffForm } from '../../../services/axiosInstance';
+import { useSelector } from 'react-redux';
+import moment from 'moment';
 
 const LogOffForm = () => {
+  // const dateFormat = 'YYYY-MM-DD'; // Định dạng ngày
+  // const currentDate = moment(); // Ngày hiện tại
+
+  // function validateStartDate(_, startDateStr, callback) {
+  //   const startDate = moment(startDateStr, dateFormat); // Chuyển đổi giá trị ngày bắt đầu sang đối tượng Moment.js
+  //   if (startDate.isValid() && startDate.isSameOrAfter(currentDate, 'day')) {
+  //     callback(); // Giá trị hợp lệ
+  //   } else {
+  //     callback('Ngày bắt đầu phải bằng hoặc sau ngày hiện tại'); // Giá trị không hợp lệ
+  //   }
+  // }
+  const { user } = useSelector((state) => state.auth);
+  console.log(user?._id);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState('Off');
   const onChange = (e) => {
     setValue(e.target.value);
+  };
+  const onFinish = async (values) => {
+    // console.log(values);
+    const req = await logOffForm({ ...values, _id: user._id });
+    console.log(req);
   };
   return (
     <Content
@@ -58,114 +79,120 @@ const LogOffForm = () => {
               </div>
             </Col>
             <Col xl={18} lg={6} md={6} sm={6} xs={5}>
-              <Form>
-                <Form.Item className='log-off'>
-                  <Radio.Group onChange={onChange} value={value}>
-                    <div className='radio-button'>
-                      <Radio value={1}>Off</Radio>
-                      <br />
-                      <Radio value={2}>WFH</Radio>
-                    </div>
-                  </Radio.Group>
-                </Form.Item>
-                <Space wrap>
-                  <Form.Item
-                    className='log-off'
-                    name={'day_start_day_off'}
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Please choose day start off',
-                      },
-                    ]}
-                    hasFeedback
-                  >
-                    <DatePicker className='day-start-off' />
+              {user && (
+                <Form onFinish={onFinish}>
+                  <Form.Item className='log-off' name='type'>
+                    <Radio.Group onChange={onChange} value={value}>
+                      <div className='radio-button'>
+                        <Radio value='Off'>Off</Radio>
+                        <br />
+                        <Radio value='WAH'>WAH</Radio>
+                      </div>
+                    </Radio.Group>
                   </Form.Item>
-                  <Form.Item
-                    className='log-off'
-                    name={'select_day'}
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Please select a time off work in 1 day',
-                      },
-                    ]}
-                    hasFeedback
-                  >
-                    <Select
-                      className='select'
-                      showSearch
-                      placeholder='Time off Duration'
-                      optionFilterProp='children'
-                      filterOption={(input, option) =>
-                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                      }
-                      options={[
+                  <Space wrap>
+                    <Form.Item
+                      className='log-off'
+                      name='from'
+                      rules={[
                         {
-                          value: '1',
-                          label: 'Morning',
+                          required: true,
+                          message: 'Please choose day start off',
                         },
+                        // { validator: validateStartDate }
+                      ]}
+                      hasFeedback
+                    >
+                      <DatePicker className='day-start-off' />
+                    </Form.Item>
+                    <Form.Item
+                      className='log-off'
+                      name='time'
+                      rules={[
                         {
-                          value: '2',
-                          label: 'Afternoon',
-                        },
-                        {
-                          value: '3',
-                          label: 'All day',
+                          required: true,
+                          message: 'Please select a time off duration',
                         },
                       ]}
-                    />
+                      hasFeedback
+                    >
+                      <Select
+                        className='select'
+                        showSearch
+                        placeholder='Time off Duration'
+                        optionFilterProp='children'
+                        filterOption={(input, option) =>
+                          (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                        }
+                        options={[
+                          {
+                            value: 'Morning',
+                            label: 'Morning',
+                          },
+                          {
+                            value: 'Afternoon',
+                            label: 'Afternoon',
+                          },
+                          {
+                            value: 'All day',
+                            label: 'All day',
+                          },
+                        ]}
+                      />
+                    </Form.Item>
+                  </Space>
+                  <Form.Item
+                    className='log-off-end-day'
+                    name='to'
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please choose day end off',
+                      },
+                    ]}
+                    hasFeedback
+                  >
+                    <DatePicker className='day-end-off' />
                   </Form.Item>
-                </Space>
-                <Form.Item
-                  className='log-off-end-day'
-                  name={'day_end_day_off'}
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please choose day end off',
-                    },
-                  ]}
-                  hasFeedback
-                >
-                  <DatePicker className='day-end-off' />
-                </Form.Item>
-                <Form.Item
-                  className='log-off'
-                  name={'quantity'}
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input quantity',
-                    },
-                  ]}
-                  hasFeedback
-                >
-                  <Input placeholder='0.5 1 2 3...' className='input-quantity' />
-                </Form.Item>
-                <Form.Item
-                  name={'reason'}
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input reason of day off',
-                    },
-                    { min: 4 },
-                  ]}
-                  hasFeedback
-                >
-                  <TextArea rows={3} className='text-area' />
-                </Form.Item>
-                <Space wrap>
-                  <Link to='/staff'>
-                    <Button className='button-cancel'>Cancel</Button>
-                  </Link>
-                  <Button type='primary' htmlType='submit' block className='button-send'>
-                    Send
-                  </Button>
-                </Space>
-              </Form>
+                  <Form.Item
+                    className='log-off'
+                    name='quantity'
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please input quantity',
+                      },
+                    ]}
+                    hasFeedback
+                  >
+                    <Input placeholder='0.5 1 2 3...' className='input-quantity' />
+                  </Form.Item>
+                  <Form.Item
+                    name={'reason'}
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please input reason of day off',
+                      },
+                      { min: 4 },
+                    ]}
+                    hasFeedback
+                  >
+                    <TextArea rows={3} className='text-area' />
+                  </Form.Item>
+
+                  <Form.Item>
+                    <Space wrap>
+                      <Link to='/staff'>
+                        <Button className='button-cancel'>Cancel</Button>
+                      </Link>
+                      <Button type='primary' htmlType='submit' block className='button-send'>
+                        Send
+                      </Button>
+                    </Space>
+                  </Form.Item>
+                </Form>
+              )}
             </Col>
           </Row>
         </div>

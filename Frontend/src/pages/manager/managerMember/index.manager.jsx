@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table } from 'antd';
 import { Layout, Breadcrumb, theme, Button, Typography, Space, Row, Col } from 'antd';
 import ModalAll from '../../../src/components/modal/ModalAll';
@@ -14,19 +14,23 @@ const { Title, Text } = Typography;
 import './index.manager.css';
 import { Link } from "react-router-dom";
 const { Content } = Layout;
+import { fetchGroup } from '../../../services/axiosInstance';
 
 const columns = [
   {
     title: 'Name',
     dataIndex: 'name',
+    key:'name'
   },
   {
     title: 'Members',
     dataIndex: 'members',
+    key: 'members'
   },
   {
     title: 'Master',
     dataIndex: 'master',
+    key: 'master'
   },
   {
     title: 'Action',
@@ -58,7 +62,6 @@ const data = [
     master: 'Vo Van Thin',
   },
 ];
-
 export default function ManagerPage() {
   const {
     token: { colorBgContainer },
@@ -110,7 +113,7 @@ export default function ManagerPage() {
             </Col>
           </Row>
         </Space>
-        <Table columns={columns} dataSource={data} scroll={{ x: true }} />
+        <Table columns={columns} dataSource={groups} scroll={{ x: true }} />
         <ModalAll
           name={isTitle}
           open={isCreateOpen}
