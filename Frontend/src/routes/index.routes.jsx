@@ -39,6 +39,7 @@ const AppRouter = (req, res) => {
             <Route path='/manager/request' exact element={<AccountRequest/>}/>
             <Route path='/manager/days_off' exact element={<AdminPage />} />
             <Route path='/manager/member-details' exact element={<MemberDetails />} />
+            <Route path='/manager/dayoff/details' exact element={<DayoffDetails/>}/>
           </Route>
 
           {/* staff route */}

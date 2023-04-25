@@ -10,9 +10,10 @@ import {
 } from '@ant-design/icons';
 import ModalAll from '../modal/ModalAll';
 import './accountStyle.css'
+import {Link} from 'react-router-dom';
 
 
-const AccountTable = ({dataAccountRequest, role, name }) => {
+const AccountTable = ({dataAccountRequest, checkRole, name}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isTitle, setTitle] = useState('');
@@ -63,6 +64,20 @@ const AccountTable = ({dataAccountRequest, role, name }) => {
       title: 'Request for Date',
       dataIndex: 'request_for_date',
       key: 'request_for_date',
+      render: (text) => {
+      if(checkRole === 'Manager')
+      {
+        return (
+          <Link to='/manager/dayoff/details'>{text}</Link>
+        )
+      }
+      else if (checkRole === 'Staff')
+        {
+          return (
+            <Link to='/staff/dayoff/details'>{text}</Link>
+          )
+        }
+      }
     },
     {
       title: 'Quantity',
@@ -117,6 +132,7 @@ const AccountTable = ({dataAccountRequest, role, name }) => {
     },
     {
       title: 'Actions',
+      dataIndex: 'actions',
       key: 'actions',
       render: (_, record) => (
         <Space size='middle'>
