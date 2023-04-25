@@ -13,6 +13,7 @@ import MemberDetails from '../pages/manager/MemberDetails';
 import ProtectedRoute from './protectedRoute.route';
 import { PageNotFound } from '../components/404';
 import { PageNotAuthor } from '../components/403';
+import AccountDetailPage from '../pages/staff/AccountRequestDetail/index.detail';
 
 const AppRouter = (req, res) => {
   const isLoggedIn = localStorage.getItem('access_token');
