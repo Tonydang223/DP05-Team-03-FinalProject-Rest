@@ -1,29 +1,53 @@
 import {React, useEffect, useState} from 'react'
 import AccountTable from '../../../components/accountTable/AccountTable';
 import { Layout, Breadcrumb, theme } from 'antd';
-// import {fetchAccountRequest} from '../../../services/axiosInstance.js';
+import {fetchAccountRequest, fetchInfoUser} from '../../../services/axiosInstance.js';
+import moment from 'moment';
 
 
 const AccountRequest = () => {
 
     const checkRole = localStorage.getItem('user_role');
-    const token = localStorage.getItem('access_token');
     const { Content } = Layout;
     const {
         token: { colorBgContainer },
     } = theme.useToken();
 
     const [data, setData] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     console.log(data);
-
     useEffect(() => {
-        const headers = {
-            Accept: 'application/json',
-            Authorization: `Bearer ${token}`,
-          };
-        fetch('http://localhost:8888/api/request/getAll', { headers })
-            .then(response => response.json())
-            .then(data => setData(data));
+        const fetchData = async() => {
+            try {
+                setIsLoading(true);
+                const result = await fetchAccountRequest();
+                const usersResponse = await fetchInfoUser();
+                const userData = usersResponse.data;
+                
+                const requestsWithUserData = result.data.map((request) => {
+                    const user = userData.find((user) => user._id === request.user);
+                    
+                    return { ...request, user };
+                  });
+                setData(requestsWithUserData.map(row => (
+                    {
+                    _id: row._id,
+                    request_for_date: `${(row.from + '-' + row.to) ? (moment(row.from).format('LL') + ' - ' + moment(row.to).format('LL')) : (moment(row.from).format('LL'))}`,
+                    quantity: row.quantity,
+                    requester: row.user.firstName,
+                    status: row.status,
+                    request_date: `${moment(row.from, 'YYYYMMDD').fromNow()}`,
+                    
+                })));
+
+                setIsLoading(false);
+                
+            } catch (error) {
+                setIsLoading(false); // Stop loading in case of error
+                console.error(error);
+            }
+        }
+        fetchData();
         
     }, []);
     return (
@@ -48,7 +72,7 @@ const AccountRequest = () => {
                 background: colorBgContainer,
             }}
             >
-            <AccountTable />
+            {isLoading ? <div>Loading....</div> : <AccountTable dataAccountRequest={data} /> }
             </div>
         </Content>
         </>

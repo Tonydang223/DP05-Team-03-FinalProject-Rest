@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import { Space, Table, Button, Row, Col } from 'antd';
+import { Space, Table, Button, Row, Col, Tag } from 'antd';
 import {
   CheckCircleFilled,
   CloseCircleFilled,
@@ -10,33 +10,8 @@ import {
 } from '@ant-design/icons';
 import ModalAll from '../modal/ModalAll';
 
-//   fake data
-const data = [
-  {
-    id: 1,
-    key: '1',
-    request_for_date: 'John Brown',
-    qty: 32,
-    status: 'New York No. 1 Lake Park',
-    request_date: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    request_for_date: 'John Brown',
-    qty: 32,
-    status: 'New York No. 1 Lake Park',
-    request_date: ['nice', 'developer'],
-  },
-  {
-    key: '3',
-    request_for_date: 'John Brown',
-    qty: 32,
-    status: 'New York No. 1 Lake Park',
-    request_date: ['nice', 'developer'],
-  },
-];
 
-const AccountTable = ({ role }) => {
+const AccountTable = ({dataAccountRequest, role }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isTitle, setTitle] = useState('');
@@ -84,44 +59,54 @@ const AccountTable = ({ role }) => {
 
   const columns = [
     {
-      title: 'No.',
-      dataIndex: 'key',
-      key: 'key',
-    },
-    {
-      title: 'Resquest for date',
+      title: 'Request for Date',
       dataIndex: 'request_for_date',
       key: 'request_for_date',
     },
     {
       title: 'Quantity',
-      dataIndex: 'qty',
-      key: 'qty',
+      dataIndex: 'quantity',
+      key: 'quantity',
+    },
+    {
+      title: 'Requester',
+      dataIndex: 'requester',
+      key: 'requester'
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
+      render: (status) => {
+        switch (status) {
+          case 'Rejected':
+            return (
+              <Tag color="#eb2f06">
+                  {status}
+              </Tag>
+            )
+            break;
+          case 'Approved':
+            return (
+              <Tag color="#583da1">
+                  {status}
+              </Tag>
+            )
+          case 'Pending':
+            return (
+              <Tag color="#f6b93b">
+                  {status}
+              </Tag>
+            )
+          default:
+            break;
+        }
+      }
     },
     {
       title: 'Request Date',
-      key: 'request_date',
       dataIndex: 'request_date',
-      //   render: (_, { tags }) => (
-      //     <>
-      //       {tags.map((tag) => {
-      //         let color = tag.length > 5 ? 'geekblue' : 'green';
-      //         if (tag === 'loser') {
-      //           color = 'volcano';
-      //         }
-      //         return (
-      //           <Tag color={color} key={tag}>
-      //             {tag.toUpperCase()}
-      //           </Tag>
-      //         );
-      //       })}
-      //     </>
-      //   ),
+      key: 'request_date'
     },
     {
       title: 'Actions',
@@ -132,29 +117,20 @@ const AccountTable = ({ role }) => {
             <EditFilled style={{ color: 'blue' }} />
           </a>
           <a style={{ fontSize: '20px' }} title={isTitle} onClick={showModalApprove}>
-            <CheckCircleFilled style={{ color: 'green' }} />
+            <CheckCircleFilled  />
           </a>
           <a style={{ fontSize: '20px' }} title={isTitle} onClick={showModalReject}>
-            <CloseCircleFilled style={{ color: 'red' }} />
+            <CloseCircleFilled />
           </a>
         </Space>
       ),
     },
+    
+    
   ];
   return (
     <>
-      <Row style={{ marginBottom: '20px', gap: '10px', justifyContent: 'center' }}>
-        <Button>
-          <CheckOutlined /> Approved day off
-        </Button>
-        <Button>
-          <CloseOutlined /> Reject day off
-        </Button>
-        <Button>
-          <UndoOutlined /> Reverted day off
-        </Button>
-      </Row>
-      <Table columns={columns} dataSource={data} scroll={{ x: true }} />
+      <Table rowKey={record => record._id} columns={columns} dataSource={dataAccountRequest} scroll={{ x: true }} />
       <ModalAll
         name={isTitle}
         title={isTitle}

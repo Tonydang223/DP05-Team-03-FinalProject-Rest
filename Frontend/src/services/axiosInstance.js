@@ -11,21 +11,28 @@ export const fetchWorkspaces = () => {
 };
 
 // fetch account request
+export const fetchAccountRequest = async () => {
+  try {
+    const response = await axiosInstance.get(`${import.meta.env.VITE_BASE_URL}/request/getAll`);
+    console.log(response.data)
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
 
-export const fetchAccountRequest = () => {
-  axiosInstance.get(`${import.meta.env.VITE_BASE_URL}/request/getAll`);
+export const fetchInfoUser = async () => {
+  try {
+    const response = await axiosInstance.get(`${import.meta.env.VITE_BASE_URL}/user/getAll`);
+    console.log(response.data)
+    return response.data;
+  }
+  catch(error)
+  {
+    console.error();
+    throw error;
+  }
 }
 
 
-
-
-// export const fetchAccountRequest = async () => {
-//   try {
-//     const response = await axiosInstance.get(`http://localhost:8888/api/request/getAll`);
-//     console.log(response.data)
-//     return { data: response.data };
-//   } catch (error) {
-//     console.error(error);
-//     throw error;
-//   }
-// };
