@@ -14,7 +14,7 @@ import ProtectedRoute from './protectedRoute.route';
 import { PageNotFound } from '../components/404';
 import { PageNotAuthor } from '../components/403';
 import Member from '../pages/manager/managerMember';
-import GroupDetail from '../pages/manager/groupDetails.manager';
+import GroupDetail from '../pages/manager/groupDetail/groupDetails.manager';
 import Profile from '../pages/auth/Profile/Profile';
 
 const AppRouter = (req, res) => {
