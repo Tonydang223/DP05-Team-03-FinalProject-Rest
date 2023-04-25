@@ -2,7 +2,7 @@ import React from 'react';
 import { Layout, Breadcrumb, theme, Descriptions, Row, Col, Button, Form, Input } from 'antd';
 import { RedoOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
-import '../../pages/manager/groupDetails.css';
+import './groupDetails.css';
 
 export default function GroupDetailsPage() {
   const { TextArea } = Input;

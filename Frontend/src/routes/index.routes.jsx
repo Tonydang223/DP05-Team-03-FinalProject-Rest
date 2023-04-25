@@ -8,7 +8,8 @@ import LogOffForm from '../pages/staff/LogOff/LogOffForm';
 import Workspaces from '../pages/admin/Workspaces';
 import WorkspaceDetails from '../pages/admin/WorkspaceDetails';
 import AdminPage from '../pages/admin/index.admin';
-import MemberDetails from '../pages/manager/MemberDetails';
+import MemberDetails from '../pages/manager/memberDetail/MemberDetails';
+import AccountRequest from '../pages/manager/accountRequest/AccountRequest';
 import ProtectedRoute from './protectedRoute.route';
 import { PageNotFound } from '../components/404';
 import { PageNotAuthor } from '../components/403';
@@ -36,10 +37,12 @@ const AppRouter = (req, res) => {
           <Route path='/manager' element={<ProtectedRoute role={'Manager'} />}>
             <Route path='/manager/*' exact element={<PageNotAuthor />} />
             <Route path='/manager/groups' exact element={<ManagerPage />} />
+            <Route path='/manager/request' exact element={<AccountRequest/>}/>
             <Route path='/manager/groups/groups-details' exact element={<GroupDetail />} />
             <Route path='/manager/days_off' exact element={<AdminPage />} />
             <Route path='/manager/member' exact element={<Member/>} />
             <Route path='/manager/member-details' exact element={<MemberDetails />} />
+            <Route path='/manager/dayoff/details' exact element={<DayoffDetails/>}/>
           </Route>
 
           {/* staff route */}

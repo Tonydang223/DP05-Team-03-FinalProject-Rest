@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import { Space, Table, Button, Row, Col } from 'antd';
+import { Space, Table, Button, Row, Col, Tag } from 'antd';
 import {
   CheckCircleFilled,
   CloseCircleFilled,
@@ -9,33 +9,11 @@ import {
   UndoOutlined,
 } from '@ant-design/icons';
 import ModalAll from '../modal/ModalAll';
+import './accountStyle.css'
+import {Link} from 'react-router-dom';
 
-//   fake data
-const data = [
-  {
-    key: '1',
-    request_for_date: 'John Brown',
-    qty: 32,
-    status: 'New York No. 1 Lake Park',
-    request_date: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    request_for_date: 'John Brown',
-    qty: 32,
-    status: 'New York No. 1 Lake Park',
-    request_date: ['nice', 'developer'],
-  },
-  {
-    key: '3',
-    request_for_date: 'John Brown',
-    qty: 32,
-    status: 'New York No. 1 Lake Park',
-    request_date: ['nice', 'developer'],
-  },
-];
 
-const AccountTable = ({ role }) => {
+const AccountTable = ({dataAccountRequest, checkRole, name}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isTitle, setTitle] = useState('');
@@ -83,77 +61,121 @@ const AccountTable = ({ role }) => {
 
   const columns = [
     {
-      title: 'No.',
-      dataIndex: 'key',
-      key: 'key',
-    },
-    {
-      title: 'Resquest for date',
+      title: 'Request for Date',
       dataIndex: 'request_for_date',
       key: 'request_for_date',
+      render: (text) => {
+      if(checkRole === 'Manager')
+      {
+        return (
+          <Link to='/manager/dayoff/details'>{text}</Link>
+        )
+      }
+      else if (checkRole === 'Staff')
+        {
+          return (
+            <Link to='/staff/dayoff/details'>{text}</Link>
+          )
+        }
+      }
     },
     {
       title: 'Quantity',
-      dataIndex: 'qty',
-      key: 'qty',
+      dataIndex: 'quantity',
+      key: 'quantity',
+    },
+    {
+      title: 'Requester',
+      dataIndex: 'requester',
+      key: 'requester'
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
+      render: (status) => {          
+            switch (status) {
+              case 'Rejected':
+                return (
+                  <Tag color="#eb2f06">
+                      {status}
+                  </Tag>
+                )
+                break;
+              case 'Approved':
+                return (
+                  <Tag color="#583da1">
+                      {status}
+                  </Tag>
+                )
+                case 'Pending':
+                  return (
+                    <Tag color="#f6b93b">
+                        {status}
+                    </Tag>
+                  )
+              default:
+                break;
+            }
+      }
+    },
+    {
+      title: 'Verifier',
+      dataIndex: 'verifier',
+      key: 'verifier',
+      className: name === 'request' ? '':'hidden-column'
     },
     {
       title: 'Request Date',
-      key: 'request_date',
       dataIndex: 'request_date',
-      //   render: (_, { tags }) => (
-      //     <>
-      //       {tags.map((tag) => {
-      //         let color = tag.length > 5 ? 'geekblue' : 'green';
-      //         if (tag === 'loser') {
-      //           color = 'volcano';
-      //         }
-      //         return (
-      //           <Tag color={color} key={tag}>
-      //             {tag.toUpperCase()}
-      //           </Tag>
-      //         );
-      //       })}
-      //     </>
-      //   ),
+      key: 'request_date'
     },
     {
       title: 'Actions',
+      dataIndex: 'actions',
       key: 'actions',
-      render: (_, record) => (
-        <Space size='middle'>
-          <a style={{ fontSize: '20px' }} title={isTitle} onClick={showEdit}>
-            <EditFilled style={{ color: 'blue' }} />
-          </a>
-          <a style={{ fontSize: '20px' }} title={isTitle} onClick={showModalApprove}>
-            <CheckCircleFilled style={{ color: 'green' }} />
-          </a>
-          <a style={{ fontSize: '20px' }} title={isTitle} onClick={showModalReject}>
-            <CloseCircleFilled style={{ color: 'red' }} />
-          </a>
-        </Space>
-      ),
+      render: (_, record) => 
+      {
+        if(record.check_approver === 0) {
+          return (
+            <Space size='middle'>
+              {/* <a style={{ fontSize: '20px' }} title={isTitle}>
+                <EditFilled/>
+              </a> */}
+              <a style={{ fontSize: '20px' }} title={isTitle} onClick={showModalApprove}>
+                <CheckCircleFilled  />
+              </a>
+              <a style={{ fontSize: '20px' }} title={isTitle} onClick={showModalReject}>
+                <CloseCircleFilled />
+              </a>
+            </Space>
+          )
+        } else {
+          return (
+            <Space size='middle'>
+              <a style={{ fontSize: '20px' }} title={isTitle} onClick={showEdit}>
+                <UndoOutlined/>
+              </a>
+              {/* <a style={{ fontSize: '20px' }} title={isTitle}>
+                <EditFilled/>
+              </a> */}
+              <a style={{ fontSize: '20px' }} title={isTitle} onClick={showModalApprove}>
+                <CheckCircleFilled  />
+              </a>
+              <a style={{ fontSize: '20px' }} title={isTitle} onClick={showModalReject}>
+                <CloseCircleFilled />
+              </a>
+            </Space>
+          );
+        }
+        
+      },
+      className: name === 'request' ? '':'hidden-column'
     },
   ];
   return (
     <>
-      <Row style={{ marginBottom: '20px', gap: '10px', justifyContent: 'center' }}>
-        <Button>
-          <CheckOutlined /> Approved day off
-        </Button>
-        <Button>
-          <CloseOutlined /> Reject day off
-        </Button>
-        <Button>
-          <UndoOutlined /> Reverted day off
-        </Button>
-      </Row>
-      <Table columns={columns} dataSource={data} scroll={{ x: true }} />
+      <Table rowKey={record => record._id} columns={columns} dataSource={dataAccountRequest} scroll={{ x: true }} />
       <ModalAll
         name={isTitle}
         title={isTitle}
