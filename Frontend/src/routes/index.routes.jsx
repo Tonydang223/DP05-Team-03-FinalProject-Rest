@@ -28,7 +28,7 @@ const AppRouter = (req, res) => {
           <Route path='/admin' element={<ProtectedRoute role={'Admin'} />}>
             <Route path='/admin/*' exact element={<PageNotAuthor />} />
             <Route path='/admin/workspaces' exact element={<Workspaces />} />
-            <Route path='/admin/workspace-detail' exact element={<WorkspaceDetail />} />
+            <Route path='/admin/workspace-detail/:id' element={<WorkspaceDetail />} />
           </Route>
 
           {/* manager route */}

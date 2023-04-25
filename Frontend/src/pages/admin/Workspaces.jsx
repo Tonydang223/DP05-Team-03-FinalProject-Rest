@@ -34,7 +34,6 @@ const Workspaces = () => {
   //   { key: 1, name: 'ST Software', status: 'Active', managers: '' },
   //   { key: 2, name: 'Devplus', status: 'Inactive', managers: '' },
   // ];
-  // <Avatar size='small' icon={<UserOutlined />} />;
 
   const columns = [
     { title: 'Name', dataIndex: 'name', key: 'name' },
@@ -46,17 +45,19 @@ const Workspaces = () => {
       render: (user) =>
         user.length > 0 ? (
           <>
-            {user
-              ?.filter((item) => item.role === 'Manager')
-              ?.map((item) =>
-                item.img_profile ? (
-                  // eslint-disable-next-line react/jsx-key
-                  <Avatar size='medium' src={item.img_profile} />
-                ) : (
-                  // eslint-disable-next-line react/jsx-key
-                  <Avatar size='medium' icon={<UserOutlined />} />
-                ),
-              )}
+            <div key={user._id}>
+              {user
+                ?.filter((item) => item.role === 'Manager')
+                ?.map((item) =>
+                  item.img_profile ? (
+                    // eslint-disable-next-line react/jsx-key
+                    <Avatar size='medium' src={item.img_profile} key={item._id} />
+                  ) : (
+                    // eslint-disable-next-line react/jsx-key
+                    <Avatar size='medium' icon={<UserOutlined />} key={item._id} />
+                  ),
+                )}
+            </div>
           </>
         ) : (
           <p>None</p>
@@ -68,8 +69,15 @@ const Workspaces = () => {
       key: '_id',
       render: (_id) => (
         <Space size='middle'>
-          <Link to={`/admin/workspace-details/${_id}`} style={{ fontSize: '20px' }} title={isTitle}>
-            <InfoCircleFilled style={{ color: '#1677FF' }} />
+          <Link
+            to={{ pathname: `/admin/workspace-detail/${_id}`, state: { _id } }}
+            style={{ fontSize: '20px' }}
+            title={isTitle}
+          >
+            {/* <InfoCircleFilled style={{ color: '#1677FF' }} />{' '} */}
+            <Button type='primary' title={isTitle}>
+              Detail
+            </Button>
           </Link>
         </Space>
       ),

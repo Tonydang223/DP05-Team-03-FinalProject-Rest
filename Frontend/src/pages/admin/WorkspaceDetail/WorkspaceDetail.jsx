@@ -10,29 +10,58 @@ import {
   theme,
   Breadcrumb,
   Typography,
+  Col,
+  Row,
 } from 'antd';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { useState } from 'react';
 import './WorkSpaceDetail.css';
 import ModalAll from '../../../components/modal/ModalAll';
+import { useParams } from 'react-router-dom';
+import { detailWorkspace, setWorkspaceStatus } from './../../../services/axiosInstance';
+import { useEffect, useState } from 'react';
 
 const { Content } = Layout;
+const { Title } = Typography;
+
 const WorkspaceDetail = () => {
+  const { id } = useParams();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isTitle, setTitle] = useState('');
+  const [workspace, setWorkspace] = useState(null);
+
+  const getWorkspace = async (id) => {
+    const res = await detailWorkspace(id);
+    setWorkspace(res);
+  };
+
+  useEffect(() => {
+    getWorkspace(id);
+  }, [isModalOpen]);
+
+  const onFinish = async (values) => {
+    await setWorkspaceStatus({ id, values });
+    setIsModalOpen(false);
+  };
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-  const [checkStrictly, setCheckStrictly] = useState(false);
+
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: 'First Name',
+      dataIndex: 'firstName',
+      key: 'firstName',
+    },
+    {
+      title: 'Last Name',
+      dataIndex: 'lastName',
+      key: 'lastName',
     },
     {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
-      width: '12%',
     },
     {
       title: 'Action',
@@ -40,36 +69,16 @@ const WorkspaceDetail = () => {
 
       render: () => (
         <Space size='middle'>
-          <Button className='btn-space' title={isTitle} onClick={showEditPassword}>
-            <EditOutlined />
+          <Button type='primary' title={isTitle} onClick={showEditPassword}>
             Reset Password
           </Button>
-          <Button className='btn-space' title={isTitle} onClick={showDeletePassword}>
-            <DeleteOutlined />
+          <Button type='primary' title={isTitle} onClick={showDeletePassword} danger>
             Remove
           </Button>
         </Space>
       ),
     },
   ];
-  const data = [
-    {
-      key: 1,
-      name: 'Khoa Nguyen',
-      email: 'khoanguyen@gmail.com',
-      address: 'New York No. 1 Lake Park',
-    },
-
-    {
-      key: 2,
-      name: 'Nam Nguyen',
-      email: 'namnguyen@gmail.com',
-      address: 'Sydney No. 1 Lake Park',
-    },
-  ];
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const [isTitle, setTitle] = useState('');
 
   const showEditPassword = () => {
     setIsModalOpen(true);
@@ -82,10 +91,10 @@ const WorkspaceDetail = () => {
 
   const showAddApprove = () => {
     setIsModalOpen(true);
-    setTitle('Add_Manager');
+    setTitle('Set_Status');
   };
 
-  const handApproveAdd = () => {
+  const handleApproveAdd = () => {
     setIsModalOpen(false);
   };
 
@@ -102,10 +111,18 @@ const WorkspaceDetail = () => {
         style={{
           margin: '16px 0',
         }}
-      >
-        <Breadcrumb.Item>Account</Breadcrumb.Item>
-        <Breadcrumb.Item>Request</Breadcrumb.Item>
-      </Breadcrumb>
+        items={[
+          {
+            title: 'Admin',
+          },
+          {
+            title: 'Workspaces',
+          },
+          {
+            title: 'Details',
+          },
+        ]}
+      />
       <div
         style={{
           padding: 24,
@@ -113,34 +130,48 @@ const WorkspaceDetail = () => {
           background: colorBgContainer,
         }}
       >
-        <div className='workspace-container'>
-          <div>
-            <Typography.Title level={1} style={{ fontSize: '18px', marginLeft: '29px' }}>
-              Basic Information
-            </Typography.Title>
-          </div>
-          <Form.Item name={['user', 'name']} label='Name'>
-            <Input placeholder='' className='workspace-text' />
-          </Form.Item>
-          <div className='wrap-btn'>
-            <Button className='btn-workspace' title={isTitle} onClick={showAddApprove}>
-              + New Manager
+        <Row style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+          <Col>
+            <Title level={4}>{workspace?.name} Workspace</Title>
+            <Title level={5} style={{ marginTop: '5px' }}>
+              Status: {workspace?.status}
+            </Title>
+          </Col>
+          <div
+            style={{
+              marginBottom: '20px',
+              marginTop: '13px',
+              display: 'flex',
+              justifyContent: 'center',
+              gap: '5px',
+            }}
+          >
+            <Button role='button' title={isTitle} onClick={showAddApprove}>
+              Set Status
             </Button>
-            <ModalAll
-              name={isTitle}
-              open={isModalOpen}
-              onOk={handApproveAdd}
-              onCancel={handleCancelAdd}
-            />
+            <Button role='button' title={isTitle} onClick={showAddApprove}>
+              Add Manager
+            </Button>
           </div>
-          <Space align='center' className='head-wrap'>
-            Status:{''}
-            <Switch checked={checkStrictly} onChange={setCheckStrictly} />
-          </Space>
-          <div className='table-container'>
-            <Table columns={columns} dataSource={data} />
-          </div>
-        </div>
+        </Row>
+
+        <Table
+          columns={columns}
+          dataSource={workspace?.user}
+          pagination={{
+            pageSize: 6,
+          }}
+          rowKey='_id'
+          scroll={{ x: true }}
+        />
+
+        <ModalAll
+          name={isTitle}
+          open={isModalOpen}
+          onOk={handleApproveAdd}
+          onCancel={handleCancelAdd}
+          onFinish={onFinish}
+        />
       </div>
     </Content>
   );

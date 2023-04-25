@@ -128,11 +128,52 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
               name='status'
               label='Status'
               rules={[{ required: true, message: 'Please provide status' }]}
-              // style={{
-              //   width: '78%',
-              //   marginLeft: '85px',
-              //   marginTop: '20px',
-              // }}
+            >
+              <Radio.Group>
+                <Radio value='open'>open</Radio>
+                <Radio value='close'>close</Radio>
+              </Radio.Group>
+            </Form.Item>
+
+            <Form.Item style={{ textAlign: 'center' }}>
+              <Button
+                htmlType='button'
+                onClick={onCancel}
+                style={{
+                  marginTop: '10px',
+                  marginRight: '20px',
+                  backgroundColor: 'red',
+                  color: 'white',
+                }}
+              >
+                Cancel
+              </Button>
+              <Button type='primary' htmlType='submit'>
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
+        </Modal>
+      )}
+
+      {name === 'Set_Status' && (
+        <Modal open={open} onOk={onOk} onCancel={onCancel} footer={null}>
+          <h2
+            style={{
+              textAlign: 'center',
+              paddingBottom: '10px',
+              fontSize: '23px',
+              fontWeight: '600',
+            }}
+          >
+            Set Workspace Status
+          </h2>
+
+          <Form name='basic' autoComplete='off' onFinish={onFinish}>
+            <Form.Item
+              name='status'
+              label='Status'
+              rules={[{ required: true, message: 'Please provide status' }]}
             >
               <Radio.Group>
                 <Radio value='open'>open</Radio>
@@ -162,7 +203,18 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
       )}
 
       {name === 'Add_Manager' && (
-        <Modal title='Add New Manager' open={open} onOk={onOk} onCancel={onCancel}>
+        <Modal open={open} onOk={onOk} onCancel={onCancel}>
+          <h2
+            style={{
+              textAlign: 'center',
+              paddingBottom: '10px',
+              fontSize: '23px',
+              fontWeight: '600',
+            }}
+          >
+            Add Manager
+          </h2>
+
           <Form.Item
             label='Manager Name'
             name='name'
