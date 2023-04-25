@@ -27,6 +27,7 @@ const AccountRequest = () => {
         const requestsWithUserData = result.data.filter(request => request.status === 'Pending')
             .map(async (request) => {
                 const verifier = await fetchApprove(request._id);
+                
                 return {
                     _id: request._id,
                     request_for_date: `${
@@ -35,7 +36,7 @@ const AccountRequest = () => {
                         : moment(request.from).format('LL')
                     }`,
                     quantity: request.quantity,
-                    requester: `${(request.user.firstName + ' ' +request.user.lastName) ? (request.user.firstName + '' + request.user.lastName) : ''}`,
+                    requester: `${(request.user.firstName + ' ' +request.user.lastName) ? (request.user.firstName + ' ' + request.user.lastName) : ''}`,
                     status: request.status,
                     verifier: ` ${verifier.data.approve.length} / ${verifier.data.verifier}`,
                     check_approver: verifier.data.approve.length,
