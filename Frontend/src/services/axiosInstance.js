@@ -128,3 +128,16 @@ export const fetchApprove = async (id) => {
     throw error;
   }
 };
+
+export const setWorkspaceStatus = async (data) => {
+  const response = await axiosInstance.post(
+    `http://localhost:8888/api/workspace/changeStatus/${data.id}`,
+    JSON.stringify(data.values),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
+  return response.data.data;
+};

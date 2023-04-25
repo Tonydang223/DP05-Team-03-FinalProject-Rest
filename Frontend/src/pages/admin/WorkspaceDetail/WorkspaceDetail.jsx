@@ -2,6 +2,9 @@ import React from 'react';
 import { Table, Button, Space, Layout, theme, Breadcrumb, Typography, Col, Row } from 'antd';
 import './WorkSpaceDetail.css';
 import ModalAll from '../../../components/modal/ModalAll';
+import { useParams } from 'react-router-dom';
+import { detailWorkspace, setWorkspaceStatus } from './../../../services/axiosInstance';
+import { useEffect, useState } from 'react';
 
 import { useParams } from 'react-router-dom';
 import {
@@ -107,7 +110,7 @@ const WorkspaceDetail = () => {
   //manager
   const showAddManagerModal = () => {
     setIsModalOpen(true);
-    setTitle('Add_Manager');
+    setTitle('Set_Status');
   };
 
   //Modal Actions
