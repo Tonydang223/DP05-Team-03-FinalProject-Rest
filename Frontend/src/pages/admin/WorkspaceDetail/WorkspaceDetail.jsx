@@ -116,7 +116,7 @@ const WorkspaceDetail = () => {
   //manager
   const showAddManagerModal = () => {
     setIsModalOpen(true);
-    setTitle('Add_Manager');
+    setTitle('Set_Status');
   };
 
   //Modal Actions
