@@ -1,11 +1,11 @@
 import React from 'react';
-import { Form, Layout, Breadcrumb, theme, Table, Button, Avatar, Space } from 'antd';
+import { Layout, Breadcrumb, theme, Table, Button, Avatar, Space } from 'antd';
 import { UserOutlined, InfoCircleFilled } from '@ant-design/icons';
 import ModalAll from '../../components/modal/ModalAll';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import { fetchWorkspaces } from './../../services/axiosInstance';
+import { fetchWorkspaces, addWorkspace } from './../../services/axiosInstance';
 
 const { Content } = Layout;
 const layout = {
@@ -13,41 +13,62 @@ const layout = {
   wrapperCol: { span: 16 },
 };
 const Workspaces = () => {
+  //State
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isTitle, setTitle] = useState('');
+  const [workspaces, setWorkspaces] = useState([]);
+
   //fetch data
   const getAllWorkspaces = async () => {
     const res = await fetchWorkspaces();
-    console.log(res);
+    setWorkspaces(res);
   };
 
   useEffect(() => {
     getAllWorkspaces();
-  }, []);
+  }, [isModalOpen]);
 
   //Data
-  const dataSource = [
-    { key: 1, name: 'ST Software', state: 'Active', managers: '' },
-    { key: 2, name: 'Devplus', state: 'Inactive', managers: '' },
-  ];
+  // const dataSource = [
+  //   { key: 1, name: 'ST Software', status: 'Active', managers: '' },
+  //   { key: 2, name: 'Devplus', status: 'Inactive', managers: '' },
+  // ];
+  // <Avatar size='small' icon={<UserOutlined />} />;
 
   const columns = [
     { title: 'Name', dataIndex: 'name', key: 'name' },
-    { title: 'State', dataIndex: 'state', key: 'state' },
+    { title: 'Status', dataIndex: 'status', key: 'status' },
     {
       title: 'Managers',
-      dataIndex: 'managers',
-      render: () => (
-        <>
-          <Avatar size='small' icon={<UserOutlined />} />{' '}
-          <Avatar size='small' icon={<UserOutlined />} />
-        </>
-      ),
+      dataIndex: 'user',
+      key: 'user',
+      render: (user) =>
+        user.length > 0 ? (
+          <>
+            {user
+              ?.filter((item) => item.role === 'Manager')
+              ?.map((item) =>
+                item.img_profile ? (
+                  // eslint-disable-next-line react/jsx-key
+                  <Avatar size='medium' src={item.img_profile} />
+                ) : (
+                  // eslint-disable-next-line react/jsx-key
+                  <Avatar size='medium' icon={<UserOutlined />} />
+                ),
+              )}
+          </>
+        ) : (
+          <p>None</p>
+        ),
     },
     {
       title: 'Actions',
-      key: 'actions',
-      render: (_, record) => (
+      dataIndex: '_id',
+      key: '_id',
+      render: (_id) => (
         <Space size='middle'>
-          <Link to='/admin/workspace-details' style={{ fontSize: '20px' }} title={isTitle}>
+          <Link to={`/admin/workspace-details/${_id}`} style={{ fontSize: '20px' }} title={isTitle}>
             <InfoCircleFilled style={{ color: '#1677FF' }} />
           </Link>
         </Space>
@@ -60,13 +81,10 @@ const Workspaces = () => {
     token: { colorBgContainer },
   } = theme.useToken();
 
-  //State
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isTitle, setTitle] = useState('');
-
   //Actions
-  const onFinish = (values) => {
-    console.log('Success:', values);
+  const onFinish = async (values) => {
+    await addWorkspace({ values });
+    setIsModalOpen(false);
   };
 
   const showAddApprove = () => {
@@ -74,7 +92,8 @@ const Workspaces = () => {
     setTitle('Add_Workspace');
   };
 
-  const handleApproveAdd = () => {
+  const handleApproveAdd = (data) => {
+    console.log();
     setIsModalOpen(false);
   };
 
@@ -124,17 +143,18 @@ const Workspaces = () => {
             open={isModalOpen}
             onOk={handleApproveAdd}
             onCancel={handleCancelAdd}
-          />
-          <Form
-            {...layout}
-            name='nest-messages'
             onFinish={onFinish}
-            style={{
-              maxWidth: 600,
-            }}
           />
         </div>
-        <Table columns={columns} dataSource={dataSource} scroll={{ x: true }} />
+        <Table
+          columns={columns}
+          dataSource={workspaces}
+          pagination={{
+            pageSize: 6,
+          }}
+          rowKey='_id'
+          scroll={{ x: true }}
+        />
       </div>
     </Content>
   );

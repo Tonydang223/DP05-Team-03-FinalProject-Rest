@@ -1,14 +1,15 @@
 import React from 'react';
-import { Modal, Input, Form, Button } from 'antd';
+import { Modal, Input, Form, Button, Radio } from 'antd';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
+
 const animatedComponents = makeAnimated();
 const options = [
   { value: 'chocolate', label: 'Chocolate' },
   { value: 'strawberry', label: 'Strawberry' },
   { value: 'vanilla', label: 'Vanilla' },
 ];
-const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
+const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
   return (
     <>
       {name === 'Logout' && (
@@ -119,7 +120,7 @@ const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
             Add new workspace
           </h2>
 
-          <Form name='basic' autoComplete='off'>
+          <Form name='basic' autoComplete='off' onFinish={onFinish}>
             <Form.Item
               label='Workspace Name'
               name='name'
@@ -127,30 +128,23 @@ const ModalAll = ({ name, title, open, onOk, onCancel, type }) => {
             >
               <Input placeholder='Workspace Name' />
             </Form.Item>
+
             <Form.Item
-              label='Slack Id'
-              name='id'
-              rules={[{ required: true, message: 'Please input slack id' }]}
+              name='status'
+              label='Status'
+              rules={[{ required: true, message: 'Please provide status' }]}
               style={{
-                width: '80%',
-                marginLeft: '77px',
-                marginTop: '40px',
+                width: '78%',
+                marginLeft: '85px',
+                marginTop: '20px',
               }}
             >
-              <Input placeholder='Slack Id' style={{ width: '106%' }} />
+              <Radio.Group>
+                <Radio value='open'>open</Radio>
+                <Radio value='close'>close</Radio>
+              </Radio.Group>
             </Form.Item>
-            <Form.Item
-              label='Member Name'
-              name='member'
-              rules={[{ required: true, message: 'Please input member name' }]}
-              style={{
-                width: '80%',
-                marginLeft: '23px',
-                marginTop: '40px',
-              }}
-            >
-              <Input placeholder='Member' style={{ width: '130%' }} />
-            </Form.Item>
+
             <Form.Item
               wrapperCol={{
                 offset: 8,

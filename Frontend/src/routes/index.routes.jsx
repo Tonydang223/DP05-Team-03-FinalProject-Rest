@@ -7,7 +7,7 @@ import DayoffDetails from '../pages/staff/dayoffDetails.staff';
 import ChangePassword from '../pages/auth/ChangePassword/ChangePassword';
 import LogOffForm from '../pages/staff/LogOff/LogOffForm';
 import Workspaces from '../pages/admin/Workspaces';
-import WorkspaceDetails from '../pages/admin/WorkspaceDetails';
+import WorkspaceDetail from '../pages/admin/WorkspaceDetail/WorkspaceDetail';
 import AdminPage from '../pages/admin/index.admin';
 import MemberDetails from '../pages/manager/MemberDetails';
 import ProtectedRoute from './protectedRoute.route';
@@ -28,7 +28,7 @@ const AppRouter = (req, res) => {
           <Route path='/admin' element={<ProtectedRoute role={'Admin'} />}>
             <Route path='/admin/*' exact element={<PageNotAuthor />} />
             <Route path='/admin/workspaces' exact element={<Workspaces />} />
-            <Route path='/admin/workspace-details' exact element={<WorkspaceDetails />} />
+            <Route path='/admin/workspace-detail' exact element={<WorkspaceDetail />} />
           </Route>
 
           {/* manager route */}

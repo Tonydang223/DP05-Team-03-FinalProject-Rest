@@ -14,10 +14,10 @@ import {
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import './WorkSpaceDetail.css';
-import ModalAll from '../../components/modal/ModalAll';
+import ModalAll from '../../../components/modal/ModalAll';
 
 const { Content } = Layout;
-const WorkspaceDetails = () => {
+const WorkspaceDetail = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -146,4 +146,4 @@ const WorkspaceDetails = () => {
   );
 };
 
-export default WorkspaceDetails;
+export default WorkspaceDetail;
