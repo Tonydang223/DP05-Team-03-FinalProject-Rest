@@ -37,10 +37,6 @@ const WorkspaceDetail = () => {
     await deleteManager({ manager, id });
   };
 
-  const deleteManagerButton = async () => {
-    await deleteManager(manager);
-  };
-
   useEffect(() => {
     getWorkspace(id);
   }, [isModalOpen]);
