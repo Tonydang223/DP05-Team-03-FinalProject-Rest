@@ -319,6 +319,8 @@ const AccountTable = ({ dataAccountRequest, checkRole, name, fetchData }) => {
         }
       },
     },
+    
+    
   ];
 
   return (
