@@ -155,8 +155,17 @@ export const addManager = async (data) => {
   return response.data.data;
 };
 
-export const deleteManager = async (managerId) => {
-  const response = await axiosInstance.post(`http://localhost:8888/api/user/delete/${managerId}`);
+export const deleteManager = async (data) => {
+  const json = { managerId: data.manager, id_workspace: data.id };
+  const response = await axiosInstance.post(
+    `http://localhost:8888/api/user/delete/${json.managerId}`,
+    JSON.stringify(json),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
   return alert(response.data.message);
 };
 
