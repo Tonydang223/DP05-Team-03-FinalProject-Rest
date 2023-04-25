@@ -14,7 +14,6 @@ const AccountRequest = () => {
     } = theme.useToken();
 
     const [data, setData] = useState([]);
-    // console.log(data);
     const [isLoading, setIsLoading] = useState(false);
     console.log(data);
     useEffect(() => {
@@ -33,13 +32,14 @@ const AccountRequest = () => {
                   const requestData = requestsWithUserData.map(async (row) => {
                     // passing id for fetch approve
                     const verifier = await fetchApprove(row._id);
+                    console.log(verifier.data.verifier);
                     return {
                       _id: row._id,
                       request_for_date: `${(row.from && row.to) ? (moment(row.from).format('LL') + ' - ' + moment(row.to).format('LL')) : (moment(row.from).format('LL'))}`,
                       quantity: row.quantity,
                       requester: row.user.firstName,
                       status: row.status,
-                      verifier: `${verifier.data.length} / 3`,
+                      verifier: ` ${verifier.data.approve.length} / ${verifier.data.verifier}`,
                       request_date: `${moment(row.from, 'YYYYMMDD').fromNow()}`,
                     };
                   });
