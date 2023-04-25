@@ -23,11 +23,11 @@ class AuthController {
       res.status(500).send({ message: error.message });
     }
   }
-  async changePassword(req, res) {
+  async ResetPass(req, res) {
     const { password, idUser } = req.body;
     try {
       const user = await UserModel.findById({
-        _id: idUser ? idUser : req.usr._id,
+        _id: idUser,
       });
       const salt = await bcrypt.genSalt(10);
       const hashPassword = await bcrypt.hash(password, salt);
@@ -35,6 +35,25 @@ class AuthController {
       const oldPass = await bcrypt.compareSync(password, user.password);
 
       if (oldPass) return res.status(400).json({ message: 'The password is old!' });
+
+      await user.update({ $set: { password: hashPassword } }, { new: true });
+      return res.status(200).json({ message: 'Your password was reseted successfully!' });
+    } catch (error) {
+      res.status(500).send({ message: error.message });
+    }
+  }
+  async ChangePass(req, res) {
+    const { newPass, oldPass } = req.body;
+    try {
+      const user = await UserModel.findById({
+        _id: req.usr._id,
+      });
+      const salt = await bcrypt.genSalt(10);
+      const hashPassword = await bcrypt.hash(newPass, salt);
+
+      const old = await bcrypt.compareSync(oldPass, user.password);
+
+      if (!old) return res.status(400).json({ message: 'The password is not right!' });
 
       await UserModel.findByIdAndUpdate(
         { _id: req.usr._id },

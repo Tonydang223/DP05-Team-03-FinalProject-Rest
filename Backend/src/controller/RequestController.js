@@ -290,13 +290,23 @@ class RequestController {
   async getAllRequests(req, res) {
     try {
       await RequestModel.updateMany(
-        { from: { $lt: new Date() } },
+        { from: { $lt: new Date() }, status: { $eq: STATUS_REQUEST[2] } },
         { $set: { status: STATUS_REQUEST[1] } },
         { multi: true },
       ).then(async () => {
         const requests = await RequestModel.find();
         res.status(200).json({ message: 'Get the requests successfully!', data: [...requests] });
       });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+  async getDetailRequests(req, res) {
+    try {
+      const request = await RequestModel.findOne({ _id: req.params.id });
+      res
+        .status(200)
+        .json({ message: 'Get the requests successfully!', data: { ...request._doc } });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

@@ -11,5 +11,6 @@ router.post('/revert/:id', userAuthPermission([ROLES[2]]), RequestController.rev
 router.get('/getAll', userAuthPermission(), RequestController.getAllRequests);
 router.get('/getApproves/:id', userAuthPermission(), RequestController.getApprovesOfRequest);
 router.get('/getHistories/:id', userAuthPermission(), RequestController.getHistories);
+router.get('/getDetail/:id', userAuthPermission(), RequestController.getDetailRequests);
 
 module.exports = router;
