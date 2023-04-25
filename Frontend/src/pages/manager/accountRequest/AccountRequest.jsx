@@ -32,7 +32,6 @@ const AccountRequest = () => {
                   const requestData = requestsWithUserData.map(async (row) => {
                     // passing id for fetch approve
                     const verifier = await fetchApprove(row._id);
-                    console.log(verifier.data.verifier);
                     return {
                       _id: row._id,
                       request_for_date: `${(row.from && row.to) ? (moment(row.from).format('LL') + ' - ' + moment(row.to).format('LL')) : (moment(row.from).format('LL'))}`,
@@ -76,7 +75,7 @@ const AccountRequest = () => {
                 background: colorBgContainer,
             }}
             >
-            {isLoading ? <div>Loading....</div> : <AccountTable dataAccountRequest={data} /> }
+            {isLoading ? <div>Loading....</div> : <AccountTable name="request" dataAccountRequest={data} /> }
             </div>
         </Content>
         </>

@@ -9,9 +9,10 @@ import {
   UndoOutlined,
 } from '@ant-design/icons';
 import ModalAll from '../modal/ModalAll';
+import './accountStyle.css'
 
 
-const AccountTable = ({dataAccountRequest, role }) => {
+const AccountTable = ({dataAccountRequest, role, name }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isTitle, setTitle] = useState('');
@@ -78,35 +79,37 @@ const AccountTable = ({dataAccountRequest, role }) => {
       dataIndex: 'status',
       key: 'status',
       render: (status) => {
-        switch (status) {
-          case 'Rejected':
-            return (
-              <Tag color="#eb2f06">
-                  {status}
-              </Tag>
-            )
-            break;
-          case 'Approved':
-            return (
-              <Tag color="#583da1">
-                  {status}
-              </Tag>
-            )
-          case 'Pending':
-            return (
-              <Tag color="#f6b93b">
-                  {status}
-              </Tag>
-            )
-          default:
-            break;
-        }
+        
+          switch (status) {
+            case 'Rejected':
+              return (
+                <Tag color="#eb2f06">
+                    {status}
+                </Tag>
+              )
+              break;
+            case 'Approved':
+              return (
+                <Tag color="#583da1">
+                    {status}
+                </Tag>
+              )
+              case 'Pending':
+                return (
+                  <Tag color="#f6b93b">
+                      {status}
+                  </Tag>
+                )
+            default:
+              break;
+          }
       }
     },
     {
       title: 'Verifier',
       dataIndex: 'verifier',
       key: 'verifier',
+      className: name === 'request' ? '':'hidden-column'
     },
     {
       title: 'Request Date',
@@ -129,9 +132,8 @@ const AccountTable = ({dataAccountRequest, role }) => {
           </a>
         </Space>
       ),
+      className: name === 'request' ? '':'hidden-column'
     },
-    
-    
   ];
   return (
     <>
