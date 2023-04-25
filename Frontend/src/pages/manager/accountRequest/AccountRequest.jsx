@@ -1,7 +1,7 @@
 import {React, useEffect, useState} from 'react'
 import AccountTable from '../../../components/accountTable/AccountTable';
 import { Layout, Breadcrumb, theme } from 'antd';
-import {fetchAccountRequest, fetchInfoUser} from '../../../services/axiosInstance.js';
+import {fetchAccountRequest, fetchApprove, fetchInfoUser} from '../../../services/axiosInstance.js';
 import moment from 'moment';
 
 
@@ -14,6 +14,7 @@ const AccountRequest = () => {
     } = theme.useToken();
 
     const [data, setData] = useState([]);
+    // console.log(data);
     const [isLoading, setIsLoading] = useState(false);
     console.log(data);
     useEffect(() => {
@@ -29,17 +30,21 @@ const AccountRequest = () => {
                     
                     return { ...request, user };
                   });
-                setData(requestsWithUserData.map(row => (
-                    {
-                    _id: row._id,
-                    request_for_date: `${(row.from + '-' + row.to) ? (moment(row.from).format('LL') + ' - ' + moment(row.to).format('LL')) : (moment(row.from).format('LL'))}`,
-                    quantity: row.quantity,
-                    requester: row.user.firstName,
-                    status: row.status,
-                    request_date: `${moment(row.from, 'YYYYMMDD').fromNow()}`,
-                    
-                })));
-
+                  const requestData = requestsWithUserData.map(async (row) => {
+                    // passing id for fetch approve
+                    const verifier = await fetchApprove(row._id);
+                    return {
+                      _id: row._id,
+                      request_for_date: `${(row.from && row.to) ? (moment(row.from).format('LL') + ' - ' + moment(row.to).format('LL')) : (moment(row.from).format('LL'))}`,
+                      quantity: row.quantity,
+                      requester: row.user.firstName,
+                      status: row.status,
+                      verifier: `${verifier.data.length} / 3`,
+                      request_date: `${moment(row.from, 'YYYYMMDD').fromNow()}`,
+                    };
+                  });
+                const resolvedData = await Promise.all(requestData);
+                setData(resolvedData);
                 setIsLoading(false);
                 
             } catch (error) {
@@ -48,7 +53,6 @@ const AccountRequest = () => {
             }
         }
         fetchData();
-        
     }, []);
     return (
         <>

@@ -35,4 +35,18 @@ export const fetchInfoUser = async () => {
   }
 }
 
+export const fetchApprove = async (id) => {
+  try {
+    const response = await axiosInstance.get(`${import.meta.env.VITE_BASE_URL}/request/getApproves/${id}`);
+    
+    console.log(response.data);
+    return response.data;
+  }
+  catch(error)
+  {
+    console.error();
+    throw error
+  }
+}
+
 

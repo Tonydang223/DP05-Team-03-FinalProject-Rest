@@ -104,6 +104,11 @@ const AccountTable = ({dataAccountRequest, role }) => {
       }
     },
     {
+      title: 'Verifier',
+      dataIndex: 'verifier',
+      key: 'verifier',
+    },
+    {
       title: 'Request Date',
       dataIndex: 'request_date',
       key: 'request_date'
