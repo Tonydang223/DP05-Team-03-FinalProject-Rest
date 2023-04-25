@@ -2,17 +2,8 @@ import React, { useState } from 'react';
 import { Table } from 'antd';
 import { Layout, Breadcrumb, theme, Button, Typography, Space, Row, Col } from 'antd';
 import ModalAll from '../../../src/components/modal/ModalAll';
-import {
-    CheckCircleFilled,
-    CloseCircleFilled,
-    EditFilled,
-    CheckOutlined,
-    CloseOutlined,
-    UndoOutlined,
-  } from '@ant-design/icons';
 const { Title, Text } = Typography;
 import './index.manager.css';
-import { Link } from "react-router-dom";
 const { Content } = Layout;
 
 const columns = [
@@ -28,22 +19,14 @@ const columns = [
     title: 'Master',
     dataIndex: 'master',
   },
-  {
-    title: 'Action',
-    dataIndex: 'action',
-  }
 ];
 const nameFull = 'Huy';
 const data = [
   {
     key: '1',
     name: nameFull.charAt(0),
-    members: 32,
-    master: 'New York No. 1 Lake Park',
-    action:
-    <Link to='/manager/groups/groups-details' style={{ fontSize: '20px' }}>
-      <EditFilled style={{ color: 'blue' }} />
-    </Link>
+    age: 32,
+    address: 'New York No. 1 Lake Park',
   },
   {
     key: '2',
