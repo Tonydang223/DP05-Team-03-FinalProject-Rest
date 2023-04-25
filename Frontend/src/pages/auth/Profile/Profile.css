@@ -25,6 +25,10 @@
   0px 4px 6px -2px;
   --transition: .4s ease-in-out;
 }
+.button{
+  margin-left: 20px;
+  margin-top: 20px;
+}
 .profile-container .image-profile {
   margin-top: 100px;
   margin-bottom: 40px;  
@@ -38,20 +42,6 @@
   border-radius: 50px;
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
   /* margin-left: 15px; */
-}
-.profile-container .info-profile .information{
-  color: transparent !important;
-  -webkit-text-stroke: 1px #000;
-  background: url(../../../assets/img/back.png);
-  -webkit-background-clip: text;
-  background-position: 0 0;
-  animation: back 20s linear infinite;
-  font-size: 60px;
-}
-@keyframes back{
-  100%{
-    background-position: 2000px 0;
-  }
 }
 .profile-container .info-profile .name-profile{
   margin-left: 50px;
@@ -95,7 +85,7 @@
   width: 300px;
   /* max-width: 250px; */
   overflow: hidden;
-  border-radius: 5rem;
+  border-radius: 2rem;
   gap: 1rem;
   margin: auto;
 }

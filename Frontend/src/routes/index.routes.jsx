@@ -4,7 +4,6 @@ import ManagerPage from '../pages/manager/index.manager';
 import StaffPage from '../pages/staff/index.staff';
 import LoginPage from '../pages/auth/index.auth';
 import DayoffDetails from '../pages/staff/dayoffDetails.staff';
-import ChangePassword from '../pages/auth/ChangePassword/ChangePassword';
 import LogOffForm from '../pages/staff/LogOff/LogOffForm';
 import Workspaces from '../pages/admin/Workspaces';
 import WorkspaceDetails from '../pages/admin/WorkspaceDetails';
@@ -24,7 +23,6 @@ const AppRouter = (req, res) => {
       <Routes path='/login'>
         {/* auth route */}
         <Route path='/login' exact element={<LoginPage />} />
-        <Route path='/change-password' exact element={<ChangePassword />} />
         <Route path='/' exact element={<Layouts />}>
         <Route path='/profile' exact element={<Profile />} />
           {/* admin route */}

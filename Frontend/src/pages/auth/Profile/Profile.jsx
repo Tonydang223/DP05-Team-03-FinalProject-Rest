@@ -1,11 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Layout, Breadcrumb, theme, Col, Row, Image, Space, Typography, Button } from 'antd';
 import './Profile.css';
 import image from '../../../assets/img/CoverProfile.png';
 import Avatar from '../../../assets/img/traveler1.png';
 const { Title, Text } = Typography;
 const { Content } = Layout;
+import ModalAll from '../../../../src/components/modal/ModalAll';
+
 const Profile = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isTitle, setTitle] = useState('');
+
+  const showEditProfile = () => {
+    setIsModalOpen(true);
+    setTitle('Edit_Profile');
+  };
+  const showChangePassword = () => {
+    setIsModalOpen(true);
+    setTitle('ChangePassword');
+  };
+  const handApproveAdd = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancelAdd = () => {
+    setIsModalOpen(false);
+  };
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -29,9 +49,10 @@ const Profile = () => {
           minHeight: 530,
           background: colorBgContainer,
           justifyContent: 'center',
+          display: 'flex',
         }}
       >
-        <Space direction="vertical">
+        <Space direction='vertical'>
           <div className='travelers container section'>
             <div className='sectionContainer'>
               <div className='travelersContainer grid'>
@@ -52,9 +73,31 @@ const Profile = () => {
               </div>
             </div>
           </div>
-          <Space wrap>
-            <Button>Edit Profile</Button>
-            <Button>Change password</Button>
+          <Space wrap className='button'>
+            <Button
+              title={isTitle}
+              onClick={showEditProfile}
+              type='primary'
+              htmlType='submit'
+              style={{ fontWeight: 'bold' }}
+            >
+              Edit Profile
+            </Button>
+            <Button
+              title={isTitle}
+              onClick={showChangePassword}
+              type='primary'
+              htmlType='submit'
+              style={{ fontWeight: 'bold' }}
+            >
+              Change password
+            </Button>
+            <ModalAll
+              name={isTitle}
+              open={isModalOpen}
+              onOk={handApproveAdd}
+              onCancel={handleCancelAdd}
+            />
           </Space>
         </Space>
       </div>

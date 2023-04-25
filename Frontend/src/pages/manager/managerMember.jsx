@@ -2,8 +2,8 @@ import React from 'react';
 import { Table, Layout, Breadcrumb } from 'antd';
 import { useState } from 'react';
 import ModalAll from '../../components/modal/ModalAll';
-import {EditFilled} from '@ant-design/icons';
-import { Link } from "react-router-dom";
+import { EditFilled } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 const { Content } = Layout;
 
 const columns = [
@@ -22,17 +22,18 @@ const columns = [
     title: 'Action',
     dataIndex: 'action',
     width: '30%',
-  }
+  },
 ];
 const data = [
   {
     key: '1',
     name: 'John Brown',
     email: 'New York No. 1 Lake Park',
-    action:
-    <Link to='/manager/member-details' style={{ fontSize: '20px' }}>
-      <EditFilled style={{ color: 'blue' }} />
-    </Link>
+    action: (
+      <Link to='/manager/member-details' style={{ fontSize: '20px' }}>
+        <EditFilled style={{ color: 'blue' }} />
+      </Link>
+    ),
   },
   {
     key: '2',
@@ -57,16 +58,16 @@ export default function ManagerPage() {
   };
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTitle, setTitle] = useState('');
-  
-  const showAddApprove = () => {
+
+  const showAddMember = () => {
     setIsModalOpen(true);
     setTitle('Add_Member');
   };
-  
+
   const handApproveAdd = () => {
     setIsModalOpen(false);
   };
-  
+
   const handleCancelAdd = () => {
     setIsModalOpen(false);
   };
@@ -86,21 +87,28 @@ export default function ManagerPage() {
           <Breadcrumb.Item>Members</Breadcrumb.Item>
         </Breadcrumb>
         <div>
-        <button
-          title={isTitle}
-          onClick={showAddApprove}
-          style={{ float:'right', marginBottom:'30px', fontWeight:'bold', marginRight:'20px' , backgroundColor: '#1677ff', color: 'white' }}
-        >
-          + New member
-        </button>
-        <ModalAll
-          name={isTitle}
-          open={isModalOpen}
-          onOk={handApproveAdd}
-          onCancel={handleCancelAdd}
-        />
+          <button
+            title={isTitle}
+            onClick={showAddMember}
+            style={{
+              float: 'right',
+              marginBottom: '30px',
+              fontWeight: 'bold',
+              marginRight: '20px',
+              backgroundColor: '#1677ff',
+              color: 'white',
+            }}
+          >
+            + New member
+          </button>
+          <ModalAll
+            name={isTitle}
+            open={isModalOpen}
+            onOk={handApproveAdd}
+            onCancel={handleCancelAdd}
+          />
         </div>
-        <Table columns={columns} dataSource={data} onChange={onChange} scroll={{ x: true }}/>
+        <Table columns={columns} dataSource={data} onChange={onChange} scroll={{ x: true }} />
       </Content>
     </>
   );
