@@ -319,7 +319,10 @@ class RequestController {
 
       res.status(200).json({
         message: 'Get approves of the request successfully!',
-        data: { approve: [...approvesOfRequest], verifier: mastersL.length },
+        data: {
+          approve: [...approvesOfRequest],
+          verifier: mastersL.filter((v) => v !== request.user.toString()).length,
+        },
       });
     } catch (error) {
       res.status(500).json({ message: error.message });
