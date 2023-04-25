@@ -2,6 +2,7 @@ import React from 'react';
 import { Table, Button, Space, Layout, theme, Breadcrumb, Typography, Col, Row } from 'antd';
 import './WorkSpaceDetail.css';
 import ModalAll from '../../../components/modal/ModalAll';
+
 import { useParams } from 'react-router-dom';
 import {
   detailWorkspace,
@@ -41,10 +42,6 @@ const WorkspaceDetail = () => {
 
   const deleteManagerButton = async () => {
     await deleteManager({ manager, id });
-  };
-
-  const deleteManagerButton = async () => {
-    await deleteManager(manager);
   };
 
   useEffect(() => {
