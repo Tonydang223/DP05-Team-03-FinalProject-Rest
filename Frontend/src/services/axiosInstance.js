@@ -9,11 +9,12 @@ export const fetchUser = async () => {
 export const editProfile = async (data) => {
   const response = await axiosInstance.post(
     `http://localhost:8888/api/user/update`,
-    JSON.stringify(data.values), {
-    headers: {
-      'Content-Type': 'application/json',
+    JSON.stringify(data.values),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
     },
-  },
   );
   return alert(response.data.message);
 };
@@ -49,17 +50,19 @@ export const fetchGroup = async () => {
   try {
     const response = await axiosInstance.get(`${import.meta.env.VITE_BASE_URL}/group/getAll`);
     return response.data.data;
-  }
-  catch (error) {
+  } catch (error) {
     throw error;
   }
 };
 export const detailGroup = async (id) => {
-  const response = await axiosInstance.get(`${import.meta.env.VITE_BASE_URL}/group/getDetail/${id}`);
+  const response = await axiosInstance.get(
+    `${import.meta.env.VITE_BASE_URL}/group/getDetail/${id}`,
+  );
   return response.data.data;
 };
 export const addGroup = async (initialValuesCreateGroup) => {
-  const response = await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/group/create`,
+  const response = await axiosInstance.post(
+    `${import.meta.env.VITE_BASE_URL}/group/create`,
     JSON.stringify(initialValuesCreateGroup),
     {
       headers: {
@@ -70,7 +73,8 @@ export const addGroup = async (initialValuesCreateGroup) => {
   return alert(response.data.message);
 };
 export const UpdateGroup = async (valuesUpdateGroup) => {
-  const response = await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/group/update/${valuesUpdateGroup._id}`,
+  const response = await axiosInstance.post(
+    `${import.meta.env.VITE_BASE_URL}/group/update/${valuesUpdateGroup._id}`,
     JSON.stringify(valuesUpdateGroup),
     {
       headers: {
@@ -85,7 +89,6 @@ export const AllUser = async () => {
   const response = await axiosInstance.get(`${import.meta.env.VITE_BASE_URL}/user/getAll`);
   return response.data.data;
 };
-
 
 // Workspaces
 export const fetchWorkspaces = async () => {
@@ -212,13 +215,13 @@ export const fetchInfoUser = async () => {
 
 export const fetchApprove = async (id) => {
   try {
-    const response = await axiosInstance.get(`${import.meta.env.VITE_BASE_URL}/request/getApproves/${id}`);
+    const response = await axiosInstance.get(
+      `${import.meta.env.VITE_BASE_URL}/request/getApproves/${id}`,
+    );
     return response.data;
-  }
-  catch(error)
-  {
+  } catch (error) {
     console.error(error);
-    throw error
+    throw error;
   }
 };
 
@@ -228,17 +231,20 @@ export const fetchMember = async () => {
   return response.data.data;
 };
 export const approveRequest = async (requestId, typeApprove) => {
-  return await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/request/approve/${requestId}`, {type_approve: typeApprove});
-}
+  return await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/request/approve/${requestId}`, {
+    type_approve: typeApprove,
+  });
+};
 
 export const revertRequest = async (requestId) => {
   return await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/request/revert/${requestId}`);
-}
+};
 
 export const updateRequest = async (data) => {
-  const {requestId, values} = data
+  const { requestId, values } = data;
 
-  const response = await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/request/update/${requestId}`,
+  const response = await axiosInstance.post(
+    `${import.meta.env.VITE_BASE_URL}/request/update/${requestId}`,
     JSON.stringify(values),
     {
       headers: {
@@ -246,8 +252,7 @@ export const updateRequest = async (data) => {
       },
     },
   );
-}
-
+};
 
 export const addMember = async (data) => {
   const json = {
