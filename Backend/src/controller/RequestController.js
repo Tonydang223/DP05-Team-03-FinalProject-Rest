@@ -294,7 +294,7 @@ class RequestController {
         { $set: { status: STATUS_REQUEST[1] } },
         { multi: true },
       ).then(async () => {
-        const requests = await RequestModel.find();
+        const requests = await RequestModel.find().populate('user', '-password');
         res.status(200).json({ message: 'Get the requests successfully!', data: [...requests] });
       });
     } catch (error) {
@@ -303,7 +303,10 @@ class RequestController {
   }
   async getDetailRequests(req, res) {
     try {
-      const request = await RequestModel.findOne({ _id: req.params.id });
+      const request = await RequestModel.findOne({ _id: req.params.id }).populate(
+        'user',
+        '-password',
+      );
       res
         .status(200)
         .json({ message: 'Get the requests successfully!', data: { ...request._doc } });
