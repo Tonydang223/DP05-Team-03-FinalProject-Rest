@@ -134,19 +134,42 @@ const AccountTable = ({dataAccountRequest, checkRole, name}) => {
       title: 'Actions',
       dataIndex: 'actions',
       key: 'actions',
-      render: (_, record) => (
-        <Space size='middle'>
-          <a style={{ fontSize: '20px' }} title={isTitle} onClick={showEdit}>
-            <EditFilled style={{ color: 'blue' }} />
-          </a>
-          <a style={{ fontSize: '20px' }} title={isTitle} onClick={showModalApprove}>
-            <CheckCircleFilled  />
-          </a>
-          <a style={{ fontSize: '20px' }} title={isTitle} onClick={showModalReject}>
-            <CloseCircleFilled />
-          </a>
-        </Space>
-      ),
+      render: (_, record) => 
+      {
+        if(record.check_approver === 0) {
+          return (
+            <Space size='middle'>
+              {/* <a style={{ fontSize: '20px' }} title={isTitle}>
+                <EditFilled/>
+              </a> */}
+              <a style={{ fontSize: '20px' }} title={isTitle} onClick={showModalApprove}>
+                <CheckCircleFilled  />
+              </a>
+              <a style={{ fontSize: '20px' }} title={isTitle} onClick={showModalReject}>
+                <CloseCircleFilled />
+              </a>
+            </Space>
+          )
+        } else {
+          return (
+            <Space size='middle'>
+              <a style={{ fontSize: '20px' }} title={isTitle} onClick={showEdit}>
+                <UndoOutlined/>
+              </a>
+              {/* <a style={{ fontSize: '20px' }} title={isTitle}>
+                <EditFilled/>
+              </a> */}
+              <a style={{ fontSize: '20px' }} title={isTitle} onClick={showModalApprove}>
+                <CheckCircleFilled  />
+              </a>
+              <a style={{ fontSize: '20px' }} title={isTitle} onClick={showModalReject}>
+                <CloseCircleFilled />
+              </a>
+            </Space>
+          );
+        }
+        
+      },
       className: name === 'request' ? '':'hidden-column'
     },
   ];

@@ -35,18 +35,19 @@ const AccountRequest = () => {
                         : moment(request.from).format('LL')
                     }`,
                     quantity: request.quantity,
-                    requester: `${request.user.firstName + ' ' +request.user.lastName}`,
+                    requester: `${(request.user.firstName + ' ' +request.user.lastName) ? (request.user.firstName + '' + request.user.lastName) : ''}`,
                     status: request.status,
                     verifier: ` ${verifier.data.approve.length} / ${verifier.data.verifier}`,
+                    check_approver: verifier.data.approve.length,
                     request_date: `${moment(request.from, 'YYYYMMDD').fromNow()}`,
                 };
         });
-        const resolvedData = await Promise.all(requestsWithUserData);
-        setData(resolvedData);
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false); // Stop loading in case of error
-        console.error(error);
+            const resolvedData = await Promise.all(requestsWithUserData);
+            setData(resolvedData);
+            setIsLoading(false);
+        } catch (error) {
+            setIsLoading(false); // Stop loading in case of error
+            console.error(error);
       }
     };
     fetchData();
