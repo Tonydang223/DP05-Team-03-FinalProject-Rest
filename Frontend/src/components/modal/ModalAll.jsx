@@ -82,12 +82,7 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
                 options={options}
               />
             </Form.Item>
-            <Form.Item
-              wrapperCol={{
-                offset: 8,
-                span: 16,
-              }}
-            >
+            <Form.Item>
               <Button
                 htmlType='button'
                 onClick={onCancel}
@@ -133,11 +128,11 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
               name='status'
               label='Status'
               rules={[{ required: true, message: 'Please provide status' }]}
-              style={{
-                width: '78%',
-                marginLeft: '85px',
-                marginTop: '20px',
-              }}
+              // style={{
+              //   width: '78%',
+              //   marginLeft: '85px',
+              //   marginTop: '20px',
+              // }}
             >
               <Radio.Group>
                 <Radio value='open'>open</Radio>
@@ -145,17 +140,12 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
               </Radio.Group>
             </Form.Item>
 
-            <Form.Item
-              wrapperCol={{
-                offset: 8,
-                span: 16,
-              }}
-            >
+            <Form.Item style={{ textAlign: 'center' }}>
               <Button
                 htmlType='button'
                 onClick={onCancel}
                 style={{
-                  marginTop: '15px',
+                  marginTop: '10px',
                   marginRight: '20px',
                   backgroundColor: 'red',
                   color: 'white',
