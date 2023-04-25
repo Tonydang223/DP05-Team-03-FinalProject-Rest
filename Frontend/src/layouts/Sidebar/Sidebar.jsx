@@ -40,7 +40,7 @@ export default function SideBar() {
   };
 
   const handleCancelEdit = () => {
-    setIsEditOpen(false);
+    setIsModalOpen(false);
   };
 
   // Approve modal
@@ -61,7 +61,7 @@ export default function SideBar() {
   const items = [
     getItem('Account', 'account', <UserOutlined />, [
       getItem(<Link to='/'>Dashboard</Link>, 'dashboard'),
-      getItem(<Link to='/staff/log_off_form'>Requests</Link>, 'requests'),
+      getItem(<Link to='/manager/request'>Requests</Link>, 'requests'),
       getItem(<Link to='/manager/days_off'>Days off</Link>, 'daysoff'),
     ]),
     getItem('Manager', 'manager', <TeamOutlined />, [

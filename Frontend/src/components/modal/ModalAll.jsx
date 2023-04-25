@@ -343,8 +343,297 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
       )}
 
       {name === 'Add_Member' && (
-        <Modal title={title} open={open} onOk={onOk} onCancel={onCancel}>
-          <p>Are you sure to {title}?</p>
+        <Modal title={title} open={open} onOk={onOk} onCancel={onCancel} footer={null}>
+          <h2
+            style={{
+              textAlign: 'center',
+              paddingBottom: '10px',
+              fontSize: '25px',
+              fontWeight: '600',
+            }}
+          >
+            Create a new member
+          </h2>
+          <Form
+            name='basic'
+            labelCol={{
+              span: 8,
+            }}
+            wrapperCol={{
+              span: 16,
+            }}
+            style={{
+              maxWidth: 600,
+            }}
+            initialValues={{
+              remember: true,
+            }}
+            autoComplete='off'
+          >
+            <Form.Item
+              label='Name'
+              name='name'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input name of member',
+                },
+              ]}
+              hasFeedback
+            >
+              <Input />
+            </Form.Item>
+
+            <Form.Item
+              label='Email'
+              name='email'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input email of member',
+                },
+                { type: 'email' },
+              ]}
+              hasFeedback
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label='Password'
+              name='password'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input password',
+                },
+                {
+                  validator: (_, value) =>
+                    !value.includes(' ')
+                      ? Promise.resolve()
+                      : Promise.reject(new Error('No spaces allowed')),
+                },
+                {
+                  min: 8,
+                },
+              ]}
+              hasFeedback
+            >
+              <Input.Password />
+            </Form.Item>
+            <Form.Item
+              label='Slack Id'
+              name='slack_id'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input slack id',
+                },
+              ]}
+              hasFeedback
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              wrapperCol={{
+                offset: 8,
+                span: 16,
+              }}
+            >
+              <Button
+                htmlType='button'
+                onClick={onCancel}
+                style={{
+                  marginRight: '20px',
+                  backgroundColor: 'red',
+                  color: 'white',
+                }}
+              >
+                Cancel
+              </Button>
+              <Button type='primary' htmlType='submit'>
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
+        </Modal>
+      )}
+
+      {name === 'Edit_Profile' && (
+        <Modal title={title} open={open} onOk={onOk} onCancel={onCancel} footer={null}>
+          <h2
+            style={{
+              textAlign: 'center',
+              paddingBottom: '10px',
+              fontSize: '25px',
+              fontWeight: '600',
+            }}
+          >
+            Edit profile account
+          </h2>
+          <Form
+            name='basic'
+            labelCol={{
+              span: 8,
+            }}
+            wrapperCol={{
+              span: 16,
+            }}
+            style={{
+              maxWidth: 600,
+            }}
+            initialValues={{
+              remember: true,
+            }}
+            autoComplete='off'
+          >
+            <Form.Item
+              label='Name'
+              name='name'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input name of account',
+                },
+              ]}
+              hasFeedback
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label='Email'
+              name='email'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input email of account',
+                },
+                { type: 'email' },
+              ]}
+              hasFeedback
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              wrapperCol={{
+                offset: 8,
+                span: 16,
+              }}
+            >
+              <Button
+                htmlType='button'
+                onClick={onCancel}
+                style={{
+                  marginRight: '20px',
+                  backgroundColor: 'red',
+                  color: 'white',
+                }}
+              >
+                Cancel
+              </Button>
+              <Button type='primary' htmlType='submit'>
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
+        </Modal>
+      )}
+      {name === 'ChangePassword' && (
+        <Modal title={title} open={open} onOk={onOk} onCancel={onCancel} footer={null}>
+          <h2
+            style={{
+              textAlign: 'center',
+              paddingBottom: '10px',
+              fontSize: '25px',
+              fontWeight: '600',
+            }}
+          >
+            Change password account
+          </h2>
+          <Form
+            name='basic'
+            labelCol={{
+              span: 10,
+            }}
+            wrapperCol={{
+              span: 14,
+            }}
+            style={{
+              maxWidth: 600,
+            }}
+            initialValues={{
+              remember: true,
+            }}
+            autoComplete='off'
+          >
+            <Form.Item
+              label='Old password'
+              name='old_password'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input old password',
+                },
+              ]}
+              hasFeedback
+            >
+              <Input.Password />
+            </Form.Item>
+            <Form.Item
+              label='New password'
+              name='new_password'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input new password',
+                },
+              ]}
+              hasFeedback
+            >
+              <Input.Password />
+            </Form.Item>
+            <Form.Item
+              label='Confirm password'
+              name='confirm_new_password'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please confirm new password',
+                },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue('new_password') === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject('Two passwords do not match');
+                  },
+                }),
+              ]}
+              hasFeedback
+            >
+              <Input.Password />
+            </Form.Item>
+            <Form.Item
+              wrapperCol={{
+                offset: 8,
+                span: 16,
+              }}
+            >
+              <Button
+                htmlType='button'
+                onClick={onCancel}
+                style={{
+                  marginRight: '20px',
+                  backgroundColor: 'red',
+                  color: 'white',
+                }}
+              >
+                Cancel
+              </Button>
+              <Button type='primary' htmlType='submit'>
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
         </Modal>
       )}
     </>

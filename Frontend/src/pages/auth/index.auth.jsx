@@ -144,9 +144,6 @@ function LoginPage() {
                   <Col className='col-checkbox'>
                     <Checkbox className='checkbox-remember-me'>Remember me</Checkbox>
                   </Col>
-                  <Col className='link-change-password'>
-                    <a href='/'>Change password</a>
-                  </Col>
                 </Row>
                 <Button
                   block

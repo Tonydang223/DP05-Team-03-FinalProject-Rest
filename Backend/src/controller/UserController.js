@@ -86,7 +86,7 @@ class UserController {
   }
   async getUsers(req, res) {
     try {
-      const users = await UserModel.find({ role: ROLES[2] });
+      const users = await UserModel.find({ role: ROLES[2] }).select('-password');
       res.status(200).json({ message: 'Get users successfully', data: [...users] });
     } catch (error) {
       res.status(500).send({ message: error.message });

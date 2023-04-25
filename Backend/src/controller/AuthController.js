@@ -27,9 +27,10 @@ class AuthController {
     const { password, idUser } = req.body;
     console.log(req.body);
     try {
-      const user = await UserModel.findById({
+      const user = await UserModel.findOne({
         _id: idUser,
       });
+      if (!user) return res.status(400).json({ message: 'The user is not existed!' });
       const salt = await bcrypt.genSalt(10);
       const hashPassword = await bcrypt.hash(password, salt);
 
@@ -46,7 +47,7 @@ class AuthController {
   async ChangePass(req, res) {
     const { newPass, oldPass } = req.body;
     try {
-      const user = await UserModel.findById({
+      const user = await UserModel.findOne({
         _id: req.usr._id,
       });
       const salt = await bcrypt.genSalt(10);
@@ -56,11 +57,7 @@ class AuthController {
 
       if (!old) return res.status(400).json({ message: 'The password is not right!' });
 
-      await UserModel.findByIdAndUpdate(
-        { _id: req.usr._id },
-        { $set: { password: hashPassword } },
-        { new: true },
-      );
+      await user.update({ $set: { password: hashPassword } }, { new: true });
       return res.status(200).json({ message: 'Your password was changed successfully!' });
     } catch (error) {
       res.status(500).send({ message: error.message });

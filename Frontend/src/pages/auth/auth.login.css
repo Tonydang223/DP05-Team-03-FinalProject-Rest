@@ -67,7 +67,7 @@
   text-align: center;
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: space-between;
 }
 .login-other-method .text-other-method {
   font-size: 14px;
