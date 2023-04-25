@@ -92,8 +92,8 @@
 .travelers .sectionContainer .travelersContainer .singleTraveler {
   position: relative;
   height: 280px;
-  width: 80%;
-  max-width: 250px;
+  width: 300px;
+  /* max-width: 250px; */
   overflow: hidden;
   border-radius: 5rem;
   gap: 1rem;
@@ -150,10 +150,15 @@
   display: block;
   color: black;
   font-weight: 700;
+  margin-bottom: 7px;
+  font-size: 20px;
 }
 .travelers .sectionContainer .travelersContainer .singleTraveler .travelerName p {
   color: var(--PrimaryColor);
   font-style: italic;
+}
+.travelers .sectionContainer .travelersContainer .singleTraveler .travelerName .role {
+  color:#000;
 }
 @keyframes animatedBorders {
   0% {
@@ -171,6 +176,6 @@
   transition: 1s ease-in-out;
 }
 .travelers .sectionContainer .travelersContainer .singleTraveler:hover .travelerImage {
-  bottom: 110px;
+  bottom: 160px;
   transition: 1s ease-in-out;
 }
