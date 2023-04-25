@@ -40,7 +40,7 @@ export default function SideBar() {
   };
 
   const handleCancelEdit = () => {
-    setIsEditOpen(false);
+    setIsModalOpen(false);
   };
 
   // Approve modal
