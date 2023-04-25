@@ -57,7 +57,7 @@ const LogOffForm = () => {
                 <Text>Reason</Text>
               </div>
             </Col>
-            <Col xl={6} lg={6} md={6} sm={6} xs={5}>
+            <Col xl={18} lg={6} md={6} sm={6} xs={5}>
               <Form>
                 <Form.Item className='log-off'>
                   <Radio.Group onChange={onChange} value={value}>
