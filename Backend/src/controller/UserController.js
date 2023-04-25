@@ -9,6 +9,7 @@ class UserController {
     try {
       const { firstName, lastName, email, password, role, slackId } = req.body;
       const result = await web.users.list();
+      console.log(result);
       const usrs = result.members.filter((v) => !v.is_admin && !v.is_bot && v.profile.email);
       const workSpace = await WorkspaceModel.findById({ _id: req.params.id });
       if (slackId && !usrs.map((v) => v.id).includes(slackId)) {

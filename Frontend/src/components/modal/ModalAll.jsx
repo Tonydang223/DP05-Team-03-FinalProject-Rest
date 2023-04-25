@@ -239,29 +239,51 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
         </Modal>
       )}
 
-      {name === 'Edit_Password' && (
-        <Modal open={open} onOk={onOk} onCancel={onCancel}>
-          <Form.Item
-            label='Old Password'
-            name='oldpassword'
-            rules={[{ required: true, message: 'Please input your old password' }]}
-            style={{ marginTop: '20px' }}
+      {name === 'Reset_Password' && (
+        <Modal open={open} onOk={onOk} onCancel={onCancel} footer={null}>
+          <h2
+            style={{
+              textAlign: 'center',
+              paddingBottom: '10px',
+              fontSize: '23px',
+              fontWeight: '600',
+            }}
           >
-            <Input placeholder='Old Password' style={{ marginLeft: '10px', width: '300px' }} />
-          </Form.Item>
-          <Form.Item
-            label='New Password'
-            name='newpassword'
-            rules={[{ required: true, message: 'Please input your new password' }]}
-          >
-            <Input placeholder='New Password' style={{ marginLeft: '2px', width: '299px' }} />
-          </Form.Item>
+            Reset Password
+          </h2>
+
+          <Form onFinish={onFinish}>
+            <Form.Item
+              label='New Password'
+              name='password'
+              rules={[{ required: true, message: 'Please input new password' }]}
+            >
+              <Input placeholder='New Password' style={{ marginLeft: '2px', width: '299px' }} />
+            </Form.Item>
+            <Form.Item style={{ textAlign: 'center' }}>
+              <Button
+                htmlType='button'
+                onClick={onCancel}
+                style={{
+                  marginTop: '10px',
+                  marginRight: '20px',
+                  backgroundColor: 'red',
+                  color: 'white',
+                }}
+              >
+                Cancel
+              </Button>
+              <Button type='primary' htmlType='submit'>
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
         </Modal>
       )}
 
-      {name === 'Delete_Password' && (
+      {name === 'Delete_Manager' && (
         <Modal open={open} onOk={onOk} onCancel={onCancel}>
-          <p>Are you sure to delete?</p>
+          <p>Are you sure to delete this Manager?</p>
         </Modal>
       )}
 

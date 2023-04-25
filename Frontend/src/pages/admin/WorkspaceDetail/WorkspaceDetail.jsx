@@ -16,7 +16,12 @@ import {
 import './WorkSpaceDetail.css';
 import ModalAll from '../../../components/modal/ModalAll';
 import { useParams } from 'react-router-dom';
-import { detailWorkspace, setWorkspaceStatus } from './../../../services/axiosInstance';
+import {
+  detailWorkspace,
+  setWorkspaceStatus,
+  deleteManager,
+  resetPasswordManager,
+} from './../../../services/axiosInstance';
 import { useEffect, useState } from 'react';
 
 const { Content } = Layout;
@@ -28,10 +33,15 @@ const WorkspaceDetail = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTitle, setTitle] = useState('');
   const [workspace, setWorkspace] = useState(null);
+  const [manager, setManager] = useState(null);
 
   const getWorkspace = async (id) => {
     const res = await detailWorkspace(id);
     setWorkspace(res);
+  };
+
+  const deleteManagerButton = async () => {
+    await deleteManager(manager);
   };
 
   useEffect(() => {
@@ -39,7 +49,8 @@ const WorkspaceDetail = () => {
   }, [isModalOpen]);
 
   const onFinish = async (values) => {
-    await setWorkspaceStatus({ id, values });
+    isTitle === 'Set_Status' && (await setWorkspaceStatus({ id, values }));
+    isTitle === 'Reset_Password' && (await resetPasswordManager({ manager, values }));
     setIsModalOpen(false);
   };
 
@@ -66,13 +77,12 @@ const WorkspaceDetail = () => {
     {
       title: 'Action',
       key: 'action',
-
-      render: () => (
+      render: (user) => (
         <Space size='middle'>
-          <Button type='primary' title={isTitle} onClick={showEditPassword}>
+          <Button type='primary' title={isTitle} onClick={() => showEditPassword(user._id)}>
             Reset Password
           </Button>
-          <Button type='primary' title={isTitle} onClick={showDeletePassword} danger>
+          <Button type='primary' title={isTitle} onClick={() => showDeleteManager(user._id)} danger>
             Remove
           </Button>
         </Space>
@@ -80,13 +90,15 @@ const WorkspaceDetail = () => {
     },
   ];
 
-  const showEditPassword = () => {
+  const showEditPassword = (_id) => {
     setIsModalOpen(true);
-    setTitle('Edit_Password');
+    setManager(_id);
+    setTitle('Reset_Password');
   };
-  const showDeletePassword = () => {
+  const showDeleteManager = (_id) => {
     setIsModalOpen(true);
-    setTitle('Delete_Password');
+    setManager(_id);
+    setTitle('Delete_Manager');
   };
 
   const showAddApprove = () => {
@@ -95,10 +107,12 @@ const WorkspaceDetail = () => {
   };
 
   const handleApproveAdd = () => {
+    isTitle === 'Delete_Manager' && deleteManagerButton();
     setIsModalOpen(false);
   };
 
   const handleCancelAdd = () => {
+    setManager(null);
     setIsModalOpen(false);
   };
   return (

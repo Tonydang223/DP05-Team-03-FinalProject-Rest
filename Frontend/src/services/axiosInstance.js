@@ -41,3 +41,35 @@ export const setWorkspaceStatus = async (data) => {
   );
   return response.data.data;
 };
+
+export const addManager = async (data) => {
+  const response = await axiosInstance.post(
+    `http://localhost:8888/api/user/create/${data.id}`,
+    JSON.stringify(data.values),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
+  return response.data.data;
+};
+
+export const deleteManager = async (managerId) => {
+  const response = await axiosInstance.post(`http://localhost:8888/api/user/delete/${managerId}`);
+  return response.data.data;
+};
+
+export const resetPasswordManager = async (data) => {
+  const json = { idUser: data.manager, password: data.values.password };
+  const response = await axiosInstance.post(
+    `http://localhost:8888/api/auth/resetPassword`,
+    JSON.stringify(json),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
+  return response.data.data;
+};
