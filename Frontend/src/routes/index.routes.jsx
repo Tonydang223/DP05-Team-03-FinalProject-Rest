@@ -13,7 +13,7 @@ import AccountRequest from '../pages/manager/accountRequest/AccountRequest';
 import ProtectedRoute from './protectedRoute.route';
 import { PageNotFound } from '../components/404';
 import { PageNotAuthor } from '../components/403';
-import Member from '../pages/manager/managerMember';
+import Member from '../pages/manager/managerMember/managerMember';
 import GroupDetail from '../pages/manager/groupDetail/groupDetails.manager';
 import Profile from '../pages/auth/Profile/Profile';
 
@@ -41,7 +41,7 @@ const AppRouter = (req, res) => {
             <Route path='/manager/request' exact element={<AccountRequest />} />
             <Route path='/manager/groups/groups-details' exact element={<GroupDetail />} />
             {/* <Route path='/manager/days_off' exact element={<AdminPage />} /> */}
-            <Route path='/manager/member' exact element={<Member />} />
+            <Route path='/manager/members' exact element={<Member />} />
             <Route path='/manager/member-details' exact element={<MemberDetails />} />
             <Route path='/manager/dayoff/details' exact element={<DayoffDetails />} />
           </Route>

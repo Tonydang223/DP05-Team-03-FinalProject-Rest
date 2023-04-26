@@ -185,7 +185,7 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
 
           <Form name='basic' autoComplete='off' onFinish={onFinish}>
             <Form.Item name='status' label='Status' initialValue='open'>
-              <Radio.Group defaultValue='open'>
+              <Radio.Group>
                 <Radio value='open'>open</Radio>
                 <Radio value='close'>close</Radio>
               </Radio.Group>
@@ -386,106 +386,71 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
       )}
 
       {name === 'Add_Member' && (
-        <Modal title={title} open={open} onOk={onOk} onCancel={onCancel} footer={null}>
+        <Modal open={open} onOk={onOk} onCancel={onCancel} footer={null}>
           <h2
             style={{
               textAlign: 'center',
               paddingBottom: '10px',
-              fontSize: '25px',
+              fontSize: '23px',
               fontWeight: '600',
             }}
           >
-            Create a new member
+            Add Member
           </h2>
-          <Form
-            name='basic'
-            labelCol={{
-              span: 8,
-            }}
-            wrapperCol={{
-              span: 16,
-            }}
-            style={{
-              maxWidth: 600,
-            }}
-            initialValues={{
-              remember: true,
-            }}
-            autoComplete='off'
-          >
+
+          <Form name='basic' autoComplete='off' onFinish={onFinish} {...formItemLayout}>
             <Form.Item
-              label='Name'
-              name='name'
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input name of member',
-                },
-              ]}
+              label='First Name'
+              name='firstName'
+              rules={[{ required: true, message: 'Please input first name' }]}
               hasFeedback
             >
-              <Input />
+              <Input placeholder='First Name' />
             </Form.Item>
-
+            <Form.Item
+              label='Last Name'
+              name='lastName'
+              rules={[{ required: true, message: 'Please input last name' }]}
+              hasFeedback
+            >
+              <Input placeholder='Last Name' />
+            </Form.Item>
             <Form.Item
               label='Email'
               name='email'
               rules={[
                 {
-                  required: true,
-                  message: 'Please input email of member',
+                  type: 'email',
+                  message: 'The input is not valid E-mail!',
                 },
-                { type: 'email' },
+                { required: true, message: 'Please input manager email' },
               ]}
               hasFeedback
             >
-              <Input />
+              <Input placeholder='Manager Email' />
             </Form.Item>
             <Form.Item
               label='Password'
               name='password'
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input password',
-                },
-                {
-                  validator: (_, value) =>
-                    !value.includes(' ')
-                      ? Promise.resolve()
-                      : Promise.reject(new Error('No spaces allowed')),
-                },
-                {
-                  min: 8,
-                },
-              ]}
+              rules={[{ required: true, message: 'Please input password' }]}
               hasFeedback
             >
               <Input.Password />
             </Form.Item>
             <Form.Item
               label='Slack Id'
-              name='slack_id'
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input slack id',
-                },
-              ]}
+              name='slackId'
+              rules={[{ required: true, message: 'Please input manager slack Id' }]}
               hasFeedback
             >
-              <Input />
+              <Input placeholder='U055GG1R132' />
             </Form.Item>
-            <Form.Item
-              wrapperCol={{
-                offset: 8,
-                span: 16,
-              }}
-            >
+            <Form.Item style={{ textAlign: 'center' }}>
               <Button
                 htmlType='button'
                 onClick={onCancel}
                 style={{
+                  marginTop: '10px',
                   marginRight: '20px',
                   backgroundColor: 'red',
                   color: 'white',

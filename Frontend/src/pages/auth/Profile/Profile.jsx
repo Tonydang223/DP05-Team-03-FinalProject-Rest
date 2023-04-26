@@ -1,15 +1,26 @@
-import React, { useState } from 'react';
-import { Layout, Breadcrumb, theme, Col, Row, Image, Space, Typography, Button } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Layout, Breadcrumb, theme, Col, Row, Avatar, Space, Typography, Button } from 'antd';
 import './Profile.css';
 import image from '../../../assets/img/CoverProfile.png';
-import Avatar from '../../../assets/img/traveler1.png';
 const { Title, Text } = Typography;
 const { Content } = Layout;
 import ModalAll from '../../../../src/components/modal/ModalAll';
+import { fetchUser } from './../../../services/axiosInstance';
+import { UserOutlined } from '@ant-design/icons';
 
 const Profile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTitle, setTitle] = useState('');
+  const [profile, setProfile] = useState('');
+
+  const fetchUserProfile = async () => {
+    const res = await fetchUser();
+    setProfile(res);
+  };
+
+  useEffect(() => {
+    fetchUserProfile();
+  }, [isModalOpen]);
 
   const showEditProfile = () => {
     setIsModalOpen(true);
@@ -58,15 +69,20 @@ const Profile = () => {
               <div className='travelersContainer grid'>
                 <div className='singleTraveler'>
                   <img src={image} className='destinationImage' />
-
                   <div className='travelerDetails'>
                     <div className='travelerPicture'>
-                      <img src={Avatar} className='travelerImage' />
+                      {profile?.img_profile ? (
+                        <Avatar size='large' src={profile?.img_profile} className='travelerImage' />
+                      ) : (
+                        <Avatar size='large' icon={<UserOutlined />} className='travelerImage' />
+                      )}
                     </div>
                     <div className='travelerName'>
-                      <span>VanHuy</span>
-                      <p>vanhuy141520@gmail.com</p>
-                      <p className='role'>Staff</p>
+                      <span>
+                        {profile?.firstName} {profile?.lastName}
+                      </span>
+                      <p>{profile?.email}</p>
+                      <p className='role'>{profile?.role}</p>
                     </div>
                   </div>
                 </div>

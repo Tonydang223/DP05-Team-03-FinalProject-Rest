@@ -1,6 +1,5 @@
 .profile-container {
   background: url(../../../assets/img/background.jpg);
-  border-radius: 10px;
   margin-top: 80px;
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
   margin-top: 20px;
@@ -39,7 +38,6 @@
 }
 .profile-container .content-info{
   background: #f8f9ff;
-  border-radius: 50px;
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
   /* margin-left: 15px; */
 }
@@ -74,7 +72,7 @@
   text-align: center;
 }
 .travelers .sectionContainer .travelersContainer {
-  margin-top: 1rem;
+  margin-top: 2rem;
   gap: 1.5rem;
   display: flex;
   flex-direction: column;
@@ -85,7 +83,6 @@
   width: 300px;
   /* max-width: 250px; */
   overflow: hidden;
-  border-radius: 2rem;
   gap: 1rem;
   margin: auto;
 }
@@ -107,11 +104,10 @@
   width: 60px;
   -o-object-fit: cover;
      object-fit: cover;
-  border-radius: 50%;
   bottom: 30px;
   left: 40%;
   transform: translateX(-50%);
-  border: 5px solid var(--colorTwo);
+  border: 2px solid var(--colorTwo);
   transition: var(--transition);
   animation: animated 2.3s infinite;
 }
@@ -155,7 +151,7 @@
     border-radius: 0rem;
   }
   50% {
-    border-radius: 2rem;
+    border-radius: 0rem;
   }
   100% {
     border-radius: 0rem;
@@ -168,4 +164,11 @@
 .travelers .sectionContainer .travelersContainer .singleTraveler:hover .travelerImage {
   bottom: 160px;
   transition: 1s ease-in-out;
+}
+
+@media (max-width: 356px) {
+  .form-login {
+    width: 65vw;
+    height: 75vh;
+  }
 }
