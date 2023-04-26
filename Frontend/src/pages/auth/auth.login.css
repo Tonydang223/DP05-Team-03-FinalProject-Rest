@@ -103,7 +103,7 @@
     height: 60px;
   }
   .form-login {
-    width: 65vw;
+    width: 90vw;
     height: 90vh !important;
   }
   .right-form-login .title-login {
@@ -199,6 +199,7 @@
 @media (max-width: 466px) {
   .login-other-method {
     flex-direction: column;
+    gap: 10px;
   }
 
   .link-change-password {

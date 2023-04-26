@@ -7,7 +7,7 @@ import DayoffDetails from '../pages/staff/dayoffDetails.staff';
 import LogOffForm from '../pages/staff/LogOff/LogOffForm';
 import Workspaces from '../pages/admin/Workspaces';
 import WorkspaceDetail from '../pages/admin/WorkspaceDetail/WorkspaceDetail';
-import AdminPage from '../pages/admin/index.admin';
+import DashboardPage from '../pages/dashboard/dashboard';
 import MemberDetails from '../pages/manager/memberDetail/MemberDetails';
 import AccountRequest from '../pages/manager/accountRequest/AccountRequest';
 import ProtectedRoute from './protectedRoute.route';
@@ -25,7 +25,8 @@ const AppRouter = (req, res) => {
         {/* auth route */}
         <Route path='/login' exact element={<LoginPage />} />
         <Route path='/' exact element={<Layouts />}>
-        <Route path='/profile' exact element={<Profile />} />
+          <Route path='/dashboard' exact element={<DashboardPage />} />
+          <Route path='/profile' exact element={<Profile />} />
           {/* admin route */}
           <Route path='/admin' element={<ProtectedRoute role={'Admin'} />}>
             <Route path='/admin/*' exact element={<PageNotAuthor />} />
@@ -37,12 +38,12 @@ const AppRouter = (req, res) => {
           <Route path='/manager' element={<ProtectedRoute role={'Manager'} />}>
             <Route path='/manager/*' exact element={<PageNotAuthor />} />
             <Route path='/manager/groups' exact element={<ManagerPage />} />
-            <Route path='/manager/request' exact element={<AccountRequest/>}/>
+            <Route path='/manager/request' exact element={<AccountRequest />} />
             <Route path='/manager/groups/groups-details' exact element={<GroupDetail />} />
-            <Route path='/manager/days_off' exact element={<AdminPage />} />
-            <Route path='/manager/member' exact element={<Member/>} />
+            {/* <Route path='/manager/days_off' exact element={<AdminPage />} /> */}
+            <Route path='/manager/member' exact element={<Member />} />
             <Route path='/manager/member-details' exact element={<MemberDetails />} />
-            <Route path='/manager/dayoff/details' exact element={<DayoffDetails/>}/>
+            <Route path='/manager/dayoff/details' exact element={<DayoffDetails />} />
           </Route>
 
           {/* staff route */}

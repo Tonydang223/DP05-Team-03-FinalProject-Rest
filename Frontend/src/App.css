@@ -11,21 +11,6 @@
   background-color: white;
 }
 
-.ant-btn-primary {
-  background-color: #12131a;
-}
-
-.ant-pagination-item {
-  border: none !important;
-}
-
-.ant-pagination-item a {
-  color: black !important;
-  border: 1px solid #d9d9d9 !important;
-  background-color: white;
-  border-radius: 5px !important;
-}
-
 ul.ant-pagination.ant-table-pagination.ant-table-pagination-right {
   justify-content: center !important;
   margin: 25px 0 0 0 !important;
