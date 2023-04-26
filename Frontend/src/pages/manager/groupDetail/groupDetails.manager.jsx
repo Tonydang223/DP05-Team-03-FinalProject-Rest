@@ -55,7 +55,6 @@ export default function GroupDetailsPage() {
     const user = await AllUser();
     setAllUser(user);
   };
-
   if (allUser) {
     for (let i = 0; i < allUser.length; i++) {
       const element = allUser[i];
