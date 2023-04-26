@@ -9,11 +9,12 @@ import {
   UndoOutlined,
 } from '@ant-design/icons';
 import ModalAll from '../modal/ModalAll';
-import './accountStyle.css'
-import {Link} from 'react-router-dom';
+import './accountStyle.css';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-
-const AccountTable = ({dataAccountRequest, checkRole, name}) => {
+const AccountTable = ({ dataAccountRequest, checkRole, name, onClick }) => {
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isTitle, setTitle] = useState('');
@@ -64,20 +65,27 @@ const AccountTable = ({dataAccountRequest, checkRole, name}) => {
       title: 'Request for Date',
       dataIndex: 'request_for_date',
       key: 'request_for_date',
-      render: (text) => {
-      if(checkRole === 'Manager')
-      {
-        return (
-          <Link to='/manager/dayoff/details'>{text}</Link>
-        )
-      }
-      else if (checkRole === 'Staff')
-        {
+      render: (text, record) => {
+        if (checkRole === 'Manager') {
           return (
-            <Link to='/staff/dayoff/details'>{text}</Link>
-          )
+            <div
+              // to='/manager/dayoff/details'
+              onClick={() => {
+                record._id,
+                  console.log(
+                    '🚀 ~ file: AccountTable.jsx:74 ~ AccountTable ~ record._id:',
+                    record._id,
+                  );
+                navigate(`/manager/dayoff/details/${record._id}`);
+              }}
+            >
+              {text}
+            </div>
+          );
+        } else if (checkRole === 'Staff') {
+          return <Link to='/staff/dayoff/details'>{text}</Link>;
         }
-      }
+      },
     },
     {
       title: 'Quantity',
@@ -87,80 +95,67 @@ const AccountTable = ({dataAccountRequest, checkRole, name}) => {
     {
       title: 'Requester',
       dataIndex: 'requester',
-      key: 'requester'
+      key: 'requester',
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      render: (status) => {          
-            switch (status) {
-              case 'Rejected':
-                return (
-                  <Tag color="#eb2f06">
-                      {status}
-                  </Tag>
-                )
-                break;
-              case 'Approved':
-                return (
-                  <Tag color="#583da1">
-                      {status}
-                  </Tag>
-                )
-                case 'Pending':
-                  return (
-                    <Tag color="#f6b93b">
-                        {status}
-                    </Tag>
-                  )
-              default:
-                break;
-            }
-      }
+      render: (status) => {
+        switch (status) {
+          case 'Rejected':
+            return <Tag color='#eb2f06'>{status}</Tag>;
+            break;
+          case 'Approved':
+            return <Tag color='#583da1'>{status}</Tag>;
+          case 'Pending':
+            return <Tag color='#f6b93b'>{status}</Tag>;
+          default:
+            break;
+        }
+      },
     },
     {
       title: 'Verifier',
       dataIndex: 'verifier',
       key: 'verifier',
-      className: name === 'request' ? '':'hidden-column'
+      className: name === 'request' ? '' : 'hidden-column',
     },
     {
       title: 'Request Date',
       dataIndex: 'request_date',
-      key: 'request_date'
+      key: 'request_date',
     },
     {
       title: 'Actions',
       dataIndex: 'actions',
       key: 'actions',
-      render: (_, record) => 
-      {
-        if(record.check_approver === 0) {
+      render: (_, record) => {
+        if (record.check_approver === 0) {
           return (
             <Space size='middle'>
               {/* <a style={{ fontSize: '20px' }} title={isTitle}>
                 <EditFilled/>
               </a> */}
               <a style={{ fontSize: '20px' }} title={isTitle} onClick={showModalApprove}>
-                <CheckCircleFilled  />
+                <CheckCircleFilled />
               </a>
               <a style={{ fontSize: '20px' }} title={isTitle} onClick={showModalReject}>
                 <CloseCircleFilled />
               </a>
             </Space>
-          )
+          );
         } else {
           return (
             <Space size='middle'>
               <a style={{ fontSize: '20px' }} title={isTitle} onClick={showEdit}>
-                <UndoOutlined/>
+                <UndoOutlined />
               </a>
               {/* <a style={{ fontSize: '20px' }} title={isTitle}>
                 <EditFilled/>
               </a> */}
               <a style={{ fontSize: '20px' }} title={isTitle} onClick={showModalApprove}>
-                <CheckCircleFilled  />
+                <CheckCircleFilled />
               </a>
               <a style={{ fontSize: '20px' }} title={isTitle} onClick={showModalReject}>
                 <CloseCircleFilled />
@@ -168,14 +163,18 @@ const AccountTable = ({dataAccountRequest, checkRole, name}) => {
             </Space>
           );
         }
-        
       },
-      className: name === 'request' ? '':'hidden-column'
+      className: name === 'request' ? '' : 'hidden-column',
     },
   ];
   return (
     <>
-      <Table rowKey={record => record._id} columns={columns} dataSource={dataAccountRequest} scroll={{ x: true }} />
+      <Table
+        rowKey={(record) => record._id}
+        columns={columns}
+        dataSource={dataAccountRequest}
+        scroll={{ x: true }}
+      />
       <ModalAll
         name={isTitle}
         title={isTitle}
