@@ -15,16 +15,6 @@ import {
 } from './../../../services/axiosInstance';
 import { useEffect, useState } from 'react';
 
-import { useParams } from 'react-router-dom';
-import {
-  detailWorkspace,
-  setWorkspaceStatus,
-  deleteManager,
-  resetPasswordManager,
-  addManager,
-} from './../../../services/axiosInstance';
-import { useEffect, useState } from 'react';
-
 const { Content } = Layout;
 const { Title } = Typography;
 
@@ -126,7 +116,7 @@ const WorkspaceDetail = () => {
   //manager
   const showAddManagerModal = () => {
     setIsModalOpen(true);
-    setTitle('Set_Status');
+    setTitle('Add_Manager');
   };
 
   //Modal Actions
