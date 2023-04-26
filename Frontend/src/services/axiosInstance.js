@@ -169,3 +169,17 @@ export const addMember = async (data) => {
   );
   return alert(response.data.message);
 };
+
+export const fetchDayoffDetails = async (id) => {
+  const response = await axiosInstance.get(
+    `${import.meta.env.VITE_BASE_URL}/request/getDetail/${id}`,
+  );
+  return response.data.data;
+};
+
+export const fetchDayoffHistory = async (id) => {
+  const response = await axiosInstance.get(
+    `${import.meta.env.VITE_BASE_URL}/request/getHistories/${id}`,
+  );
+  return response.data.data;
+};
