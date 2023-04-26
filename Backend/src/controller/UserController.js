@@ -1,19 +1,25 @@
 const { ROLES } = require('../config/constants');
 const { web } = require('../config/slackBot');
 const { upload } = require('../config/uploadCloud');
+const notiModel = require('../model/noti.model');
 const UserModel = require('../model/user.model');
+const workspaceModel = require('../model/workspace.model');
 const WorkspaceModel = require('../model/workspace.model');
 
 class UserController {
   async createUser(req, res) {
     try {
-      const { firstName, lastName, email, password, role, slackId } = req.body;
+      const { firstName, lastName, email, password, role, slackId, idWs } = req.body;
       const result = await web.users.list();
       console.log(result);
       const usrs = result.members.filter((v) => !v.is_admin && !v.is_bot && v.profile.email);
-      const workSpace = await WorkspaceModel.findById({ _id: req.params.id });
+      const noti = await notiModel.find();
+      //MAPPING NOTI BY EMAIL
       if (slackId && !usrs.map((v) => v.id).includes(slackId)) {
-        if (workSpace.isMappingByEmail && usrs.findIndex((i) => i.profile.email === email) === -1) {
+        if (
+          noti[0].workSpace.isMappingByEmail &&
+          usrs.findIndex((i) => i.profile.email === email) === -1
+        ) {
           return res.status(400).json({ message: 'The email is not included in slack!' });
         }
         return res.status(400).json({ message: 'The slackId is not existed!' });
@@ -28,7 +34,18 @@ class UserController {
         password,
         role,
       });
-      await workSpace.update({ $push: { user: user._id } }, { new: true });
+      //ADMIN CREATE MANAGER
+      if (req.usr.role === ROLES[0]) {
+        if (idWs) {
+          await workspaceModel.findOneAndUpdate(
+            { _id: idWs },
+            { $push: { user: user._id } },
+            { new: true },
+          );
+        } else {
+          return res.status(400).json({ message: 'The id workspace not include!' });
+        }
+      }
       const savedUser = await user.save();
 
       const newUser = { ...savedUser._doc };
@@ -88,6 +105,18 @@ class UserController {
     try {
       const users = await UserModel.find({ role: ROLES[2] }).select('-password');
       res.status(200).json({ message: 'Get users successfully', data: [...users] });
+    } catch (error) {
+      res.status(500).send({ message: error.message });
+    }
+  }
+  async isActiveMappingByEmail(req, res) {
+    try {
+      const noti = await notiModel.find();
+      await noti[0].update(
+        { $set: { isMappingByEmail: req.body.isMappingByEmail } },
+        { new: true },
+      );
+      res.status(200).json({ message: 'Update noti successfully!' });
     } catch (error) {
       res.status(500).send({ message: error.message });
     }

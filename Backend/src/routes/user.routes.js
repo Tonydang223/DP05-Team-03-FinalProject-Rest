@@ -6,9 +6,14 @@ const { ROLES } = require('../config/constants');
 const router = express.Router();
 
 router.post('/update', userAuthPermission(), upload.single('avatar'), UserController.updateProfile);
-router.post('/create/:id', userAuthPermission([ROLES[0], ROLES[1]]), UserController.createUser);
+router.post('/create', userAuthPermission([ROLES[0], ROLES[1]]), UserController.createUser);
 router.post('/delete/:id', userAuthPermission([ROLES[0]]), UserController.deleteUser);
 router.get('/getProfile', userAuthPermission(), UserController.getProfile);
 router.get('/getAll', userAuthPermission(), UserController.getUsers);
+router.post(
+  '/setMappingByEmail',
+  userAuthPermission([ROLES[1]]),
+  UserController.isActiveMappingByEmail,
+);
 
 module.exports = router;
