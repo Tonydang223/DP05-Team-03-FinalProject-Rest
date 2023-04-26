@@ -5,6 +5,32 @@ export const fetchUser = async () => {
   return response.data.data;
 };
 
+export const editProfile = async (data) => {
+  const response = await axiosInstance.post(
+    `http://localhost:8888/api/user/update`,
+    JSON.stringify(data.values),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
+  return alert(response.data.message);
+};
+
+export const changePasswordUser = async (data) => {
+  const response = await axiosInstance.post(
+    `http://localhost:8888/api/auth/changePassword`,
+    JSON.stringify(data.values),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
+  return alert(response.data.message);
+};
+
 // Workspaces
 export const fetchWorkspaces = async () => {
   const response = await axiosInstance.get(`http://localhost:8888/api/workspace/getAll`);

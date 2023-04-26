@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Breadcrumb, theme, Col, Row, Avatar, Space, Typography, Button } from 'antd';
+import { Layout, Breadcrumb, theme, Avatar, Space, Button } from 'antd';
 import './Profile.css';
 import image from '../../../assets/img/CoverProfile.png';
-const { Title, Text } = Typography;
 const { Content } = Layout;
 import ModalAll from '../../../../src/components/modal/ModalAll';
-import { fetchUser } from './../../../services/axiosInstance';
+import { fetchUser, editProfile, changePasswordUser } from './../../../services/axiosInstance';
 import { UserOutlined } from '@ant-design/icons';
 
 const Profile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTitle, setTitle] = useState('');
   const [profile, setProfile] = useState('');
+
+  const onFinish = async (values) => {
+    isTitle === 'Edit_Profile' && (await editProfile({ values }));
+    isTitle === 'ChangePassword' && (await changePasswordUser({ values }));
+
+    setIsModalOpen(false);
+  };
 
   const fetchUserProfile = async () => {
     const res = await fetchUser();
@@ -50,13 +56,16 @@ const Profile = () => {
         style={{
           margin: '16px 0',
         }}
-      >
-        <Breadcrumb.Item>Auth</Breadcrumb.Item>
-        <Breadcrumb.Item>Profile</Breadcrumb.Item>
-      </Breadcrumb>
+        items={[
+          {
+            title: 'My Profile',
+          },
+        ]}
+      />
+
       <div
         style={{
-          padding: 24,
+          padding: 50,
           minHeight: 530,
           background: colorBgContainer,
           justifyContent: 'center',
@@ -89,7 +98,7 @@ const Profile = () => {
               </div>
             </div>
           </div>
-          <Space wrap className='button'>
+          <Space wrap className='button' style={{ justifyContent: 'center' }}>
             <Button
               title={isTitle}
               onClick={showEditProfile}
@@ -109,6 +118,7 @@ const Profile = () => {
               Change password
             </Button>
             <ModalAll
+              onFinish={onFinish}
               name={isTitle}
               open={isModalOpen}
               onOk={handApproveAdd}
