@@ -25,17 +25,7 @@ function LoginPage() {
 
   const renderRoute = (isLoggedIn, userRole) => {
     if (isLoggedIn) {
-      switch (userRole) {
-        case 'Admin':
-          navigate('/admin');
-          break;
-        case 'Manager':
-          navigate('/manager');
-          break;
-        case 'Staff':
-          navigate('/staff');
-          break;
-      }
+      navigate('/dashboard');
     }
   };
 

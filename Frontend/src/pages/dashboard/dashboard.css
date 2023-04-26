@@ -1,0 +1,19 @@
+.card-dashboard {
+  margin: 50px;
+  padding: 10px;
+}
+
+@media screen and (max-width: 830px) {
+  .card-dashboard {
+    margin: 40px;
+    padding: 7px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .card-dashboard {
+    margin: 0px;
+    margin-top: 10px;
+    padding: 0px;
+  }
+}

@@ -2,6 +2,7 @@ import React from 'react';
 import { Table, Button, Space, Layout, theme, Breadcrumb, Typography, Col, Row } from 'antd';
 import './WorkSpaceDetail.css';
 import ModalAll from '../../../components/modal/ModalAll';
+import { EditOutlined } from '@ant-design/icons';
 
 import { useParams } from 'react-router-dom';
 import {
@@ -10,6 +11,7 @@ import {
   deleteManager,
   resetPasswordManager,
   addManager,
+  editWorkspace,
 } from './../../../services/axiosInstance';
 import { useEffect, useState } from 'react';
 
@@ -53,6 +55,7 @@ const WorkspaceDetail = () => {
     isTitle === 'Set_Status' && (await setWorkspaceStatus({ id, values }));
     isTitle === 'Reset_Password' && (await resetPasswordManager({ manager, values }));
     isTitle === 'Add_Manager' && (await addManager({ id, values }));
+    isTitle === 'Edit_Workspace' && (await editWorkspace({ id, values }));
 
     setIsModalOpen(false);
   };
@@ -106,6 +109,12 @@ const WorkspaceDetail = () => {
     setIsModalOpen(true);
     setManager(_id);
     setTitle('Delete_Manager');
+  };
+
+  //edit workspace name
+  const showEditWorkspaceName = () => {
+    setIsModalOpen(true);
+    setTitle('Edit_Workspace');
   };
 
   //status
@@ -163,7 +172,18 @@ const WorkspaceDetail = () => {
       >
         <Row style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
           <Col>
-            <Title level={4}>{workspace?.name} Workspace</Title>
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <Title style={{ marginBottom: '5px' }} level={4}>
+                {workspace?.name} Workspace
+              </Title>
+              <EditOutlined
+                style={{
+                  color: 'black',
+                  fontSize: '20px',
+                }}
+                onClick={showEditWorkspaceName}
+              />
+            </div>
             <Title level={5} style={{ marginTop: '5px' }}>
               Status: {workspace?.status}
             </Title>

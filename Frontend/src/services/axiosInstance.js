@@ -27,12 +27,24 @@ export const addWorkspace = async (workspaceData) => {
     },
   );
   return alert(response.data.message);
-<<<<<<< HEAD
 };
 
 export const setWorkspaceStatus = async (data) => {
   const response = await axiosInstance.post(
     `http://localhost:8888/api/workspace/changeStatus/${data.id}`,
+    JSON.stringify(data.values),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
+  return alert(response.data.message);
+};
+
+export const editWorkspace = async (data) => {
+  const response = await axiosInstance.post(
+    `http://localhost:8888/api/workspace/update/${data.id}`,
     JSON.stringify(data.values),
     {
       headers: {
@@ -128,69 +140,4 @@ export const fetchApprove = async (id) => {
     console.error();
     throw error;
   }
-=======
->>>>>>> 3263c1e (Add Manager to workspace done, fix UI IX form for responsive)
-};
-
-export const setWorkspaceStatus = async (data) => {
-  const response = await axiosInstance.post(
-    `http://localhost:8888/api/workspace/changeStatus/${data.id}`,
-    JSON.stringify(data.values),
-    {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    },
-  );
-  return alert(response.data.message);
-};
-
-export const addManager = async (data) => {
-  const json = {
-    email: data.values.email,
-    firstName: data.values.firstName,
-    lastName: data.values.lastName,
-    password: data.values.password,
-    slackId: data.values.slackId,
-    role: 'Manager',
-  };
-
-  const response = await axiosInstance.post(
-    `http://localhost:8888/api/user/create/${data.id}`,
-    JSON.stringify(json),
-    {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    },
-  );
-  return alert(response.data.message);
-};
-
-export const deleteManager = async (data) => {
-  const json = { managerId: data.manager, id_workspace: data.id };
-  const response = await axiosInstance.post(
-    `http://localhost:8888/api/user/delete/${json.managerId}`,
-    JSON.stringify(json),
-    {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    },
-  );
-  return alert(response.data.message);
-};
-
-export const resetPasswordManager = async (data) => {
-  const json = { idUser: data.manager, password: data.values.password };
-  const response = await axiosInstance.post(
-    `http://localhost:8888/api/auth/resetPassword`,
-    JSON.stringify(json),
-    {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    },
-  );
-  return alert(response.data.message);
 };

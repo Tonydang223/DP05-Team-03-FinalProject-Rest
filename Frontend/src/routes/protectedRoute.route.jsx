@@ -16,13 +16,13 @@ export default function ProtectedRoute({ children, role }) {
   }
   if (accessToken && role !== userRole) {
     if (userRole === 'Admin') {
-      return <Navigate to='/admin' />;
+      return <Navigate to='/dashboard' />;
     }
     if (userRole === 'Manager') {
-      return <Navigate to='/manager' />;
+      return <Navigate to='/dashboard' />;
     }
     if (userRole === 'Staff') {
-      return <Navigate to='/staff' />;
+      return <Navigate to='/dashboard' />;
     }
   }
 
