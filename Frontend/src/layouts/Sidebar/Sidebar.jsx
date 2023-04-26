@@ -123,6 +123,11 @@ export default function SideBar() {
           roles: ['Manager'],
         },
         {
+          label: <Link to='/manager/members'>Members</Link>,
+          key: 'members',
+          roles: ['Manager'],
+        },
+        {
           label: <Link to='/staff'>Notifications</Link>,
           key: 'notifications',
           roles: ['Manager'],

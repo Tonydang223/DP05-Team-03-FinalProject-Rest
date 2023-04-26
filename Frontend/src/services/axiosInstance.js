@@ -63,10 +63,11 @@ export const addManager = async (data) => {
     password: data.values.password,
     slackId: data.values.slackId,
     role: 'Manager',
+    idWs: data.id,
   };
 
   const response = await axiosInstance.post(
-    `http://localhost:8888/api/user/create/${data.id}`,
+    `http://localhost:8888/api/user/create`,
     JSON.stringify(json),
     {
       headers: {
@@ -140,4 +141,31 @@ export const fetchApprove = async (id) => {
     console.error();
     throw error;
   }
+};
+
+//manager members
+export const fetchMember = async () => {
+  const response = await axiosInstance.get(`http://localhost:8888/api/user/getAll`);
+  return response.data.data;
+};
+
+export const addMember = async (data) => {
+  const json = {
+    email: data.values.email,
+    firstName: data.values.firstName,
+    lastName: data.values.lastName,
+    password: data.values.password,
+    slackId: data.values.slackId,
+  };
+
+  const response = await axiosInstance.post(
+    `http://localhost:8888/api/user/create`,
+    JSON.stringify(json),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
+  return alert(response.data.message);
 };

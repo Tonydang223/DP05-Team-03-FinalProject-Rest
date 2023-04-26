@@ -1,18 +1,14 @@
 import React from 'react';
 import { Layout, Breadcrumb, theme, Table, Button, Avatar, Space } from 'antd';
-import { UserOutlined, InfoCircleFilled } from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
 import ModalAll from '../../components/modal/ModalAll';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { fetchWorkspaces, addWorkspace } from './../../services/axiosInstance';
-import { redirect } from 'react-router-dom';
 
 const { Content } = Layout;
-const layout = {
-  labelCol: { span: 8 },
-  wrapperCol: { span: 16 },
-};
+
 const Workspaces = () => {
   //State
 
@@ -52,10 +48,20 @@ const Workspaces = () => {
                 ?.map((item) =>
                   item.img_profile ? (
                     // eslint-disable-next-line react/jsx-key
-                    <Avatar size='medium' src={item.img_profile} key={item._id} />
+                    <Avatar
+                      size='medium'
+                      src={item.img_profile}
+                      key={item._id}
+                      style={{ marginRight: '10px' }}
+                    />
                   ) : (
                     // eslint-disable-next-line react/jsx-key
-                    <Avatar size='medium' icon={<UserOutlined />} key={item._id} />
+                    <Avatar
+                      size='medium'
+                      icon={<UserOutlined />}
+                      key={item._id}
+                      style={{ marginRight: '10px' }}
+                    />
                   ),
                 )}
             </div>
@@ -101,8 +107,7 @@ const Workspaces = () => {
     setTitle('Add_Workspace');
   };
 
-  const handleApproveAdd = (data) => {
-    console.log();
+  const handleApproveAdd = () => {
     setIsModalOpen(false);
   };
 
