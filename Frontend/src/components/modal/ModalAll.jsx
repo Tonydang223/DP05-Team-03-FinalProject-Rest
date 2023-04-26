@@ -480,27 +480,33 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
           </h2>
           <Form
             name='basic'
-            labelCol={{
-              span: 8,
-            }}
-            wrapperCol={{
-              span: 16,
-            }}
-            style={{
-              maxWidth: 600,
-            }}
+            {...formItemLayout}
             initialValues={{
               remember: true,
             }}
             autoComplete='off'
+            onFinish={onFinish}
           >
             <Form.Item
-              label='Name'
-              name='name'
+              label='First Name'
+              name='firstName'
               rules={[
                 {
                   required: true,
-                  message: 'Please input name of account',
+                  message: 'Please input first name of account',
+                },
+              ]}
+              hasFeedback
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label='Last Name'
+              name='lastName'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input last name of account',
                 },
               ]}
               hasFeedback
@@ -521,12 +527,7 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
             >
               <Input />
             </Form.Item>
-            <Form.Item
-              wrapperCol={{
-                offset: 8,
-                span: 16,
-              }}
-            >
+            <Form.Item style={{ textAlign: 'center' }}>
               <Button
                 htmlType='button'
                 onClick={onCancel}
@@ -560,23 +561,16 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
           </h2>
           <Form
             name='basic'
-            labelCol={{
-              span: 10,
-            }}
-            wrapperCol={{
-              span: 14,
-            }}
-            style={{
-              maxWidth: 600,
-            }}
+            {...formItemLayout}
             initialValues={{
               remember: true,
             }}
             autoComplete='off'
+            onFinish={onFinish}
           >
             <Form.Item
               label='Old password'
-              name='old_password'
+              name='oldPass'
               rules={[
                 {
                   required: true,
@@ -589,7 +583,7 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
             </Form.Item>
             <Form.Item
               label='New password'
-              name='new_password'
+              name='newPass'
               rules={[
                 {
                   required: true,
@@ -610,7 +604,7 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
                 },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
-                    if (!value || getFieldValue('new_password') === value) {
+                    if (!value || getFieldValue('newPass') === value) {
                       return Promise.resolve();
                     }
                     return Promise.reject('Two passwords do not match');
@@ -621,12 +615,7 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
             >
               <Input.Password />
             </Form.Item>
-            <Form.Item
-              wrapperCol={{
-                offset: 8,
-                span: 16,
-              }}
-            >
+            <Form.Item style={{ textAlign: 'center' }}>
               <Button
                 htmlType='button'
                 onClick={onCancel}
