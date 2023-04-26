@@ -54,6 +54,7 @@ export const fetchGroup = async () => {
     throw error;
   }
 };
+
 export const detailGroup = async (id) => {
   const response = await axiosInstance.get(
     `${import.meta.env.VITE_BASE_URL}/group/getDetail/${id}`,
