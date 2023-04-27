@@ -30,8 +30,8 @@ const formItemLayout = {
 const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
   const [reason, setReason] = useState('');
   const handleTextReason = (e) => {
-    setReason(e.target.value)
-  }
+    setReason(e.target.value);
+  };
 
   return (
     <>
@@ -53,10 +53,14 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
         </Modal>
       )}
 
-      {name === 'Edit' && (
+      {name === 'Revert' && (
         <Modal open={open} onOk={onOk} onCancel={onCancel}>
           <h4>Reason for revert </h4>
-          <Input.TextArea placeholder='Need more detail' value={reason} onChange={handleTextReason} />
+          <Input.TextArea
+            placeholder='Need more detail'
+            value={reason}
+            onChange={handleTextReason}
+          />
         </Modal>
       )}
 

@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from 'react';
-import { Space, Table, Button, Row, Col, Tag, Alert } from 'antd';
+import { Space, Table, Button, Form, Input, Tag, Alert, Modal } from 'antd';
 import {
   CheckCircleFilled,
   CloseCircleFilled,
@@ -22,6 +22,7 @@ const AccountTable = ({dataAccountRequest, checkRole, name, fetchData}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isApproveOpen, setIsApproveOpen] = useState(false);
   const [isRevertOpen, setIsRevertOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
   const [isTitle, setTitle] = useState('');
   const [visbleAlert, setVisibleAlert] = useState(initialErrorMessage)
   const [requestId, setRequestId] = useState(null);
@@ -44,12 +45,19 @@ const AccountTable = ({dataAccountRequest, checkRole, name, fetchData}) => {
     setTitle('Reject');
   };
 
-  // Edit modal
+  // Revert modal
   const showRevert = (id) => {
     setIsRevertOpen(true);
     setRequestId(id)
-    setTitle('Edit');
+    setTitle('Revert');
   };
+
+  // Edit modal
+  const showEdit = (id) => {
+    setIsEditOpen(true);
+    setRequestId(id)
+    setTitle('Edit');
+  }
 
   const handleApproveRevert = () => {
     revertRequest(requestId)
@@ -62,9 +70,13 @@ const AccountTable = ({dataAccountRequest, checkRole, name, fetchData}) => {
       });
   };
 
-  const handleCancelEdit = () => {
+  const handleCancelRevert = () => {
     setIsRevertOpen(false);
   };
+
+  const handleCancelEdit = () => {
+    setIsEditOpen(false);
+  }
 
   const handleApprove = () => {
     approveRequest(requestId, typeApprove)
@@ -74,8 +86,11 @@ const AccountTable = ({dataAccountRequest, checkRole, name, fetchData}) => {
     })
     .catch((error) => {
       // Xử lý lỗi nếu có
+      if(error?.response?.status === 400)
+      {
+        setVisibleAlert({message: error?.response?.data?.message, visible: true});
+      }
       setIsApproveOpen(false);
-      setVisibleAlert({message: error?.response?.data?.message, visible: true});
     });
   };
 
@@ -194,13 +209,17 @@ const AccountTable = ({dataAccountRequest, checkRole, name, fetchData}) => {
           const handleRejectClick = () => {
             showModalReject(record._id);
           }
+
+          const handleEditClick = () => {
+            showEdit(record._id)
+          }
           if(name === 'request')
           {
             return (
               <Space size='middle'>
-                {/* <a style={{ fontSize: '20px' }} title={isTitle}>
+                <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleEditClick}>
                   <EditFilled/>
-                </a> */}
+                </a>
                 <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleApproveClick} >
                   <CheckCircleFilled  />
                 </a>
@@ -258,8 +277,27 @@ const AccountTable = ({dataAccountRequest, checkRole, name, fetchData}) => {
         name={isTitle}
         open={isRevertOpen}
         onOk={handleApproveRevert}
-        onCancel={handleCancelEdit}
+        onCancel={handleCancelRevert}
       />
+
+      <Modal 
+        name={isTitle}
+        open={isEditOpen}
+        onCancel={handleCancelEdit}
+        footer={null}
+      >
+        <Form initialValues={dataAccountRequest} onFinish="" style={{marginTop: '20px'}}>
+          <Form.Item label="Name" name="name">
+            <Input />
+          </Form.Item>
+          <Form.Item label="Age" name="age">
+            <Input />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">Save</Button>
+          </Form.Item>
+        </Form>
+      </Modal>
     </>
   );
 };
