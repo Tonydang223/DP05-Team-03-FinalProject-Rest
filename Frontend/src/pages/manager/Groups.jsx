@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Table } from 'antd';
 import { Layout, Breadcrumb, theme, Button, Typography, Space, Row, Col, Avatar } from 'antd';
 import ModalAll from '../../components/modal/ModalAll';
-import { EditFilled } from '@ant-design/icons';
 import './index.manager.css';
 import { Link } from 'react-router-dom';
 const { Content } = Layout;
@@ -88,32 +87,6 @@ const columns = [
     ),
   },
 ];
-const nameFull = 'Huy';
-const data = [
-  {
-    key: '1',
-    name: nameFull.charAt(0),
-    members: 32,
-    master: 'New York No. 1 Lake Park',
-    action: (
-      <Link to='/manager/groups/groups-details' style={{ fontSize: '20px' }}>
-        <EditFilled style={{ color: 'blue' }} />
-      </Link>
-    ),
-  },
-  {
-    key: '2',
-    name: 'John Brown',
-    members: 'Jim Green',
-    master: 'Vo Van Thin',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    members: 'hi',
-    master: 'Vo Van Thin',
-  },
-];
 
 export default function ManagerPage() {
   const [groups, setGroups] = useState([]);
@@ -130,6 +103,9 @@ export default function ManagerPage() {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isTitle, setTitle] = useState('');
   const [isSubmit, setSubmit] = useState('');
+  const handleApproveAdd = () => {
+    setIsCreateOpen(false);
+  };
   // Create Modal
   const CreateGroup = () => {
     setIsCreateOpen(true);
@@ -174,10 +150,18 @@ export default function ManagerPage() {
             </Col>
           </Row>
         </Space>
-        <Table columns={columns} dataSource={groups} scroll={{ x: true }} />
+        <Table
+          columns={columns}
+          dataSource={groups}
+          scroll={{ x: true }}
+          pagination={{
+            pageSize: 5,
+          }}
+        />
         <ModalAll
           name={isTitle}
           open={isCreateOpen}
+          onOk={handleApproveAdd}
           onCancel={handleCancelCreate}
           type={isSubmit}
         />

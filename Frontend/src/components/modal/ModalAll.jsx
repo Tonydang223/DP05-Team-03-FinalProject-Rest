@@ -37,9 +37,6 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
     members: [],
   };
   const [valuesAddedMem, setValuesAddedMem] = useState(initialValuesAllMember);
-  // const [members, setMembers] = useState([]);
-  // const [masters, setMasters] = useState([]);
-  const [formAddMember] = Form.useForm();
   const options = [];
   const optionsWorkspace = [];
   const getAllUsers = async () => {
@@ -69,10 +66,9 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
     }
   }
 
-  const submitAddGroup = async() => {
+  const submitAddGroup = async () => {
     await addGroup(valuesAddedMem);
-
-  }
+  };
 
   useEffect(() => {
     getAllUsers();
@@ -113,7 +109,7 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
       )}
 
       {name === 'CreateGroup' && (
-        <Modal open={open} onCancel={onCancel} footer={null}>
+        <Modal open={open} onOk={onOk} onCancel={onCancel} footer={null}>
           <h2
             style={{
               textAlign: 'center',
@@ -142,10 +138,12 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
                 },
               ]}
             >
-              <Input
-                value={valuesAddedMem.name}
-                onChange={(e) => setValuesAddedMem({ ...valuesAddedMem, name: e.target.value })}
-              />
+              <div>
+                <Input
+                  value={valuesAddedMem.name}
+                  onChange={(e) => setValuesAddedMem({ ...valuesAddedMem, name: e.target.value })}
+                />
+              </div>
             </Form.Item>
             <Form.Item
               label='Add member'

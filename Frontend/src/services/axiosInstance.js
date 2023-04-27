@@ -58,9 +58,20 @@ export const detailGroup = async (id) => {
   const response = await axiosInstance.get(`${import.meta.env.VITE_BASE_URL}/group/getDetail/${id}`);
   return response.data.data;
 };
-export const addGroup = async (initialValuesAllMember) => {
+export const addGroup = async (initialValuesCreateGroup) => {
   const response = await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/group/create`,
-    JSON.stringify(initialValuesAllMember),
+    JSON.stringify(initialValuesCreateGroup),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
+  return alert(response.data.message);
+};
+export const UpdateGroup = async (valuesUpdateGroup) => {
+  const response = await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/group/update/${valuesUpdateGroup._id}`,
+    JSON.stringify(valuesUpdateGroup),
     {
       headers: {
         'Content-Type': 'application/json',

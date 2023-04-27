@@ -16,43 +16,46 @@ import {
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import './groupDetails.css';
-import { detailGroup, AllUser } from '../../../services/axiosInstance';
+import {
+  detailGroup,
+  AllUser,
+  fetchWorkspaces,
+  UpdateGroup,
+} from '../../../services/axiosInstance';
 const { TextArea } = Input;
 const { Content } = Layout;
 export default function GroupDetailsPage() {
-  //mentions
   const { id } = useParams();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [master, setMaster] = useState([]);
-  const [member, setMember] = useState([]);
   const [allUser, setAllUser] = useState([]);
-  const [isTitle, setTitle] = useState('');
-  const [groupDetail, setGroupDetail] = useState(null);
-  const [formValues, setFormValues] = useState({});
-  // console.log(groupDetail);
+  const [workspace, setWorkspace] = useState([]);
+
+  const initialValuesAllMember = {
+    name: '',
+    id_workspace: '',
+    masters: [],
+    members: [],
+  };
+  const [valuesAddedMem, setValuesAddedMem] = useState(initialValuesAllMember);
+
+  // Get workspace
+  const getWorkSpace = async () => {
+    const allWorkspace = await fetchWorkspaces();
+    setWorkspace(allWorkspace);
+  };
 
   //Select master in group
   const options = [];
+  const optionsWorkspace = [];
 
   const getGroupDetail = async (id) => {
-    const res = await detailGroup(id);
-    console.log(res);
-    setFormValues(res);
-    setMaster(
-      res?.masters?.map((item) => {
-        return item._id;
-      }),
-    );
-    setMember(
-      res?.members?.map((item) => {
-        return item._id;
-      }),
-    );
+    return await detailGroup(id);
   };
+
   const getAllUsers = async () => {
     const user = await AllUser();
     setAllUser(user);
   };
+
   if (allUser) {
     for (let i = 0; i < allUser.length; i++) {
       const element = allUser[i];
@@ -62,18 +65,37 @@ export default function GroupDetailsPage() {
       });
     }
   }
+
+  if (workspace) {
+    for (let i = 0; i < workspace.length; i++) {
+      const element = workspace[i];
+      optionsWorkspace.push({
+        label: `${element.name}`,
+        value: element._id,
+      });
+    }
+  }
+
   useEffect(() => {
-    getGroupDetail(id);
+    getGroupDetail(id).then((res) => {
+      const getIds = (arr) => {
+        return arr.map((v) => v._id);
+      };
+      setValuesAddedMem({
+        ...res,
+        masters: getIds(res.masters),
+        members: getIds(res.members),
+        id_workspace: res.workspace._id,
+        name: res.name,
+      });
+    });
     getAllUsers();
+    getWorkSpace();
   }, []);
 
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values);
-  };
 
   const layout = {
     labelCol: {
@@ -89,18 +111,10 @@ export default function GroupDetailsPage() {
 
   const [selectedValues, setSelectedValues] = useState([]);
 
-  const handleSelectChange = (value) => {
-    setSelectedValues(value);
+  //update group
+  const submitUpdateGroup = async () => {
+    await UpdateGroup(valuesAddedMem);
   };
-
-  const filteredOptions =
-    options.length > 0 &&
-    options.map((option) => {
-      if (selectedValues.includes(option.value)) {
-        return { ...option, checked: true };
-      }
-      return option;
-    });
   return (
     <>
       <Content
@@ -133,70 +147,134 @@ export default function GroupDetailsPage() {
         >
           <Col span={24}>
             <Descriptions title='Basic information' />
-            {master.length > 0 && (
-              <Form
-                {...layout}
-                name='normal_login'
-                className='login-form'
-                onFinish={onFinish}
-                colon={false}
-                initialValues={formValues}
+            <Form
+              {...layout}
+              name='nor_login'
+              autoComplete='off'
+              onFinish={submitUpdateGroup}
+              initialValues={initialValuesAllMember}
+            >
+              <Form.Item name='name' label='Name group'>
+                <div>
+                  <Input
+                    value={valuesAddedMem?.name}
+                    onChange={(e) => setValuesAddedMem({ ...valuesAddedMem, name: e.target.value })}
+                  />
+                </div>
+              </Form.Item>
+              <Form.Item
+                name='masters'
+                label='Masters'
+                rules={[
+                  () => ({
+                    validator() {
+                      if (!valuesAddedMem.masters.length) {
+                        return Promise.reject('Please add a master');
+                      } else {
+                        return Promise.resolve();
+                      }
+                    },
+                  }),
+                ]}
               >
-                <Form.Item label='Group Name'>
-                  <Input value={formValues.name} name='name' className='form-input' />
-                </Form.Item>
-                <Form.Item name='master' label='Masters'>
-                  <Space
+                <Space
+                  style={{
+                    width: '100%',
+                  }}
+                  direction='vertical'
+                >
+                  <Select
+                    mode='multiple'
+                    // allowClear
                     style={{
                       width: '100%',
                     }}
-                    direction='vertical'
-                  >
-                    <Select
-                      mode='multiple'
-                      // allowClear
-                      style={{
-                        width: '100%',
-                      }}
-                      placeholder='Please select'
-                      defaultValue={master}
-                      options={options}
-                      onChange={filteredOptions}
-                    />
-                  </Space>
-                </Form.Item>
-                <Form.Item name='member' label='Members'>
-                  <Space
+                    placeholder='Please select'
+                    value={valuesAddedMem?.masters}
+                    options={options?.filter(
+                      (item) => !valuesAddedMem?.members?.includes(item?.value),
+                    )}
+                    onChange={(v) => setValuesAddedMem({ ...valuesAddedMem, masters: [...v] })}
+                  />
+                </Space>
+              </Form.Item>
+              <Form.Item
+                name='members'
+                label='Member'
+                rules={[
+                  () => ({
+                    validator() {
+                      if (!valuesAddedMem.members.length) {
+                        return Promise.reject('Please add a member');
+                      } else {
+                        return Promise.resolve();
+                      }
+                    },
+                  }),
+                ]}
+              >
+                <Space
+                  style={{
+                    width: '100%',
+                  }}
+                  direction='vertical'
+                >
+                  <Select
+                    mode='multiple'
+                    allowClear
                     style={{
                       width: '100%',
                     }}
-                    direction='vertical'
-                  >
-                    <Select
-                      mode='multiple'
-                      allowClear
-                      style={{
-                        width: '100%',
-                      }}
-                      placeholder='Please select'
-                      defaultValue={member}
-                      onChange={handleSelectChange}
-                      // value={selectedValues.filter((value) =>
-                      //   filteredOptions.some((option) => option.value === value),
-                      // )}
-                      options={filteredOptions}
-                    />
-                  </Space>
-                </Form.Item>
+                    placeholder='Please select'
+                    value={valuesAddedMem?.members}
+                    onChange={(v) => setValuesAddedMem({ ...valuesAddedMem, members: [...v] })}
+                    options={options?.filter(
+                      (item) => !valuesAddedMem?.masters?.includes(item?.value),
+                    )}
+                  />
+                </Space>
+              </Form.Item>
+              <Form.Item
+                name='id_workspace'
+                label='Workspace'
+                rules={[
+                  () => ({
+                    validator() {
+                      if (!valuesAddedMem.id_workspace) {
+                        return Promise.reject('Please add a workspace');
+                      } else {
+                        return Promise.resolve();
+                      }
+                    },
+                  }),
+                ]}
+              >
+                <Space
+                  style={{
+                    width: '100%',
+                  }}
+                  direction='vertical'
+                >
+                  <Select
+                    allowClear
+                    style={{
+                      width: '100%',
+                    }}
+                    placeholder='Please select'
+                    value={valuesAddedMem?.id_workspace}
+                    onChange={(v) => setValuesAddedMem({ ...valuesAddedMem, id_workspace: v })}
+                    options={optionsWorkspace}
+                  />
+                </Space>
+              </Form.Item>
 
-                <Form.Item {...tailLayout}>
-                  <Button className='info-form-button'>Cancel</Button>
-                  <Button htmlType='submit' className='info-form-button'>
-                    Send
-                  </Button>
-                </Form.Item>
-              </Form>
-            )}
+              <Form.Item {...tailLayout}>
+                <Button className='info-form-button'>Cancel</Button>
+                <Button htmlType='submit' className='info-form-button'>
+                  Send
+                </Button>
+              </Form.Item>
+            </Form>
           </Col>
         </Row>
       </Content>
