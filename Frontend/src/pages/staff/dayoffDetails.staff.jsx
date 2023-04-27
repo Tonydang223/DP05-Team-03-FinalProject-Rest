@@ -14,7 +14,7 @@ import ModalAll from '../../components/modal/ModalAll';
 export default function DayoffDetails() {
   const [loading, setLoading] = useState(false);
   const [dayoffData, setDayoffData] = useState([]);
-  console.log('🚀 ~ file: dayoffDetails.staff.jsx:17 ~ DayoffDetails ~ dayoffData:', dayoffData);
+  // console.log('🚀 ~ file: dayoffDetails.staff.jsx:17 ~ DayoffDetails ~ dayoffData:', dayoffData);
   const [dayoffHistory, setDayoffHistory] = useState([]);
 
   const userRole = localStorage.getItem('user_role');
@@ -68,11 +68,11 @@ export default function DayoffDetails() {
           ) : (
             <>
               <Breadcrumb.Item>
-                <Link to='/manager'>Manager</Link>
+                <div>Manager</div>
               </Breadcrumb.Item>
 
               <Breadcrumb.Item>
-                <Link to='/manager/day-off'>Dayoff</Link>
+                <div>Dayoff</div>
               </Breadcrumb.Item>
               <Breadcrumb.Item>
                 <div>Details</div>

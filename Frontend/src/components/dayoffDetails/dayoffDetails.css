@@ -15,6 +15,22 @@
 .info-form-button {
   margin: 0 10px 0 10px;
 }
+h3:where(.css-dev-only-do-not-override-1fan5ip).ant-typography,
+div:where(.css-dev-only-do-not-override-1fan5ip).ant-typography-h3,
+div:where(.css-dev-only-do-not-override-1fan5ip).ant-typography-h3 > textarea,
+:where(.css-dev-only-do-not-override-1fan5ip).ant-typography h3 {
+  color: #c8c8c8;
+  text-align: center;
+}
+
+:where(.css-dev-only-do-not-override-1fan5ip).ant-input-borderless,
+:where(.css-dev-only-do-not-override-1fan5ip).ant-input-borderless:hover,
+:where(.css-dev-only-do-not-override-1fan5ip).ant-input-borderless:focus,
+:where(.css-dev-only-do-not-override-1fan5ip).ant-input-borderless-focused,
+:where(.css-dev-only-do-not-override-1fan5ip).ant-input-borderless-disabled,
+:where(.css-dev-only-do-not-override-1fan5ip).ant-input-borderless[disabled] {
+  color: black;
+}
 
 /* dayoff histories */
 
@@ -22,6 +38,9 @@
   margin: 0;
   border-left: 4px solid blueviolet;
   padding: 0 5px 0 5px;
+}
+.history-details {
+  margin: 10px;
 }
 
 h5:where(.css-dev-only-do-not-override-htwhyh).ant-typography,

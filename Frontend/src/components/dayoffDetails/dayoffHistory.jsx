@@ -77,7 +77,7 @@ export const DayoffHistory = ({ data }) => {
             ) : item.action === 'Rejected' ? (
               <Text>{item.approved_request.userName} rejected</Text>
             ) : (
-              <Text>abc</Text>
+              <Text>Someone need you to change reason </Text>
             )}
           </Space>
         </div>
