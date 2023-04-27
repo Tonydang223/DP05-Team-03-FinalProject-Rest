@@ -137,7 +137,6 @@ export const resetPasswordManager = async (data) => {
 export const fetchAccountRequest = async () => {
   try {
     const response = await axiosInstance.get(`${import.meta.env.VITE_BASE_URL}/request/getAll`);
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -192,7 +191,6 @@ export const updateRequest = async (data) => {
       },
     },
   );
-  return alert(response.data.message);
 }
 
 
@@ -221,7 +219,7 @@ export const fetchDayoffDetails = async (id) => {
   const response = await axiosInstance.get(
     `${import.meta.env.VITE_BASE_URL}/request/getDetail/${id}`,
   );
-  return alert(response.data.message);
+  return response.data.data;
 };
 
 export const fetchDayoffHistory = async (id) => {

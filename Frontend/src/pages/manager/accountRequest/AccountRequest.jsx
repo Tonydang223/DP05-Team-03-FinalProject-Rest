@@ -3,9 +3,12 @@ import AccountTable from '../../../components/accountTable/AccountTable';
 import { Layout, Breadcrumb, theme } from 'antd';
 import { fetchAccountRequest, fetchApprove } from '../../../services/axiosInstance.js';
 import moment from 'moment';
+import { useSelector } from 'react-redux';
 
 const AccountRequest = () => {
   const checkRole = localStorage.getItem('user_role');
+  const { user } = useSelector((state) => state.auth);
+  // console.log(user._id);
   const { Content } = Layout;
   const {
     token: { colorBgContainer },
@@ -20,43 +23,46 @@ const AccountRequest = () => {
       const result = await fetchAccountRequest();
 
       const requestsWithUserData = result.data
-        .filter((request) => request.status === 'Pending')
-        .map(async (request) => {
-          const verifier = await fetchApprove(request._id);
-
-          return {
-            _id: request._id,
-            from: request.from,
-            to: request.to,
-            reason: request.reason,
-            time: request.time,
-            type_of_work: request.type_of_work,
-            request_for_date: `${
-              request.from && request.to
-                ? moment(request.from).format('LL') + ' - ' + moment(request.to).format('LL')
-                : moment(request.from).format('LL')
-            }`,
-            quantity: request.quantity,
-            requester: `${
-              request.user.firstName + ' ' + request.user.lastName
-                ? request.user.firstName + ' ' + request.user.lastName
-                : ''
-            }`,
-            status: request.status,
-            verifier: ` ${verifier.data.approve.length} / ${verifier.data.verifier}`,
-            check_approver: verifier.data.approve.length,
-            request_date: `${moment(request.from, 'YYYYMMDD').fromNow()}`,
-          };
+        .filter((request) => request.status === 'Pending' )
+        .map((request) => {
+          // console.log(request);
+          try {
+            return {
+              _id: request._id,
+              from: request.from,
+              to: request.to,
+              reason: request.reason,
+              time: request.time,
+              type_of_work: request.type_of_work,
+              request_for_date: `${
+                request.from && request.to
+                  ? moment(request.from).format('LL') + ' - ' + moment(request.to).format('LL')
+                  : moment(request.from).format('LL')
+              }`,
+              quantity: request.quantity,
+              requester: `${
+                request.user.firstName + ' ' + request.user.lastName
+                  ? request.user.firstName + ' ' + request.user.lastName
+                  : ''
+              }`,
+              user_id: request.user._id,
+              status: request.status,
+              request_date: `${moment(request.from, 'YYYYMMDD').fromNow()}`,
+            };
+          } catch (error) {
+            console.log(error);
+            return null;
+          }
         });
-      const resolvedData = await Promise.all(requestsWithUserData);
-      setData(resolvedData);
+      // const resolvedData = await Promise.all(requestsWithUserData);
+      setData(requestsWithUserData);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false); // Stop loading in case of error
       console.error(error);
     }
   };
-  
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -85,7 +91,14 @@ const AccountRequest = () => {
           {isLoading ? (
             <div>Loading....</div>
           ) : (
-            <AccountTable name='request' fetchData={fetchData} dataAccountRequest={data} checkRole={checkRole} />
+            data.length > 0 && (
+              <AccountTable
+                name='request'
+                fetchData={fetchData}
+                dataAccountRequest={data}
+                checkRole={checkRole}
+              />
+            )
           )}
         </div>
       </Content>
@@ -94,4 +107,3 @@ const AccountRequest = () => {
 };
 
 export default AccountRequest;
-

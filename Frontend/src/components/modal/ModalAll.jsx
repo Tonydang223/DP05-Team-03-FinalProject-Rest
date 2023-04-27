@@ -56,11 +56,13 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
       {name === 'Revert' && (
         <Modal open={open} onOk={onOk} onCancel={onCancel}>
           <h4>Reason for revert </h4>
-          <Input.TextArea
-            placeholder='Need more detail'
-            value={reason}
-            onChange={handleTextReason}
-          />
+          <Form>
+            <Input.TextArea
+              placeholder='Need more detail'
+              value={reason}
+              onChange={handleTextReason}
+            />
+          </Form>
         </Modal>
       )}
 

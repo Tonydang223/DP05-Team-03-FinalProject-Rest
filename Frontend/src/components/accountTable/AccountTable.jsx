@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Space, Table, Button, Form, Input, Tag, Alert, Modal, Select } from 'antd';
+import { Space, Table, Button, Form, Input, Tag, Alert, Modal, Select, notification } from 'antd';
 import {
   CheckCircleFilled,
   CloseCircleFilled,
@@ -11,13 +11,20 @@ import {
 import ModalAll from '../modal/ModalAll';
 import './accountStyle.css';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { approveRequest, revertRequest, updateRequest } from '../../services/axiosInstance';
+import { useSelector } from 'react-redux';
 
 const AccountTable = ({ dataAccountRequest, checkRole, name, fetchData }) => {
+  const { user } = useSelector((state) => state.auth);
+
+  const navigate = useNavigate();
   const initialErrorMessage = {
     message: '',
     visible: false,
   };
+
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isApproveOpen, setIsApproveOpen] = useState(false);
   const [isRevertOpen, setIsRevertOpen] = useState(false);
@@ -85,7 +92,11 @@ const AccountTable = ({ dataAccountRequest, checkRole, name, fetchData }) => {
         fetchData();
       })
       .catch((error) => {
-        console.error(error);
+        if(error?.response?.status === 400)
+        {
+          setVisibleAlert({ message: error?.response?.data?.message, visible: true });
+        }
+        setIsRevertOpen(false);
       });
   };
 
@@ -105,7 +116,7 @@ const AccountTable = ({ dataAccountRequest, checkRole, name, fetchData }) => {
       })
       .catch((error) => {
         // Xử lý lỗi nếu có
-        if (error?.response?.status === 400) {
+        if (error?.response?.status === 400 || error?.response?.status === 403) {
           setVisibleAlert({ message: error?.response?.data?.message, visible: true });
         }
         setIsApproveOpen(false);
@@ -134,7 +145,24 @@ const AccountTable = ({ dataAccountRequest, checkRole, name, fetchData }) => {
   };
 
   const handleSubmitEdit = async (values) => {
+    try{
+
     await updateRequest({requestId, values});
+    notification.success({
+      message: 'Request updated',
+      description: 'The request has been successfully updated.',
+    });
+    fetchData();
+    }catch(error)
+    {
+      console.error(error)
+      setIsEditOpen(false);
+      notification.error({
+        message: 'Error Message',
+        description: error.response.data.message
+      })
+      fetchData();
+    }
   };
 
   const columns = [
@@ -167,7 +195,7 @@ const AccountTable = ({ dataAccountRequest, checkRole, name, fetchData }) => {
                 record._id,
                   console.log(
                     '🚀 ~ file: AccountTable.jsx:74 ~ AccountTable ~ record._id:',
-                    record._id,
+                    name,
                   );
                 navigate(`/staff/${name}/details/${record._id}`);
               }}
@@ -206,12 +234,6 @@ const AccountTable = ({ dataAccountRequest, checkRole, name, fetchData }) => {
       },
     },
     {
-      title: 'Verifier',
-      dataIndex: 'verifier',
-      key: 'verifier',
-      className: name === 'request' ? '' : 'hidden-column',
-    },
-    {
       title: 'Request Date',
       dataIndex: 'request_date',
       key: 'request_date',
@@ -243,20 +265,47 @@ const AccountTable = ({ dataAccountRequest, checkRole, name, fetchData }) => {
           console.log(record.time);
         };
         if (name === 'request') {
-          return (
-            <Space size='middle'>
-              <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleEditClick}>
-                <EditFilled />
-              </a>
-              <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleApproveClick}>
-                <CheckCircleFilled />
-              </a>
-              <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleRejectClick}>
-                <CloseCircleFilled />
-              </a>
-            </Space>
-          );
-        } else if (name === 'day-off' && record.status != 'Rejected') {
+          if(checkRole === 'Staff')
+          {
+            return (
+              <>
+                <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleEditClick}>
+                  <EditFilled />
+                </a>
+              </>
+            )
+          }
+          else if(checkRole === 'Manager')
+          {
+            return (
+              <>
+                <Space size='middle'>
+                <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleApproveClick}>
+                  <CheckCircleFilled />
+                </a>
+                <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleRejectClick}>
+                  <CloseCircleFilled />
+                </a>
+              </Space>
+              </>
+            )
+          }
+          else {
+            return (
+              <Space size='middle'>
+                <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleEditClick}>
+                  <EditFilled />
+                </a>
+                <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleApproveClick}>
+                  <CheckCircleFilled />
+                </a>
+                <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleRejectClick}>
+                  <CloseCircleFilled />
+                </a>
+              </Space>
+            );
+          }
+        } else if (name === 'day-off' && record.status != 'Rejected' && record.user_id === user._id) {
           const handleRevertClick = () => {
             showRevert(record._id);
           };
@@ -285,6 +334,7 @@ const AccountTable = ({ dataAccountRequest, checkRole, name, fetchData }) => {
             onClose={() => setVisibleAlert(initialErrorMessage)}
           />
         )}
+        
       </Space>
       <Table
         rowKey={(record) => record._id}
