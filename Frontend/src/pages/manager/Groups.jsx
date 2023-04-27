@@ -4,7 +4,7 @@ import { Layout, Breadcrumb, theme, Button, Typography, Space, Row, Col, Avatar 
 import ModalAll from '../../components/modal/ModalAll';
 import { EditFilled } from '@ant-design/icons';
 import './index.manager.css';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 const { Content } = Layout;
 import { fetchGroup } from '../../services/axiosInstance';
 import { UserOutlined } from '@ant-design/icons';
@@ -18,60 +18,59 @@ const columns = [
     title: 'Members',
     dataIndex: 'members',
     key: 'members',
-    render: (members) => 
-    members.length > 0 ? (
-      <>
-      <div key={members._id}>
-        {members.slice(0,3)
-        ?.map((item) =>
-        item.img_profile ? (
-          // eslint-disable-next-line react/jsx-key
-          <Avatar size='medium' src={item.img_profile} key={item._id} />
-        ) : (
-          // eslint-disable-next-line react/jsx-key
-          <Avatar size='medium' icon={<UserOutlined />} key={item._id} />
-        ),)
-        }
-      </div>
-      </>
-    ) : (
-      <p style={{marginTop:'15px'}}>No member</p>
-    ),
+    render: (members) =>
+      members.length > 0 ? (
+        <>
+          <div key={members._id}>
+            {members.slice(0, 3)?.map((item) =>
+              item.img_profile ? (
+                // eslint-disable-next-line react/jsx-key
+                <Avatar size='medium' src={item.img_profile} key={item._id} />
+              ) : (
+                // eslint-disable-next-line react/jsx-key
+                <Avatar size='medium' icon={<UserOutlined />} key={item._id} />
+              ),
+            )}
+          </div>
+        </>
+      ) : (
+        <p style={{ marginTop: '15px' }}>No member</p>
+      ),
   },
   {
     title: 'Masters',
     dataIndex: 'masters',
     key: 'masters',
-    render: (masters) => 
-    masters.length > 0 ? (
-      <>
-      <div key={masters._id}>
-        {masters.slice(0,3)
-        ?.map((item) =>
-        item.img_profile ? (
-          // eslint-disable-next-line react/jsx-key
-          <Avatar size='medium' src={item.img_profile} key={item._id} />
-        ) : (
-          // eslint-disable-next-line react/jsx-key
-          <Avatar size='medium' icon={<UserOutlined />} key={item._id} />
-        ),)
-        }
-      </div>
-      </>
-    ) : (
-      <p style={{marginTop:'15px'}}>No master</p>
-    ),
+    render: (masters) =>
+      masters.length > 0 ? (
+        <>
+          <div key={masters._id}>
+            {masters.slice(0, 3)?.map((item) =>
+              item.img_profile ? (
+                // eslint-disable-next-line react/jsx-key
+                <Avatar size='medium' src={item.img_profile} key={item._id} />
+              ) : (
+                // eslint-disable-next-line react/jsx-key
+                <Avatar size='medium' icon={<UserOutlined />} key={item._id} />
+              ),
+            )}
+          </div>
+        </>
+      ) : (
+        <p style={{ marginTop: '15px' }}>No master</p>
+      ),
   },
   {
     title: 'WorkSpace',
     dataIndex: 'workspace',
     key: 'workspace',
-    render: (workspace) => 
-     <>
-     <div>
-      <p style={{marginTop:'15px'}}>{workspace.name}</p>
-     </div>
-     </>
+    render: (workspace) => (
+      <>
+        <div>
+          <p style={{ marginTop: '15px' }}>{workspace.name}</p>
+        </div>
+      </>
+    ),
   },
   {
     title: 'Action',
@@ -79,14 +78,15 @@ const columns = [
     key: '_id',
     render: (_id) => (
       <Space size='middle'>
-        <Link style={{ fontSize: '20px'}}
-              to={{ pathname: `/manager/groups/groups-details/${_id}`, state: { _id } }}>
-          <Button type="primary">
-            Detail
-          </Button>
+        <Link
+          style={{ fontSize: '20px' }}
+          to={{ pathname: `/manager/groups/groups-details/${_id}`, state: { _id } }}
+        >
+          <Button type='primary'>Detail</Button>
         </Link>
       </Space>
-    )}
+    ),
+  },
 ];
 const nameFull = 'Huy';
 const data = [
@@ -95,10 +95,11 @@ const data = [
     name: nameFull.charAt(0),
     members: 32,
     master: 'New York No. 1 Lake Park',
-    action:
-    <Link to='/manager/groups/groups-details' style={{ fontSize: '20px' }}>
-      <EditFilled style={{ color: 'blue' }} />
-    </Link>
+    action: (
+      <Link to='/manager/groups/groups-details' style={{ fontSize: '20px' }}>
+        <EditFilled style={{ color: 'blue' }} />
+      </Link>
+    ),
   },
   {
     key: '2',

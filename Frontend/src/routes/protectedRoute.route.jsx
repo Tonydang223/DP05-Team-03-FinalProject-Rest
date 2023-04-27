@@ -4,8 +4,6 @@ import { logout } from '../redux/slice/userSlice';
 
 export default function ProtectedRoute({ children, role }) {
   const { isAuth } = useSelector((state) => state.auth);
-  // const { userRole } = useSelector((state) => state.auth.user.role);
-  // console.log('🚀 ~ file: protectedRoute.route.jsx:33 ~ ProtectedRoute ~ userRole:', userRole);
   const location = useLocation();
   const dispatch = useDispatch();
 

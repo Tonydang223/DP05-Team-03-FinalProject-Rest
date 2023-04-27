@@ -14,19 +14,22 @@ import { useSelector } from 'react-redux';
 import moment from 'moment';
 
 const LogOffForm = () => {
-  // const dateFormat = 'YYYY-MM-DD'; // Định dạng ngày
-  // const currentDate = moment(); // Ngày hiện tại
-
-  // function validateStartDate(_, startDateStr, callback) {
-  //   const startDate = moment(startDateStr, dateFormat); // Chuyển đổi giá trị ngày bắt đầu sang đối tượng Moment.js
-  //   if (startDate.isValid() && startDate.isSameOrAfter(currentDate, 'day')) {
-  //     callback(); // Giá trị hợp lệ
-  //   } else {
-  //     callback('Ngày bắt đầu phải bằng hoặc sau ngày hiện tại'); // Giá trị không hợp lệ
-  //   }
-  // }
+  const validateStartDate = (_, value) => {
+    if (value && value < moment().startOf('day')) {
+      return Promise.reject(new Error('Start date must be greater than or equal to today'));
+    }
+    return Promise.resolve();
+  };
+  const [form] = Form.useForm();
+  const validateEndDate = (_, value) => {
+    const { getFieldValue } = form;
+    const startDate = getFieldValue('from');
+    if (value && value <= startDate) {
+      return Promise.reject(new Error('End date must be greater than start date'));
+    }
+    return Promise.resolve();
+  };
   const { user } = useSelector((state) => state.auth);
-  console.log(user?._id);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -35,8 +38,7 @@ const LogOffForm = () => {
     setValue(e.target.value);
   };
   const onFinish = async (values) => {
-    // console.log(values);
-    const req = await logOffForm({ ...values, _id: user._id });
+    const req = await logOffForm({ ...values });
     console.log(req);
   };
   return (
@@ -80,8 +82,8 @@ const LogOffForm = () => {
             </Col>
             <Col xl={18} lg={6} md={6} sm={6} xs={5}>
               {user && (
-                <Form onFinish={onFinish}>
-                  <Form.Item className='log-off' name='type'>
+                <Form onFinish={onFinish} form={form}>
+                  <Form.Item className='log-off' name='type_of_work' initialValue='Off'>
                     <Radio.Group onChange={onChange} value={value}>
                       <div className='radio-button'>
                         <Radio value='Off'>Off</Radio>
@@ -99,7 +101,7 @@ const LogOffForm = () => {
                           required: true,
                           message: 'Please choose day start off',
                         },
-                        // { validator: validateStartDate }
+                        { validator: validateStartDate },
                       ]}
                       hasFeedback
                     >
@@ -149,6 +151,7 @@ const LogOffForm = () => {
                         required: true,
                         message: 'Please choose day end off',
                       },
+                      { validator: validateEndDate },
                     ]}
                     hasFeedback
                   >
