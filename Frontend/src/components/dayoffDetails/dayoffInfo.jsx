@@ -7,11 +7,26 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import moment from 'moment';
 import ModalAll from '../modal/ModalAll';
+import { useParams } from 'react-router-dom';
 
-export const DayoffInfo = (startDate, endDate, time, quantity, reason, status) => {
+export const DayoffInfo = ({ startDate, endDate, time, quantity, reason, status, id }) => {
+  console.log('🚀 ~ file: dayoffInfo.jsx:13 ~ DayoffInfo ~ id:', id);
   const userRole = localStorage.getItem('user_role');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTitle, setTitle] = useState('');
+  const [updatedData, setUpdatedData] = useState();
+
+  const onFinish = (values) => {
+    console.log('Received values of form: ', values);
+  };
+  const layout = {
+    labelCol: {
+      span: 6,
+    },
+    wrapperCol: {
+      span: 16,
+    },
+  };
 
   const showModalApprove = () => {
     setIsModalOpen(true);
@@ -41,18 +56,6 @@ export const DayoffInfo = (startDate, endDate, time, quantity, reason, status) =
       alert('789');
     }
   };
-
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values);
-  };
-  const layout = {
-    labelCol: {
-      span: 6,
-    },
-    wrapperCol: {
-      span: 16,
-    },
-  };
   useEffect(() => {});
 
   return (
@@ -73,7 +76,7 @@ export const DayoffInfo = (startDate, endDate, time, quantity, reason, status) =
             className='form-input'
             bordered={false}
             disabled={true}
-            value={moment(startDate.startDate).format('MMMM Do YYYY')}
+            value={moment(startDate).format('MMMM Do YYYY')}
           />
         </Form.Item>
         <Form.Item label='To'>
@@ -81,7 +84,7 @@ export const DayoffInfo = (startDate, endDate, time, quantity, reason, status) =
             className='form-input'
             bordered={false}
             disabled={true}
-            value={moment(endDate.endDate).format('MMMM Do YYYY')}
+            value={moment(endDate).format('MMMM Do YYYY')}
           />
         </Form.Item>
         <Form.Item label='Time'>
@@ -98,7 +101,9 @@ export const DayoffInfo = (startDate, endDate, time, quantity, reason, status) =
         </Form.Item>
 
         <Descriptions title='Action' />
-        {userRole === 'Manager' ? (
+        {userRole === 'Manager' && status === 'Approved' ? (
+          <></>
+        ) : userRole === 'Manager' && status === 'Pending' ? (
           <>
             <Button type='primary' className='info-form-button' onClick={() => showModalApprove()}>
               <CheckOutlined />
@@ -114,7 +119,7 @@ export const DayoffInfo = (startDate, endDate, time, quantity, reason, status) =
             </Button>
           </Form.Item>
         ) : (
-          <Text>abc</Text>
+          <></>
         )}
       </Form>
       <ModalAll

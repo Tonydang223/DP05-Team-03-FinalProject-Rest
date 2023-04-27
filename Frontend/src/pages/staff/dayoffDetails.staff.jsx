@@ -9,26 +9,21 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchDayoffDetails, fetchDayoffHistory } from '../../services/axiosInstance';
 import { useEffect } from 'react';
+import ModalAll from '../../components/modal/ModalAll';
 
 export default function DayoffDetails() {
   const [loading, setLoading] = useState(false);
   const [dayoffData, setDayoffData] = useState([]);
+  console.log('🚀 ~ file: dayoffDetails.staff.jsx:17 ~ DayoffDetails ~ dayoffData:', dayoffData);
   const [dayoffHistory, setDayoffHistory] = useState([]);
-  // console.log(
-  //   '🚀 ~ file: dayoffDetails.staff.jsx:17 ~ DayoffDetails ~ dayoffHistory:',
-  //   dayoffHistory,
-  // );
-  // console.log(
-  //   '🚀 ~ file: dayoffDetails.staff.jsx:18 ~ DayoffDetails ~ dayoffHistory:',
-  //   dayoffHistory?.map((item) => item?.action),
-  // );
+
   const userRole = localStorage.getItem('user_role');
+  const { id } = useParams();
 
   const { Content } = Layout;
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-  const { id } = useParams();
 
   const getDayoffInfo = async () => {
     const response = await fetchDayoffDetails(id);
@@ -64,10 +59,10 @@ export default function DayoffDetails() {
               </Breadcrumb.Item>
 
               <Breadcrumb.Item>
-                <Link to='/staff/dayoff'>Dayoff</Link>
+                <Link to='/staff/day-off'>Dayoff</Link>
               </Breadcrumb.Item>
               <Breadcrumb.Item>
-                <Link to='/staff/dayoff/details'>Details</Link>
+                <div>Details</div>
               </Breadcrumb.Item>
             </>
           ) : (
@@ -77,10 +72,10 @@ export default function DayoffDetails() {
               </Breadcrumb.Item>
 
               <Breadcrumb.Item>
-                <Link to='/manager/days_off'>Dayoff</Link>
+                <Link to='/manager/day-off'>Dayoff</Link>
               </Breadcrumb.Item>
               <Breadcrumb.Item>
-                <Link to='/manager/dayoff/details'>Details</Link>
+                <div>Details</div>
               </Breadcrumb.Item>
             </>
           )}
@@ -97,10 +92,11 @@ export default function DayoffDetails() {
               <DayoffInfo
                 startDate={dayoffData.from}
                 endDate={dayoffData.to}
-                Time={dayoffData.time}
+                time={dayoffData.time}
                 quantity={dayoffData.quantity}
                 reason={dayoffData.reason}
                 status={dayoffData.status}
+                id={dayoffData?._id}
               />
             </Col>
           )}
@@ -109,6 +105,13 @@ export default function DayoffDetails() {
             <DayoffHistory data={dayoffHistory} />
           </Col>
         </Row>
+        {/* <ModalAll
+          name={isTitle}
+          title={isTitle}
+          open={isModalOpen}
+          onOk={handleApproveReject}
+          onCancel={handleCancel}
+        /> */}
         {/* <Spinner /> */}
       </Content>
     </>

@@ -95,13 +95,13 @@ export default function SideBar() {
           roles: ['Admin', 'Manager', 'Staff'],
         },
         {
-          label: <Link to='/manager/request'>Requests</Link>,
-          key: 'staff/log_off_form',
+          label: <Link to='/staff/request'>Requests</Link>,
+          key: 'request',
           roles: ['Staff'],
         },
         {
-          label: <Link to='/manager/days_off'>Days off</Link>,
-          key: 'manager/days_off',
+          label: <Link to='/staff/day-off'>Days off</Link>,
+          key: 'dayoff',
           roles: ['Staff'],
         },
       ],
@@ -116,6 +116,16 @@ export default function SideBar() {
           label: <Link to='/dashboard'>Dashboard</Link>,
           key: 'dashboard',
           roles: ['Admin', 'Manager', 'Staff'],
+        },
+        {
+          label: <Link to='/manager/request'>Request</Link>,
+          key: 'request',
+          roles: ['Manager'],
+        },
+        {
+          label: <Link to='/manager/day-off'>Dayoff</Link>,
+          key: 'dayoff',
+          roles: ['Manager'],
         },
         {
           label: <Link to='/manager/groups'>Groups</Link>,
