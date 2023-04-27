@@ -31,7 +31,6 @@ export default function GroupDetailsPage() {
 
   const initialValuesAllMember = {
     name: '',
-    id_workspace: '',
     masters: [],
     members: [],
   };
@@ -234,40 +233,6 @@ export default function GroupDetailsPage() {
                   />
                 </Space>
               </Form.Item>
-              <Form.Item
-                name='id_workspace'
-                label='Workspace'
-                rules={[
-                  () => ({
-                    validator() {
-                      if (!valuesAddedMem.id_workspace) {
-                        return Promise.reject('Please add a workspace');
-                      } else {
-                        return Promise.resolve();
-                      }
-                    },
-                  }),
-                ]}
-              >
-                <Space
-                  style={{
-                    width: '100%',
-                  }}
-                  direction='vertical'
-                >
-                  <Select
-                    allowClear
-                    style={{
-                      width: '100%',
-                    }}
-                    placeholder='Please select'
-                    value={valuesAddedMem?.id_workspace}
-                    onChange={(v) => setValuesAddedMem({ ...valuesAddedMem, id_workspace: v })}
-                    options={optionsWorkspace}
-                  />
-                </Space>
-              </Form.Item>
-
               <Form.Item {...tailLayout}>
                 <Button className='info-form-button'>Cancel</Button>
                 <Button htmlType='submit' className='info-form-button'>

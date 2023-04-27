@@ -102,9 +102,9 @@ export default function ManagerPage() {
   } = theme.useToken();
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isTitle, setTitle] = useState('');
-  const [isSubmit, setSubmit] = useState('');
   const handleApproveAdd = () => {
     setIsCreateOpen(false);
+    fetchGroup();
   };
   // Create Modal
   const CreateGroup = () => {
@@ -163,7 +163,6 @@ export default function ManagerPage() {
           open={isCreateOpen}
           onOk={handleApproveAdd}
           onCancel={handleCancelCreate}
-          type={isSubmit}
         />
       </div>
     </Content>

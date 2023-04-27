@@ -68,6 +68,7 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
 
   const submitAddGroup = async () => {
     await addGroup(valuesAddedMem);
+    
   };
 
   useEffect(() => {
@@ -266,7 +267,7 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
               >
                 Cancel
               </Button>
-              <Button type='primary' htmlType='submit'>
+              <Button type='primary' onClick={onOk} htmlType='submit'>
                 Submit
               </Button>
             </Form.Item>
