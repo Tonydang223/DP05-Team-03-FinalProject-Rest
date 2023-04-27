@@ -1,5 +1,5 @@
-import { React, useState } from 'react';
-import { Space, Table, Button, Row, Col, Tag } from 'antd';
+import { React, useState, useEffect } from 'react';
+import { Space, Table, Button, Row, Col, Tag, Alert } from 'antd';
 import {
   CheckCircleFilled,
   CloseCircleFilled,
@@ -9,25 +9,38 @@ import {
   UndoOutlined,
 } from '@ant-design/icons';
 import ModalAll from '../modal/ModalAll';
-import './accountStyle.css';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import './accountStyle.css'
+import {Link, useNavigate} from 'react-router-dom';
+import { approveRequest } from '../../services/axiosInstance';
 
-const AccountTable = ({ dataAccountRequest, checkRole, name, onClick }) => {
-  const navigate = useNavigate();
+const AccountTable = ({dataAccountRequest, checkRole, name, fetchData}) => {
+
+  const initialErrorMessage = {
+    message: '',
+    visible: false
+  }
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isApproveOpen, setIsApproveOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isTitle, setTitle] = useState('');
+  const [visbleAlert, setVisibleAlert] = useState(initialErrorMessage)
+  const [requestId, setRequestId] = useState(null);
+  const [typeApprove, setTypeApprove] = useState(null);
 
   // Approve modal
-  const showModalApprove = () => {
-    setIsModalOpen(true);
+  const showModalApprove = (id) => {
+    setIsApproveOpen(true);
+    setRequestId(id);
+    setTypeApprove("Approved");
     setTitle('Approve');
+    console.log(id);
   };
 
   // reject modal
-  const showModalReject = () => {
+  const showModalReject = (id) => {
     setIsModalOpen(true);
+    setRequestId(id);
+    setTypeApprove("Rejected");
     setTitle('Reject');
   };
 
@@ -46,19 +59,41 @@ const AccountTable = ({ dataAccountRequest, checkRole, name, onClick }) => {
   };
 
   const handleApprove = () => {
-    setIsModalOpen(false);
+    approveRequest(requestId, typeApprove)
+      .then(() => {
+      setIsApproveOpen(false);    
+      fetchData();  
+    })
+    .catch((error) => {
+      // Xử lý lỗi nếu có
+      setIsApproveOpen(false);
+      setVisibleAlert({message: error?.response?.data?.message, visible: true});
+    });
   };
+  
+
+
   const handleCancel = () => {
-    setIsModalOpen(false);
+    setIsApproveOpen(false);
   };
 
   const handleReject = () => {
-    setIsModalOpen(false);
+    approveRequest(requestId, typeApprove)
+      .then(() => {
+      setIsModalOpen(false);
+      fetchData();  
+    })
+    .catch((error) => {
+      // Xử lý lỗi nếu có
+      setIsModalOpen(false);
+      setVisibleAlert({message: error?.response?.data?.message, visible: true});
+    });
   };
 
   const handleCancelReject = () => {
     setIsModalOpen(false);
   };
+  
 
   const columns = [
     {
@@ -144,22 +179,38 @@ const AccountTable = ({ dataAccountRequest, checkRole, name, onClick }) => {
       title: 'Actions',
       dataIndex: 'actions',
       key: 'actions',
-      render: (_, record) => {
-        if (record.check_approver === 0) {
+      render: (_, record) => 
+      {
+        if(record.check_approver === 0) {
+          // console.log(record.check_approved)
+          const handleApproveClick = () => {
+            showModalApprove(record._id)
+          }
+
+          const handleRejectClick = () => {
+            showModalReject(record._id);
+          }
           return (
             <Space size='middle'>
               {/* <a style={{ fontSize: '20px' }} title={isTitle}>
                 <EditFilled/>
               </a> */}
-              <a style={{ fontSize: '20px' }} title={isTitle} onClick={showModalApprove}>
-                <CheckCircleFilled />
+              <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleApproveClick} >
+                <CheckCircleFilled  />
               </a>
-              <a style={{ fontSize: '20px' }} title={isTitle} onClick={showModalReject}>
+              <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleRejectClick}>
                 <CloseCircleFilled />
               </a>
             </Space>
           );
         } else {
+          const handleApproveClick = () => {
+            showModalApprove(record._id)
+          }
+
+          const handleRejectClick = () => {
+            showModalReject(record._id);
+          }
           return (
             <Space size='middle'>
               <a style={{ fontSize: '20px' }} title={isTitle} onClick={showEdit}>
@@ -168,10 +219,10 @@ const AccountTable = ({ dataAccountRequest, checkRole, name, onClick }) => {
               {/* <a style={{ fontSize: '20px' }} title={isTitle}>
                 <EditFilled/>
               </a> */}
-              <a style={{ fontSize: '20px' }} title={isTitle} onClick={showModalApprove}>
-                <CheckCircleFilled />
+              <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleApproveClick}>
+                <CheckCircleFilled  />
               </a>
-              <a style={{ fontSize: '20px' }} title={isTitle} onClick={showModalReject}>
+              <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleRejectClick}>
                 <CloseCircleFilled />
               </a>
             </Space>
@@ -183,16 +234,23 @@ const AccountTable = ({ dataAccountRequest, checkRole, name, onClick }) => {
   ];
   return (
     <>
-      <Table
-        rowKey={(record) => record._id}
-        columns={columns}
-        dataSource={dataAccountRequest}
-        scroll={{ x: true }}
+    <Space direction="vertical" style={{ width: '100%', paddingBottom: '15px' }}>
+      {visbleAlert.visible && (
+      <Alert
+      message="Error"
+      description={`${visbleAlert.message}`}
+      type="error" 
+      showIcon
+      closable
+      onClose={() => setVisibleAlert(initialErrorMessage)}
       />
+      )}
+    </Space>
+      <Table rowKey={record => record._id} columns={columns} dataSource={dataAccountRequest} scroll={{ x: true }} />
       <ModalAll
         name={isTitle}
         title={isTitle}
-        open={isModalOpen}
+        open={isApproveOpen}
         onOk={handleApprove}
         onCancel={handleCancel}
       />
@@ -206,8 +264,8 @@ const AccountTable = ({ dataAccountRequest, checkRole, name, onClick }) => {
       <ModalAll
         name={isTitle}
         open={isEditOpen}
-        onOk={handleApproveEdit}
-        onCancel={handleCancelEdit}
+        // onOk={handleApproveEdit}
+        // onCancel={handleCancelEdit}
       />
     </>
   );
