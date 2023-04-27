@@ -209,3 +209,17 @@ export const fetchDayoffHistory = async (id) => {
   );
   return response.data.data;
 };
+
+export const approveFunc = async (id) => {
+  const response = await axiosInstance.post(
+    `${import.meta.env.VITE_BASE_URL}/request/approve/${id}`,
+  );
+  return response.data.data;
+};
+
+export const revertFunc = async (id) => {
+  const response = await axiosInstance.post(
+    `${import.meta.env.VITE_BASE_URL}/request/revert/${id}`,
+  );
+  return response.data.data;
+};

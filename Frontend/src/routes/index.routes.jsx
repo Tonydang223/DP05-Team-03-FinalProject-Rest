@@ -16,6 +16,7 @@ import { PageNotAuthor } from '../components/403';
 import Member from '../pages/manager/managerMember/managerMember';
 import GroupDetail from '../pages/manager/groupDetail/groupDetails.manager';
 import Profile from '../pages/auth/Profile/Profile';
+import AccountDayoff from '../pages/manager/accountRequest/AccountDayoff';
 
 const AppRouter = (req, res) => {
   const isLoggedIn = localStorage.getItem('access_token');
@@ -38,12 +39,13 @@ const AppRouter = (req, res) => {
           <Route path='/manager' element={<ProtectedRoute role={'Manager'} />}>
             <Route path='/manager/*' exact element={<PageNotAuthor />} />
             <Route path='/manager/groups' exact element={<ManagerPage />} />
-            <Route path='/manager/request' exact element={<AccountRequest />} />
             <Route path='/manager/groups/groups-details' exact element={<GroupDetail />} />
-            {/* <Route path='/manager/days_off' exact element={<AdminPage />} /> */}
+            <Route path='/manager/day-off' exact element={<AccountDayoff />} />
             <Route path='/manager/member' exact element={<Member />} />
             <Route path='/manager/member-details' exact element={<MemberDetails />} />
-            <Route path='/manager/dayoff/details/:id' exact element={<DayoffDetails />} />
+            <Route path='/manager/day-off/details/:id' exact element={<DayoffDetails />} />
+            <Route path='/manager/request' exact element={<AccountRequest />} />
+            <Route path='/manager/request/details/:id' exact element={<DayoffDetails />} />
           </Route>
 
           {/* staff route */}
@@ -51,9 +53,10 @@ const AppRouter = (req, res) => {
             <Route path='/staff/*' exact element={<PageNotAuthor />} />
             <Route path='/staff' exact element={<StaffPage />} />
             <Route path='/staff/log_off_form' exact element={<LogOffForm />} />
-            <Route path='/staff/dayoff' exact>
-              <Route path='/staff/dayoff/details' exact element={<DayoffDetails />} />
-            </Route>
+            <Route path='/staff/day-off' exact />
+            <Route path='/staff/request' exact />
+            <Route path='/staff/day-off/details/:id' exact element={<DayoffDetails />} />
+            <Route path='/staff/request/details/:id' exact element={<AccountRequest />} />
           </Route>
           <Route path='*' element={<PageNotFound />} />
         </Route>

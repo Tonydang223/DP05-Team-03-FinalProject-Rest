@@ -76,14 +76,28 @@ const AccountTable = ({ dataAccountRequest, checkRole, name, onClick }) => {
                     '🚀 ~ file: AccountTable.jsx:74 ~ AccountTable ~ record._id:',
                     record._id,
                   );
-                navigate(`/manager/dayoff/details/${record._id}`);
+                navigate(`/manager/${name}/details/${record._id}`);
               }}
             >
               {text}
             </div>
           );
         } else if (checkRole === 'Staff') {
-          return <Link to='/staff/dayoff/details'>{text}</Link>;
+          return (
+            <div
+              // to='/manager/dayoff/details'
+              onClick={() => {
+                record._id,
+                  console.log(
+                    '🚀 ~ file: AccountTable.jsx:74 ~ AccountTable ~ record._id:',
+                    record._id,
+                  );
+                navigate(`/staff/${name}/details/${record._id}`);
+              }}
+            >
+              {text}
+            </div>
+          );
         }
       },
     },

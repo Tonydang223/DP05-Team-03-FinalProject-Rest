@@ -5,7 +5,7 @@ import './dashboard.css';
 const { Content } = Layout;
 const { Text } = Typography;
 
-export default function AdminPage() {
+export default function Dashboard() {
   return (
     <>
       <Content
