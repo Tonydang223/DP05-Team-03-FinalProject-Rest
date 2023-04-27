@@ -1,5 +1,5 @@
-import { React, useState, useEffect } from 'react';
-import { Space, Table, Button, Form, Input, Tag, Alert, Modal } from 'antd';
+import { useState, useEffect } from 'react';
+import { Space, Table, Button, Form, Input, Tag, Alert, Modal, Select } from 'antd';
 import {
   CheckCircleFilled,
   CloseCircleFilled,
@@ -9,30 +9,49 @@ import {
   UndoOutlined,
 } from '@ant-design/icons';
 import ModalAll from '../modal/ModalAll';
-import './accountStyle.css'
-import {Link} from 'react-router-dom';
-import { approveRequest, revertRequest } from '../../services/axiosInstance';
+import './accountStyle.css';
+import { Link } from 'react-router-dom';
+import { approveRequest, revertRequest, updateRequest } from '../../services/axiosInstance';
 
-const AccountTable = ({dataAccountRequest, checkRole, name, fetchData}) => {
-
+const AccountTable = ({ dataAccountRequest, checkRole, name, fetchData }) => {
   const initialErrorMessage = {
     message: '',
-    visible: false
-  }
+    visible: false,
+  };
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isApproveOpen, setIsApproveOpen] = useState(false);
   const [isRevertOpen, setIsRevertOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isTitle, setTitle] = useState('');
-  const [visbleAlert, setVisibleAlert] = useState(initialErrorMessage)
+  const [visbleAlert, setVisibleAlert] = useState(initialErrorMessage);
   const [requestId, setRequestId] = useState(null);
   const [typeApprove, setTypeApprove] = useState(null);
+
+  const [oldData, setOldData] = useState({
+    from: '',
+    to: '',
+    quantity: '',
+    reason: '',
+    status: '',
+    type_of_works: '',
+  });
+
+  const [form] = Form.useForm();
+
+  const formatDate = (date) =>
+    new Date(date)
+      .toLocaleDateString('zh-CN', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .replaceAll('/', '-');
 
   // Approve modal
   const showModalApprove = (id) => {
     setIsApproveOpen(true);
     setRequestId(id);
-    setTypeApprove("Approved");
+    setTypeApprove('Approved');
     setTitle('Approve');
     console.log(id);
   };
@@ -41,23 +60,23 @@ const AccountTable = ({dataAccountRequest, checkRole, name, fetchData}) => {
   const showModalReject = (id) => {
     setIsModalOpen(true);
     setRequestId(id);
-    setTypeApprove("Rejected");
+    setTypeApprove('Rejected');
     setTitle('Reject');
   };
 
   // Revert modal
   const showRevert = (id) => {
     setIsRevertOpen(true);
-    setRequestId(id)
+    setRequestId(id);
     setTitle('Revert');
   };
 
   // Edit modal
   const showEdit = (id) => {
     setIsEditOpen(true);
-    setRequestId(id)
+    setRequestId(id);
     setTitle('Edit');
-  }
+  };
 
   const handleApproveRevert = () => {
     revertRequest(requestId)
@@ -76,22 +95,21 @@ const AccountTable = ({dataAccountRequest, checkRole, name, fetchData}) => {
 
   const handleCancelEdit = () => {
     setIsEditOpen(false);
-  }
+  };
 
   const handleApprove = () => {
     approveRequest(requestId, typeApprove)
       .then(() => {
-      setIsApproveOpen(false);    
-      fetchData();  
-    })
-    .catch((error) => {
-      // Xử lý lỗi nếu có
-      if(error?.response?.status === 400)
-      {
-        setVisibleAlert({message: error?.response?.data?.message, visible: true});
-      }
-      setIsApproveOpen(false);
-    });
+        setIsApproveOpen(false);
+        fetchData();
+      })
+      .catch((error) => {
+        // Xử lý lỗi nếu có
+        if (error?.response?.status === 400) {
+          setVisibleAlert({ message: error?.response?.data?.message, visible: true });
+        }
+        setIsApproveOpen(false);
+      });
   };
 
   const handleCancel = () => {
@@ -101,20 +119,23 @@ const AccountTable = ({dataAccountRequest, checkRole, name, fetchData}) => {
   const handleReject = () => {
     approveRequest(requestId, typeApprove)
       .then(() => {
-      setIsModalOpen(false);
-      fetchData();  
-    })
-    .catch((error) => {
-      // Xử lý lỗi nếu có
-      setIsModalOpen(false);
-      setVisibleAlert({message: error?.response?.data?.message, visible: true});
-    });
+        setIsModalOpen(false);
+        fetchData();
+      })
+      .catch((error) => {
+        // Xử lý lỗi nếu có
+        setIsModalOpen(false);
+        setVisibleAlert({ message: error?.response?.data?.message, visible: true });
+      });
   };
 
   const handleCancelReject = () => {
     setIsModalOpen(false);
   };
-  
+
+  const handleSubmitEdit = async (values) => {
+    await updateRequest({requestId, values});
+  };
 
   const columns = [
     {
@@ -175,7 +196,6 @@ const AccountTable = ({dataAccountRequest, checkRole, name, fetchData}) => {
         switch (status) {
           case 'Rejected':
             return <Tag color='#eb2f06'>{status}</Tag>;
-            break;
           case 'Approved':
             return <Tag color='#583da1'>{status}</Tag>;
           case 'Pending':
@@ -200,65 +220,78 @@ const AccountTable = ({dataAccountRequest, checkRole, name, fetchData}) => {
       title: 'Actions',
       dataIndex: 'actions',
       key: 'actions',
-      render: (_, record) => 
-      {
-          const handleApproveClick = () => {
-            showModalApprove(record._id)
-          }
+      render: (_, record) => {
+        const handleApproveClick = () => {
+          showModalApprove(record._id);
+        };
 
-          const handleRejectClick = () => {
-            showModalReject(record._id);
-          }
+        const handleRejectClick = () => {
+          showModalReject(record._id);
+        };
 
-          const handleEditClick = () => {
-            showEdit(record._id)
-          }
-          if(name === 'request')
-          {
-            return (
-              <Space size='middle'>
-                <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleEditClick}>
-                  <EditFilled/>
-                </a>
-                <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleApproveClick} >
-                  <CheckCircleFilled  />
-                </a>
-                <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleRejectClick}>
-                  <CloseCircleFilled />
-                </a>
-              </Space>
-            )
-          }
-          else if (name === "day-off") {
-            const handleRevertClick = () => {
-              showRevert(record._id)
-            }
-            return(
-            <Space>
-              <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleRevertClick}>
-                  <UndoOutlined/>
+        const handleEditClick = () => {
+          showEdit(record._id);
+          setOldData({
+            from: formatDate(record.from),
+            to: formatDate(record.to),
+            time: record.time,
+            quantity: record.quantity,
+            reason: record.reason,
+            status: record.status,
+            type_of_works: record.type_of_work,
+          });
+          console.log(record.time);
+        };
+        if (name === 'request') {
+          return (
+            <Space size='middle'>
+              <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleEditClick}>
+                <EditFilled />
+              </a>
+              <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleApproveClick}>
+                <CheckCircleFilled />
+              </a>
+              <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleRejectClick}>
+                <CloseCircleFilled />
               </a>
             </Space>
-            )
-          }
+          );
+        } else if (name === 'day-off' && record.status != 'Rejected') {
+          const handleRevertClick = () => {
+            showRevert(record._id);
+          };
+          return (
+            <Space>
+              <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleRevertClick}>
+                <UndoOutlined />
+              </a>
+            </Space>
+          );
+        }
       },
     },
   ];
+
   return (
     <>
-    <Space direction="vertical" style={{ width: '100%', paddingBottom: '15px' }}>
-      {visbleAlert.visible && (
-      <Alert
-      message="Error"
-      description={`${visbleAlert.message}`}
-      type="error" 
-      showIcon
-      closable
-      onClose={() => setVisibleAlert(initialErrorMessage)}
+      <Space direction='vertical' style={{ width: '100%', paddingBottom: '15px' }}>
+        {visbleAlert.visible && (
+          <Alert
+            message='Error'
+            description={`${visbleAlert.message}`}
+            type='error'
+            showIcon
+            closable
+            onClose={() => setVisibleAlert(initialErrorMessage)}
+          />
+        )}
+      </Space>
+      <Table
+        rowKey={(record) => record._id}
+        columns={columns}
+        dataSource={dataAccountRequest}
+        scroll={{ x: true }}
       />
-      )}
-    </Space>
-      <Table rowKey={record => record._id} columns={columns} dataSource={dataAccountRequest} scroll={{ x: true }} />
       <ModalAll
         name={isTitle}
         title={isTitle}
@@ -280,21 +313,54 @@ const AccountTable = ({dataAccountRequest, checkRole, name, fetchData}) => {
         onCancel={handleCancelRevert}
       />
 
-      <Modal 
-        name={isTitle}
-        open={isEditOpen}
-        onCancel={handleCancelEdit}
-        footer={null}
-      >
-        <Form initialValues={dataAccountRequest} onFinish="" style={{marginTop: '20px'}}>
-          <Form.Item label="Name" name="name">
+      <Modal name={isTitle} open={isEditOpen} onOk={form.submit} onCancel={handleCancelEdit}>
+        <Form
+          form={form}
+          onFinish={handleSubmitEdit}
+          style={{ marginTop: '20px' }}
+          initialValues={oldData}
+        >
+          <Form.Item label='From' name='from'>
+            <Input type='date' />
+          </Form.Item>
+          <Form.Item label='To' name='to'>
+            <Input type='date' />
+          </Form.Item>
+          <Form.Item label='Reason' name='reason'>
             <Input />
           </Form.Item>
-          <Form.Item label="Age" name="age">
-            <Input />
+          <Form.Item label='Status' name='status'>
+            <Input disabled />
           </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">Save</Button>
+          <Form.Item
+            name='time'
+            label='Time'
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <Select allowClear>
+              <Select.Option value='All Day'>All Day</Select.Option>
+              <Select.Option value='Morning'>Morning</Select.Option>
+              <Select.Option value='Afternoon'>Afternoon</Select.Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            name='type_of_works'
+            label='Type Of Works'
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <Select allowClear>
+              <Select.Option value='Off'>Off</Select.Option>
+              <Select.Option value='WAH'>WAH</Select.Option>
+            </Select>
           </Form.Item>
         </Form>
       </Modal>

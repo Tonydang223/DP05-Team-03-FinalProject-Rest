@@ -181,6 +181,20 @@ export const revertRequest = async (requestId) => {
   return await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/request/revert/${requestId}`);
 }
 
+export const updateRequest = async (data) => {
+  const {requestId, values} = data
+
+  const response = await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/request/update/${requestId}`,
+    JSON.stringify(values),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
+  return alert(response.data.message);
+}
+
 
 export const addMember = async (data) => {
   const json = {

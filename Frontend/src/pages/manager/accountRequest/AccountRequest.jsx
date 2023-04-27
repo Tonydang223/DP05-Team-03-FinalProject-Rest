@@ -26,6 +26,11 @@ const AccountRequest = () => {
 
           return {
             _id: request._id,
+            from: request.from,
+            to: request.to,
+            reason: request.reason,
+            time: request.time,
+            type_of_work: request.type_of_work,
             request_for_date: `${
               request.from && request.to
                 ? moment(request.from).format('LL') + ' - ' + moment(request.to).format('LL')
