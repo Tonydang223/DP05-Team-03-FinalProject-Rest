@@ -25,7 +25,6 @@ import {
 const { TextArea } = Input;
 const { Content } = Layout;
 export default function GroupDetailsPage() {
-  //mentions
   const { id } = useParams();
   const [allUser, setAllUser] = useState([]);
   const [workspace, setWorkspace] = useState([]);
@@ -55,6 +54,7 @@ export default function GroupDetailsPage() {
     const user = await AllUser();
     setAllUser(user);
   };
+
   if (allUser) {
     for (let i = 0; i < allUser.length; i++) {
       const element = allUser[i];
