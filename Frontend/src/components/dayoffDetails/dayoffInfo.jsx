@@ -8,13 +8,17 @@ import { useEffect } from 'react';
 import moment from 'moment';
 import ModalAll from '../modal/ModalAll';
 import { useParams } from 'react-router-dom';
+import { approveRequest, revertRequest } from '../../services/axiosInstance';
 
 export const DayoffInfo = ({ startDate, endDate, time, quantity, reason, status, id }) => {
   console.log('🚀 ~ file: dayoffInfo.jsx:13 ~ DayoffInfo ~ id:', id);
   const userRole = localStorage.getItem('user_role');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTitle, setTitle] = useState('');
+  console.log('🚀 ~ file: dayoffInfo.jsx:18 ~ DayoffInfo ~ isTitle:', isTitle);
   const [updatedData, setUpdatedData] = useState();
+  const [requestType, setRequestType] = useState();
+  console.log('🚀 ~ file: dayoffInfo.jsx:20 ~ DayoffInfo ~ requestType:', requestType);
 
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
@@ -31,29 +35,39 @@ export const DayoffInfo = ({ startDate, endDate, time, quantity, reason, status,
   const showModalApprove = () => {
     setIsModalOpen(true);
     setTitle('Approve');
+    setRequestType('Approved');
   };
 
   // reject modal
   const showModalReject = () => {
     setIsModalOpen(true);
     setTitle('Reject');
+    setRequestType('Rejected');
   };
 
   const showModalEdit = () => {
     setIsModalOpen(true);
-    setTitle('Edit');
+    setTitle('Revert');
+    setRequestType('Revert');
   };
 
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  const handleApproveReject = () => {
-    if (isTitle === 'Approve') {
-      alert('123');
-    } else if (isTitle === 'Reject') {
-      alert('456');
-    } else {
-      alert('789');
+  const handleApproveReject = async () => {
+    try {
+      if (isTitle === 'Approve') {
+        await approveRequest(id, requestType);
+        setIsModalOpen(false);
+      } else if (isTitle === 'Reject') {
+        await approveRequest(id, requestType);
+        setIsModalOpen(false);
+      } else if (isTitle === 'Revert') {
+        // alert('123');
+        await revertRequest(id);
+      }
+    } catch (error) {
+      console.log('🚀 ~ file: dayoffInfo.jsx:69 ~ handleApproveReject ~ error:', error);
     }
   };
   useEffect(() => {});
@@ -112,7 +126,7 @@ export const DayoffInfo = ({ startDate, endDate, time, quantity, reason, status,
               <CloseOutlined />
             </Button>
           </>
-        ) : userRole === 'Staff' && status === "Approved" ? (
+        ) : userRole === 'Staff' && status === 'Approved' ? (
           <Form.Item>
             <Button type='primary' className='info-form-button' onClick={() => showModalEdit()}>
               <RedoOutlined />
