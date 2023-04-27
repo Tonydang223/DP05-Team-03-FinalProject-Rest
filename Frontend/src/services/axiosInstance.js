@@ -1,4 +1,5 @@
 import axiosInstance from './axiosInstance.config';
+import { Alert } from 'antd';
 
 export const fetchUser = async () => {
   const response = await axiosInstance.get(`${import.meta.env.VITE_BASE_URL}/user/getProfile`);
@@ -136,7 +137,6 @@ export const resetPasswordManager = async (data) => {
 export const fetchAccountRequest = async () => {
   try {
     const response = await axiosInstance.get(`${import.meta.env.VITE_BASE_URL}/request/getAll`);
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -157,15 +157,13 @@ export const fetchInfoUser = async () => {
 
 export const fetchApprove = async (id) => {
   try {
-    const response = await axiosInstance.get(
-      `${import.meta.env.VITE_BASE_URL}/request/getApproves/${id}`,
-    );
-
-    console.log(response.data);
+    const response = await axiosInstance.get(`${import.meta.env.VITE_BASE_URL}/request/getApproves/${id}`);
     return response.data;
-  } catch (error) {
-    console.error();
-    throw error;
+  }
+  catch(error)
+  {
+    console.error(error);
+    throw error
   }
 };
 
@@ -174,6 +172,27 @@ export const fetchMember = async () => {
   const response = await axiosInstance.get(`http://localhost:8888/api/user/getAll`);
   return response.data.data;
 };
+export const approveRequest = async (requestId, typeApprove) => {
+  return await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/request/approve/${requestId}`, {type_approve: typeApprove});
+}
+
+export const revertRequest = async (requestId) => {
+  return await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/request/revert/${requestId}`);
+}
+
+export const updateRequest = async (data) => {
+  const {requestId, values} = data
+
+  const response = await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/request/update/${requestId}`,
+    JSON.stringify(values),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
+}
+
 
 export const addMember = async (data) => {
   const json = {
@@ -200,7 +219,7 @@ export const fetchDayoffDetails = async (id) => {
   const response = await axiosInstance.get(
     `${import.meta.env.VITE_BASE_URL}/request/getDetail/${id}`,
   );
-  return alert(response.data.message);
+  return response.data.data;
 };
 
 export const fetchDayoffHistory = async (id) => {

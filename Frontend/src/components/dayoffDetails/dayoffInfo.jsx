@@ -112,7 +112,7 @@ export const DayoffInfo = ({ startDate, endDate, time, quantity, reason, status,
               <CloseOutlined />
             </Button>
           </>
-        ) : userRole === 'Staff' ? (
+        ) : userRole === 'Staff' && status === "Approved" ? (
           <Form.Item>
             <Button type='primary' className='info-form-button' onClick={() => showModalEdit()}>
               <RedoOutlined />

@@ -20,7 +20,7 @@ export default function AccountDayoff() {
         setIsLoading(true);
         const result = await fetchAccountRequest();
         const dayOffWithUserData = result.data
-          .filter((request) => request.status === 'Approved' || request.status === 'Rejected')
+          .filter((request) => request.status === 'Approved' || request.status === 'Rejected' )
           .map(async (request) => {
             return {
               _id: request._id,

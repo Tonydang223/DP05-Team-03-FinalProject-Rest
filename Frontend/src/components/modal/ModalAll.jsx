@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import {React, useRef, useState } from 'react';
 import { Modal, Input, Form, Button, Radio } from 'antd';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
@@ -28,6 +28,11 @@ const formItemLayout = {
   },
 };
 const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
+  const [reason, setReason] = useState('');
+  const handleTextReason = (e) => {
+    setReason(e.target.value);
+  };
+
   return (
     <>
       {name === 'Logout' && (
@@ -48,10 +53,16 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
         </Modal>
       )}
 
-      {name === 'Edit' && (
+      {name === 'Revert' && (
         <Modal open={open} onOk={onOk} onCancel={onCancel}>
           <h4>Reason for revert </h4>
-          <Input.TextArea placeholder='Need more detail' />
+          <Form>
+            <Input.TextArea
+              placeholder='Need more detail'
+              value={reason}
+              onChange={handleTextReason}
+            />
+          </Form>
         </Modal>
       )}
 
