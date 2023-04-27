@@ -10,8 +10,8 @@ import {
 } from '@ant-design/icons';
 import ModalAll from '../modal/ModalAll';
 import './accountStyle.css'
-import {Link, useNavigate} from 'react-router-dom';
-import { approveRequest } from '../../services/axiosInstance';
+import {Link} from 'react-router-dom';
+import { approveRequest, revertRequest } from '../../services/axiosInstance';
 
 const AccountTable = ({dataAccountRequest, checkRole, name, fetchData}) => {
 
@@ -21,7 +21,7 @@ const AccountTable = ({dataAccountRequest, checkRole, name, fetchData}) => {
   }
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isApproveOpen, setIsApproveOpen] = useState(false);
-  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isRevertOpen, setIsRevertOpen] = useState(false);
   const [isTitle, setTitle] = useState('');
   const [visbleAlert, setVisibleAlert] = useState(initialErrorMessage)
   const [requestId, setRequestId] = useState(null);
@@ -45,17 +45,25 @@ const AccountTable = ({dataAccountRequest, checkRole, name, fetchData}) => {
   };
 
   // Edit modal
-  const showEdit = () => {
-    setIsEditOpen(true);
+  const showRevert = (id) => {
+    setIsRevertOpen(true);
+    setRequestId(id)
     setTitle('Edit');
   };
 
-  const handleApproveEdit = () => {
-    setIsEditOpen(false);
+  const handleApproveRevert = () => {
+    revertRequest(requestId)
+      .then(() => {
+        setIsRevertOpen(false);
+        fetchData();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const handleCancelEdit = () => {
-    setIsEditOpen(false);
+    setIsRevertOpen(false);
   };
 
   const handleApprove = () => {
@@ -70,8 +78,6 @@ const AccountTable = ({dataAccountRequest, checkRole, name, fetchData}) => {
       setVisibleAlert({message: error?.response?.data?.message, visible: true});
     });
   };
-  
-
 
   const handleCancel = () => {
     setIsApproveOpen(false);
@@ -181,8 +187,6 @@ const AccountTable = ({dataAccountRequest, checkRole, name, fetchData}) => {
       key: 'actions',
       render: (_, record) => 
       {
-        if(record.check_approver === 0) {
-          // console.log(record.check_approved)
           const handleApproveClick = () => {
             showModalApprove(record._id)
           }
@@ -190,46 +194,35 @@ const AccountTable = ({dataAccountRequest, checkRole, name, fetchData}) => {
           const handleRejectClick = () => {
             showModalReject(record._id);
           }
-          return (
-            <Space size='middle'>
-              {/* <a style={{ fontSize: '20px' }} title={isTitle}>
-                <EditFilled/>
-              </a> */}
-              <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleApproveClick} >
-                <CheckCircleFilled  />
-              </a>
-              <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleRejectClick}>
-                <CloseCircleFilled />
+          if(name === 'request')
+          {
+            return (
+              <Space size='middle'>
+                {/* <a style={{ fontSize: '20px' }} title={isTitle}>
+                  <EditFilled/>
+                </a> */}
+                <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleApproveClick} >
+                  <CheckCircleFilled  />
+                </a>
+                <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleRejectClick}>
+                  <CloseCircleFilled />
+                </a>
+              </Space>
+            )
+          }
+          else if (name === "day-off") {
+            const handleRevertClick = () => {
+              showRevert(record._id)
+            }
+            return(
+            <Space>
+              <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleRevertClick}>
+                  <UndoOutlined/>
               </a>
             </Space>
-          );
-        } else {
-          const handleApproveClick = () => {
-            showModalApprove(record._id)
+            )
           }
-
-          const handleRejectClick = () => {
-            showModalReject(record._id);
-          }
-          return (
-            <Space size='middle'>
-              <a style={{ fontSize: '20px' }} title={isTitle} onClick={showEdit}>
-                <UndoOutlined />
-              </a>
-              {/* <a style={{ fontSize: '20px' }} title={isTitle}>
-                <EditFilled/>
-              </a> */}
-              <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleApproveClick}>
-                <CheckCircleFilled  />
-              </a>
-              <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleRejectClick}>
-                <CloseCircleFilled />
-              </a>
-            </Space>
-          );
-        }
       },
-      className: name === 'request' ? '' : 'hidden-column',
     },
   ];
   return (
@@ -263,9 +256,9 @@ const AccountTable = ({dataAccountRequest, checkRole, name, fetchData}) => {
       />
       <ModalAll
         name={isTitle}
-        open={isEditOpen}
-        // onOk={handleApproveEdit}
-        // onCancel={handleCancelEdit}
+        open={isRevertOpen}
+        onOk={handleApproveRevert}
+        onCancel={handleCancelEdit}
       />
     </>
   );

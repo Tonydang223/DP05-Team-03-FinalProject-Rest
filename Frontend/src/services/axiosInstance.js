@@ -177,6 +177,10 @@ export const approveRequest = async (requestId, typeApprove) => {
   return await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/request/approve/${requestId}`, {type_approve: typeApprove});
 }
 
+export const revertRequest = async (requestId) => {
+  return await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/request/revert/${requestId}`);
+}
+
 
 export const addMember = async (data) => {
   const json = {

@@ -53,6 +53,7 @@ const AppRouter = (req, res) => {
             <Route path='/staff/*' exact element={<PageNotAuthor />} />
             <Route path='/staff' exact element={<StaffPage />} />
             <Route path='/staff/request' exact element={<AccountRequest />} />
+            <Route path='/staff/days_off' exact element={<AdminPage/>}/>
             <Route path='/staff/log_off_form' exact element={<LogOffForm />} />
             <Route path='/staff/day-off' exact />
             <Route path='/staff/request' exact />
