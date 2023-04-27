@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layouts from '../layouts/index.layouts';
-import ManagerPage from '../pages/manager/index.manager';
+import GroupsPage from '../pages/manager/Groups';
 import StaffPage from '../pages/staff/index.staff';
 import LoginPage from '../pages/auth/index.auth';
 import DayoffDetails from '../pages/staff/dayoffDetails.staff';
@@ -38,7 +38,7 @@ const AppRouter = (req, res) => {
           {/* manager route */}
           <Route path='/manager' element={<ProtectedRoute role={'Manager'} />}>
             <Route path='/manager/*' exact element={<PageNotAuthor />} />
-            <Route path='/manager/groups' exact element={<ManagerPage />} />
+            <Route path='/manager/groups' exact element={<GroupsPage />} />
             <Route path='/manager/groups/groups-details' exact element={<GroupDetail />} />
             <Route path='/manager/day-off' exact element={<AccountDayoff />} />
             <Route path='/manager/member' exact element={<Member />} />

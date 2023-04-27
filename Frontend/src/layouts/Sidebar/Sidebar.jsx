@@ -133,7 +133,7 @@ export default function SideBar() {
           roles: ['Manager'],
         },
         {
-          label: <Link to='/manager/members'>Members</Link>,
+          label: <Link to='/manager/member'>Members</Link>,
           key: 'members',
           roles: ['Manager'],
         },

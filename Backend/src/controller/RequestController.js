@@ -15,6 +15,7 @@ class RequestController {
         ...req.body,
         user: req.usr._id,
       };
+      console.log(newRequestVal)
 
       const currentDate = moment().format('L');
       if (
@@ -25,6 +26,7 @@ class RequestController {
         return res.status(400).json({ message: 'The date must to be current date' });
       }
       const requests = await RequestModel.find({ user: req.usr._id });
+      console.log(requests)
 
       const checkExistedVals = requests.filter(
         (i) =>

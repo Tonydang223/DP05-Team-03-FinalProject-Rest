@@ -1,14 +1,9 @@
-import {React, useRef, useState } from 'react';
-import { Modal, Input, Form, Button, Radio } from 'antd';
-import Select from 'react-select';
+import { useRef, useEffect, useState } from 'react';
+import { Modal, Input, Form, Button, Radio, Select, Space } from 'antd';
 import makeAnimated from 'react-select/animated';
+import { AllUser, fetchWorkspaces, addGroup } from '../../../src/services/axiosInstance';
 
 const animatedComponents = makeAnimated();
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
-];
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -27,11 +22,59 @@ const formItemLayout = {
     },
   },
 };
+
 const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
   const [reason, setReason] = useState('');
   const handleTextReason = (e) => {
     setReason(e.target.value);
   };
+  const [allUser, setAllUser] = useState([]);
+  const [workspace, setWorkspace] = useState([]);
+  const initialValuesAllMember = {
+    name: '',
+    id_workspace: '',
+    masters: [],
+    members: [],
+  };
+  const [valuesAddedMem, setValuesAddedMem] = useState(initialValuesAllMember);
+  const options = [];
+  const optionsWorkspace = [];
+  const getAllUsers = async () => {
+    const user = await AllUser();
+    setAllUser(user);
+  };
+  const getWorkSpace = async () => {
+    const allWorkspace = await fetchWorkspaces();
+    setWorkspace(allWorkspace);
+  };
+  if (workspace) {
+    for (let i = 0; i < workspace.length; i++) {
+      const element = workspace[i];
+      optionsWorkspace.push({
+        label: `${element.name}`,
+        value: element._id,
+      });
+    }
+  }
+  if (allUser) {
+    for (let i = 0; i < allUser.length; i++) {
+      const element = allUser[i];
+      options.push({
+        label: `${element.firstName} ${element.lastName}`,
+        value: element._id,
+      });
+    }
+  }
+
+  const submitAddGroup = async () => {
+    await addGroup(valuesAddedMem);
+    
+  };
+
+  useEffect(() => {
+    getAllUsers();
+    getWorkSpace();
+  }, []);
 
   return (
     <>
@@ -67,7 +110,7 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
       )}
 
       {name === 'CreateGroup' && (
-        <Modal open={open} onCancel={onCancel} footer={null}>
+        <Modal open={open} onOk={onOk} onCancel={onCancel} footer={null}>
           <h2
             style={{
               textAlign: 'center',
@@ -79,43 +122,144 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
             Create a new group
           </h2>
 
-          <Form name='basic' autoComplete='off'>
+          <Form
+            name='basic'
+            autoComplete='off'
+            initialValues={initialValuesAllMember}
+            {...formItemLayout}
+            onFinish={submitAddGroup}
+          >
             <Form.Item
               label='Name group'
-              name='groupname'
+              name='name'
               rules={[
                 {
                   required: true,
                   message: 'Please input name of group',
                 },
               ]}
-              hasFeedback
             >
-              <Input />
+              <div>
+                <Input
+                  value={valuesAddedMem.name}
+                  onChange={(e) => setValuesAddedMem({ ...valuesAddedMem, name: e.target.value })}
+                />
+              </div>
             </Form.Item>
             <Form.Item
               label='Add member'
-              name='addPeople'
+              name='members'
               rules={[
-                {
-                  required: true,
-                  message: 'Please add people to group!',
-                },
+                () => ({
+                  validator() {
+                    if (!valuesAddedMem.members.length) {
+                      return Promise.reject('Please add a member');
+                    } else {
+                      return Promise.resolve();
+                    }
+                  },
+                }),
+              ]}
+            >
+              <Space
+                style={{
+                  width: '100%',
+                }}
+                direction='vertical'
+              >
+                <Select
+                  mode='multiple'
+                  allowClear
+                  style={{
+                    width: '100%',
+                  }}
+                  placeholder='Please select'
+                  value={valuesAddedMem.members}
+                  onChange={(v) => setValuesAddedMem({ ...valuesAddedMem, members: [...v] })}
+                  options={options?.filter(
+                    (item) => !valuesAddedMem.masters?.includes(item?.value),
+                  )}
+                />
+              </Space>
+            </Form.Item>
+            <Form.Item
+              label='Add master'
+              name='masters'
+              rules={[
+                () => ({
+                  validator() {
+                    if (!valuesAddedMem.masters.length) {
+                      return Promise.reject('Please add a master');
+                    } else {
+                      return Promise.resolve();
+                    }
+                  },
+                }),
               ]}
               hasFeedback
             >
-              <Select
-                closeMenuOnSelect={false}
-                components={animatedComponents}
-                isMulti
-                options={options}
-              />
+              <Space
+                style={{
+                  width: '100%',
+                }}
+                direction='vertical'
+              >
+                <Select
+                  mode='multiple'
+                  allowClear
+                  style={{
+                    width: '100%',
+                  }}
+                  placeholder='Please select'
+                  value={valuesAddedMem.masters}
+                  options={options?.filter(
+                    (item) => !valuesAddedMem.members?.includes(item?.value),
+                  )}
+                  onChange={(v) => setValuesAddedMem({ ...valuesAddedMem, masters: [...v] })}
+                />
+              </Space>
+            </Form.Item>
+            <Form.Item
+              label='Workspace'
+              name='id_workspace'
+              rules={[
+                () => ({
+                  validator() {
+                    if (!valuesAddedMem.id_workspace) {
+                      return Promise.reject('Please add a workspace');
+                    } else {
+                      return Promise.resolve();
+                    }
+                  },
+                }),
+              ]}
+              hasFeedback
+            >
+              <Space
+                style={{
+                  width: '100%',
+                }}
+                direction='vertical'
+              >
+                <Select
+                  allowClear
+                  style={{
+                    width: '100%',
+                  }}
+                  placeholder='Please select'
+                  value={valuesAddedMem.id_workspace}
+                  options={optionsWorkspace}
+                  onChange={(v) => setValuesAddedMem({ ...valuesAddedMem, id_workspace: v })}
+                />
+              </Space>
             </Form.Item>
             <Form.Item>
               <Button
                 htmlType='button'
                 onClick={onCancel}
                 style={{
+                  marginTop: '10px',
+                  marginLeft: '60px',
                   marginRight: '20px',
                   backgroundColor: 'red',
                   color: 'white',
@@ -123,7 +267,7 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
               >
                 Cancel
               </Button>
-              <Button type='primary' htmlType='submit'>
+              <Button type='primary' onClick={onOk} htmlType='submit'>
                 Submit
               </Button>
             </Form.Item>
@@ -449,6 +593,19 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
               <Input.Password />
             </Form.Item>
             <Form.Item
+              label='Phone Number'
+              name='phoneNumber'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input phone number of member',
+                },
+              ]}
+              hasFeedback
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
               label='Slack Id'
               name='slackId'
               rules={[{ required: true, message: 'Please input manager slack Id' }]}
@@ -557,7 +714,6 @@ const ModalAll = ({ name, title, open, onOk, onFinish, onCancel, type }) => {
           </Form>
         </Modal>
       )}
-
       {name === 'ChangePassword' && (
         <Modal title={title} open={open} onOk={onOk} onCancel={onCancel} footer={null}>
           <h2

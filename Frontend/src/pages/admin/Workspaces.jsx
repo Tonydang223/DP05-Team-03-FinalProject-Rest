@@ -108,7 +108,8 @@ const Workspaces = () => {
     setTitle('Add_Workspace');
   };
 
-  const handleApproveAdd = () => {
+  const handleApproveAdd = (data) => {
+    console.log();
     setIsModalOpen(false);
   };
 

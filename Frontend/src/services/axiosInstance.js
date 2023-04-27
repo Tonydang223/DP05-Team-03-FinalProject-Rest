@@ -9,7 +9,19 @@ export const fetchUser = async () => {
 export const editProfile = async (data) => {
   const response = await axiosInstance.post(
     `http://localhost:8888/api/user/update`,
-    JSON.stringify(data.values),
+    JSON.stringify(data.values), {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  },
+  );
+  return alert(response.data.message);
+};
+//Staff
+export const logOffForm = async (data) => {
+  const response = await axiosInstance.post(
+    `http://localhost:8888/api/request/create`,
+    JSON.stringify(data),
     {
       headers: {
         'Content-Type': 'application/json',
@@ -31,6 +43,49 @@ export const changePasswordUser = async (data) => {
   );
   return alert(response.data.message);
 };
+
+// Group
+export const fetchGroup = async () => {
+  try {
+    const response = await axiosInstance.get(`${import.meta.env.VITE_BASE_URL}/group/getAll`);
+    return response.data.data;
+  }
+  catch (error) {
+    throw error;
+  }
+};
+export const detailGroup = async (id) => {
+  const response = await axiosInstance.get(`${import.meta.env.VITE_BASE_URL}/group/getDetail/${id}`);
+  return response.data.data;
+};
+export const addGroup = async (initialValuesCreateGroup) => {
+  const response = await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/group/create`,
+    JSON.stringify(initialValuesCreateGroup),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
+  return alert(response.data.message);
+};
+export const UpdateGroup = async (valuesUpdateGroup) => {
+  const response = await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/group/update/${valuesUpdateGroup._id}`,
+    JSON.stringify(valuesUpdateGroup),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
+  return alert(response.data.message);
+};
+//Get all user
+export const AllUser = async () => {
+  const response = await axiosInstance.get(`${import.meta.env.VITE_BASE_URL}/user/getAll`);
+  return response.data.data;
+};
+
 
 // Workspaces
 export const fetchWorkspaces = async () => {

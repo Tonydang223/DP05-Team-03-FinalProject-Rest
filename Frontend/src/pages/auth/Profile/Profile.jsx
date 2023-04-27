@@ -6,7 +6,7 @@ const { Content } = Layout;
 import ModalAll from '../../../../src/components/modal/ModalAll';
 import { fetchUser, editProfile, changePasswordUser } from './../../../services/axiosInstance';
 import { UserOutlined } from '@ant-design/icons';
-
+import AvatarIcon from '../../../assets/avatar.png';
 const Profile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTitle, setTitle] = useState('');
@@ -83,7 +83,7 @@ const Profile = () => {
                       {profile?.img_profile ? (
                         <Avatar size='large' src={profile?.img_profile} className='travelerImage' />
                       ) : (
-                        <Avatar size='large' icon={<UserOutlined />} className='travelerImage' />
+                        <Avatar size='large' src={AvatarIcon} className='travelerImage' />
                       )}
                     </div>
                     <div className='travelerName'>
