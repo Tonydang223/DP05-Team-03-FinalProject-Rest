@@ -54,6 +54,7 @@ export const fetchGroup = async () => {
     throw error;
   }
 };
+
 export const detailGroup = async (id) => {
   const response = await axiosInstance.get(
     `${import.meta.env.VITE_BASE_URL}/group/getDetail/${id}`,
@@ -281,7 +282,7 @@ export const fetchDayoffDetails = async (id) => {
   const response = await axiosInstance.get(
     `${import.meta.env.VITE_BASE_URL}/request/getDetail/${id}`,
   );
-  return response.data.data;
+  return alert(response.data.message);
 };
 
 export const fetchDayoffHistory = async (id) => {
