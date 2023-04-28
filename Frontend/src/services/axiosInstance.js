@@ -282,7 +282,7 @@ export const fetchDayoffDetails = async (id) => {
   const response = await axiosInstance.get(
     `${import.meta.env.VITE_BASE_URL}/request/getDetail/${id}`,
   );
-  return alert(response.data.message);
+  return response.data.data;
 };
 
 export const fetchDayoffHistory = async (id) => {
