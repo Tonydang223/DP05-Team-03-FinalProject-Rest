@@ -8,19 +8,20 @@ export const fetchUser = async () => {
 
 export const editProfile = async (data) => {
   const response = await axiosInstance.post(
-    `http://localhost:8888/api/user/update`,
-    JSON.stringify(data.values), {
-    headers: {
-      'Content-Type': 'application/json',
+    `${import.meta.env.VITE_BASE_URL}/user/update`,
+    JSON.stringify(data.values),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
     },
-  },
   );
   return alert(response.data.message);
 };
 //Staff
 export const logOffForm = async (data) => {
   const response = await axiosInstance.post(
-    `http://localhost:8888/api/request/create`,
+    `${import.meta.env.VITE_BASE_URL}/request/create`,
     JSON.stringify(data),
     {
       headers: {
@@ -33,7 +34,7 @@ export const logOffForm = async (data) => {
 
 export const changePasswordUser = async (data) => {
   const response = await axiosInstance.post(
-    `http://localhost:8888/api/auth/changePassword`,
+    `${import.meta.env.VITE_BASE_URL}/auth/changePassword`,
     JSON.stringify(data.values),
     {
       headers: {
@@ -49,17 +50,19 @@ export const fetchGroup = async () => {
   try {
     const response = await axiosInstance.get(`${import.meta.env.VITE_BASE_URL}/group/getAll`);
     return response.data.data;
-  }
-  catch (error) {
+  } catch (error) {
     throw error;
   }
 };
 export const detailGroup = async (id) => {
-  const response = await axiosInstance.get(`${import.meta.env.VITE_BASE_URL}/group/getDetail/${id}`);
+  const response = await axiosInstance.get(
+    `${import.meta.env.VITE_BASE_URL}/group/getDetail/${id}`,
+  );
   return response.data.data;
 };
 export const addGroup = async (initialValuesCreateGroup) => {
-  const response = await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/group/create`,
+  const response = await axiosInstance.post(
+    `${import.meta.env.VITE_BASE_URL}/group/create`,
     JSON.stringify(initialValuesCreateGroup),
     {
       headers: {
@@ -70,7 +73,8 @@ export const addGroup = async (initialValuesCreateGroup) => {
   return alert(response.data.message);
 };
 export const UpdateGroup = async (valuesUpdateGroup) => {
-  const response = await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/group/update/${valuesUpdateGroup._id}`,
+  const response = await axiosInstance.post(
+    `${import.meta.env.VITE_BASE_URL}/group/update/${valuesUpdateGroup._id}`,
     JSON.stringify(valuesUpdateGroup),
     {
       headers: {
@@ -86,21 +90,22 @@ export const AllUser = async () => {
   return response.data.data;
 };
 
-
 // Workspaces
 export const fetchWorkspaces = async () => {
-  const response = await axiosInstance.get(`http://localhost:8888/api/workspace/getAll`);
+  const response = await axiosInstance.get(`${import.meta.env.VITE_BASE_URL}/workspace/getAll`);
   return response.data.data;
 };
 
 export const detailWorkspace = async (id) => {
-  const response = await axiosInstance.get(`http://localhost:8888/api/workspace/getDetail/${id}`);
+  const response = await axiosInstance.get(
+    `${import.meta.env.VITE_BASE_URL}/workspace/getDetail/${id}`,
+  );
   return response.data.data;
 };
 
 export const addWorkspace = async (workspaceData) => {
   const response = await axiosInstance.post(
-    `http://localhost:8888/api/workspace/create`,
+    `${import.meta.env.VITE_BASE_URL}/workspace/create`,
     JSON.stringify(workspaceData.values),
     {
       headers: {
@@ -113,7 +118,7 @@ export const addWorkspace = async (workspaceData) => {
 
 export const setWorkspaceStatus = async (data) => {
   const response = await axiosInstance.post(
-    `http://localhost:8888/api/workspace/changeStatus/${data.id}`,
+    `${import.meta.env.VITE_BASE_URL}/workspace/changeStatus/${data.id}`,
     JSON.stringify(data.values),
     {
       headers: {
@@ -126,7 +131,7 @@ export const setWorkspaceStatus = async (data) => {
 
 export const editWorkspace = async (data) => {
   const response = await axiosInstance.post(
-    `http://localhost:8888/api/workspace/update/${data.id}`,
+    `${import.meta.env.VITE_BASE_URL}/workspace/update/${data.id}`,
     JSON.stringify(data.values),
     {
       headers: {
@@ -149,7 +154,7 @@ export const addManager = async (data) => {
   };
 
   const response = await axiosInstance.post(
-    `http://localhost:8888/api/user/create`,
+    `${import.meta.env.VITE_BASE_URL}/user/create`,
     JSON.stringify(json),
     {
       headers: {
@@ -163,7 +168,7 @@ export const addManager = async (data) => {
 export const deleteManager = async (data) => {
   const json = { managerId: data.manager, id_workspace: data.id };
   const response = await axiosInstance.post(
-    `http://localhost:8888/api/user/delete/${json.managerId}`,
+    `${import.meta.env.VITE_BASE_URL}/user/delete/${json.managerId}`,
     JSON.stringify(json),
     {
       headers: {
@@ -177,7 +182,7 @@ export const deleteManager = async (data) => {
 export const resetPasswordManager = async (data) => {
   const json = { idUser: data.manager, password: data.values.password };
   const response = await axiosInstance.post(
-    `http://localhost:8888/api/auth/resetPassword`,
+    `${import.meta.env.VITE_BASE_URL}/auth/resetPassword`,
     JSON.stringify(json),
     {
       headers: {
@@ -212,33 +217,36 @@ export const fetchInfoUser = async () => {
 
 export const fetchApprove = async (id) => {
   try {
-    const response = await axiosInstance.get(`${import.meta.env.VITE_BASE_URL}/request/getApproves/${id}`);
+    const response = await axiosInstance.get(
+      `${import.meta.env.VITE_BASE_URL}/request/getApproves/${id}`,
+    );
     return response.data;
-  }
-  catch(error)
-  {
+  } catch (error) {
     console.error(error);
-    throw error
+    throw error;
   }
 };
 
 //manager members
 export const fetchMember = async () => {
-  const response = await axiosInstance.get(`http://localhost:8888/api/user/getAll`);
+  const response = await axiosInstance.get(`${import.meta.env.VITE_BASE_URL}/user/getAll`);
   return response.data.data;
 };
 export const approveRequest = async (requestId, typeApprove) => {
-  return await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/request/approve/${requestId}`, {type_approve: typeApprove});
-}
+  return await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/request/approve/${requestId}`, {
+    type_approve: typeApprove,
+  });
+};
 
 export const revertRequest = async (requestId) => {
   return await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/request/revert/${requestId}`);
-}
+};
 
 export const updateRequest = async (data) => {
-  const {requestId, values} = data
+  const { requestId, values } = data;
 
-  const response = await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/request/update/${requestId}`,
+  const response = await axiosInstance.post(
+    `${import.meta.env.VITE_BASE_URL}/request/update/${requestId}`,
     JSON.stringify(values),
     {
       headers: {
@@ -246,8 +254,7 @@ export const updateRequest = async (data) => {
       },
     },
   );
-}
-
+};
 
 export const addMember = async (data) => {
   const json = {
@@ -259,7 +266,7 @@ export const addMember = async (data) => {
   };
 
   const response = await axiosInstance.post(
-    `http://localhost:8888/api/user/create`,
+    `${import.meta.env.VITE_BASE_URL}/user/create`,
     JSON.stringify(json),
     {
       headers: {
