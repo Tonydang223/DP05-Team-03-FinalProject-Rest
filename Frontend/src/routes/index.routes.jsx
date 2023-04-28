@@ -39,7 +39,7 @@ const AppRouter = (req, res) => {
           <Route path='/manager' element={<ProtectedRoute role={'Manager'} />}>
             <Route path='/manager/*' exact element={<PageNotAuthor />} />
             <Route path='/manager/groups' exact element={<GroupsPage />} />
-            <Route path='/manager/groups/groups-details' exact element={<GroupDetail />} />
+            <Route path='/manager/groups/groups-details/:id' exact element={<GroupDetail />} />
             <Route path='/manager/day-off' exact element={<AccountDayoff />} />
             <Route path='/manager/member' exact element={<Member />} />
             <Route path='/manager/member-details' exact element={<MemberDetails />} />

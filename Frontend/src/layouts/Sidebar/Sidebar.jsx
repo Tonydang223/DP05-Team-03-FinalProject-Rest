@@ -84,8 +84,8 @@ export default function SideBar() {
 
   const navigations = [
     {
-      label: 'Account',
-      key: 'account',
+      label: 'Actions',
+      key: 'actions',
       icon: <UserOutlined />,
       roles: ['Staff'],
       children: [
@@ -93,6 +93,11 @@ export default function SideBar() {
           label: <Link to='/dashboard'>Dashboard</Link>,
           key: 'dashboard',
           roles: ['Admin', 'Manager', 'Staff'],
+        },
+        {
+          label: <Link to='/staff/log_off_form'>Send Request</Link>,
+          key: 'send',
+          roles: ['Staff'],
         },
         {
           label: <Link to='/staff/request'>Requests</Link>,
@@ -137,16 +142,16 @@ export default function SideBar() {
           key: 'members',
           roles: ['Manager'],
         },
-        {
-          label: <Link to='/staff'>Notifications</Link>,
-          key: 'notifications',
-          roles: ['Manager'],
-        },
-        {
-          label: <Link to='/staff'>Sync</Link>,
-          key: 'sync',
-          roles: ['Manager'],
-        },
+        // {
+        //   label: <Link to='/staff'>Notifications</Link>,
+        //   key: 'notifications',
+        //   roles: ['Manager'],
+        // },
+        // {
+        //   label: <Link to='/staff'>Sync</Link>,
+        //   key: 'sync',
+        //   roles: ['Manager'],
+        // },
       ],
     },
     {

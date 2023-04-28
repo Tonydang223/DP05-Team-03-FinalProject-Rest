@@ -52,7 +52,7 @@ const LogOffForm = () => {
         }}
       >
         <Breadcrumb.Item>Staff</Breadcrumb.Item>
-        <Breadcrumb.Item>Log off form</Breadcrumb.Item>
+        <Breadcrumb.Item>Send Request</Breadcrumb.Item>
       </Breadcrumb>
       <div
         style={{

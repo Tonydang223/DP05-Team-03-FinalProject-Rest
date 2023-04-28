@@ -23,7 +23,7 @@ const AccountRequest = () => {
       const result = await fetchAccountRequest();
 
       const requestsWithUserData = result.data
-        .filter((request) => request.status === 'Pending' )
+        .filter((request) => request.status === 'Pending')
         .map((request) => {
           // console.log(request);
           try {
@@ -78,7 +78,6 @@ const AccountRequest = () => {
             margin: '16px 0',
           }}
         >
-          <Breadcrumb.Item>Account</Breadcrumb.Item>
           <Breadcrumb.Item>Request</Breadcrumb.Item>
         </Breadcrumb>
         <div
