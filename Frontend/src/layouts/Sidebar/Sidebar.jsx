@@ -104,6 +104,11 @@ export default function SideBar() {
           key: 'dayoff',
           roles: ['Staff'],
         },
+        {
+          label: <Link to='/staff/log_off_form'>Log off form</Link>,
+          key: 'logoffform',
+          roles: ['Staff'],	
+        }
       ],
     },
     {
