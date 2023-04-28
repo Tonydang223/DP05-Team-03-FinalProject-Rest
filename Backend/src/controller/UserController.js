@@ -11,15 +11,11 @@ class UserController {
     try {
       const { firstName, lastName, email, password, role, slackId, idWs } = req.body;
       const result = await web.users.list();
-      console.log(result);
       const usrs = result.members.filter((v) => !v.is_admin && !v.is_bot && v.profile.email);
       const noti = await notiModel.find();
       //MAPPING NOTI BY EMAIL
       if (slackId && !usrs.map((v) => v.id).includes(slackId)) {
-        if (
-          noti[0].workSpace.isMappingByEmail &&
-          usrs.findIndex((i) => i.profile.email === email) === -1
-        ) {
+        if (noti[0].isMappingByEmail && usrs.findIndex((i) => i.profile.email === email) === -1) {
           return res.status(400).json({ message: 'The email is not included in slack!' });
         }
         return res.status(400).json({ message: 'The slackId is not existed!' });
