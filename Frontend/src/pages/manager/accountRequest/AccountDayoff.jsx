@@ -14,35 +14,35 @@ export default function AccountDayoff() {
   const [isLoading, setIsLoading] = useState(false);
   const checkRole = localStorage.getItem('user_role');
   // console.log(data);
+  const fetchData = async () => {
+    try {
+      setIsLoading(true);
+      const result = await fetchAccountRequest();
+      const dayOffWithUserData = result.data
+        .filter((request) => request.status === 'Approved' || request.status === 'Rejected')
+        .map(async (request) => {
+          return {
+            _id: request._id,
+            request_for_date: `${
+              request.from && request.to
+                ? moment(request.from).format('LL') + ' - ' + moment(request.to).format('LL')
+                : moment(request.from).format('LL')
+            }`,
+            quantity: request.quantity,
+            requester: `${request.user.firstName + ' ' + request.user.lastName}`,
+            status: request.status,
+            request_date: `${moment(request.from, 'YYYYMMDD').fromNow()}`,
+          };
+        });
+      const resolvedData = await Promise.all(dayOffWithUserData);
+      setData(resolvedData);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false); // Stop loading in case of error
+      console.error(error);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-        const result = await fetchAccountRequest();
-        const dayOffWithUserData = result.data
-          .filter((request) => request.status === 'Approved' || request.status === 'Rejected')
-          .map(async (request) => {
-            return {
-              _id: request._id,
-              request_for_date: `${
-                request.from && request.to
-                  ? moment(request.from).format('LL') + ' - ' + moment(request.to).format('LL')
-                  : moment(request.from).format('LL')
-              }`,
-              quantity: request.quantity,
-              requester: `${request.user.firstName + ' ' + request.user.lastName}`,
-              status: request.status,
-              request_date: `${moment(request.from, 'YYYYMMDD').fromNow()}`,
-            };
-          });
-        const resolvedData = await Promise.all(dayOffWithUserData);
-        setData(resolvedData);
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false); // Stop loading in case of error
-        console.error(error);
-      }
-    };
     fetchData();
   }, []);
 
@@ -70,7 +70,12 @@ export default function AccountDayoff() {
           {isLoading ? (
             <div>Loading....</div>
           ) : (
-            <AccountTable name='day-off' dataAccountRequest={data} checkRole={checkRole} />
+            <AccountTable
+              name='day-off'
+              dataAccountRequest={data}
+              checkRole={checkRole}
+              fetchData={fetchData}
+            />
           )}
         </div>
       </Content>

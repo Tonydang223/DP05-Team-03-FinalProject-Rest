@@ -13,6 +13,7 @@ import { approveRequest, revertRequest } from '../../services/axiosInstance';
 const initialErrorMessage = {
   message: '',
   visible: false,
+  type: '',
 };
 const { Title } = Typography;
 
@@ -65,10 +66,10 @@ export const DayoffInfo = ({ startDate, endDate, time, quantity, reason, status,
     try {
       if (isTitle === 'Approve') {
         const response = await approveRequest(id, requestType);
-        console.log(
-          '🚀 ~ file: dayoffInfo.jsx:61 ~ handleApproveReject ~ response:',
-          response.message,
-        );
+        console.log('🚀 ~ file: dayoffInfo.jsx:61 ~ handleApproveReject ~ response:', response);
+        if (response.status === 200) {
+          setVisibleAlert({ message: response?.data?.message, visible: true, type: 'success' });
+        }
 
         setIsModalOpen(false);
       } else if (isTitle === 'Reject') {
@@ -81,11 +82,13 @@ export const DayoffInfo = ({ startDate, endDate, time, quantity, reason, status,
     } catch (error) {
       if (error.response.status === 400) {
         setIsModalOpen(false);
-        setVisibleAlert({ message: error?.response?.data?.message, visible: true });
+        setVisibleAlert({ message: error?.response?.data?.message, visible: true, type: 'error' });
       }
     }
   };
-  useEffect(() => {});
+  useEffect(() => {
+    handleApproveReject();
+  }, []);
 
   return (
     <div>
@@ -174,9 +177,9 @@ export const DayoffInfo = ({ startDate, endDate, time, quantity, reason, status,
       />
       {visbleAlert.visible && (
         <Alert
-          message='Error'
+          message={visbleAlert.type.toUpperCase()}
           description={`${visbleAlert.message}`}
-          type='error'
+          type={visbleAlert.type}
           showIcon
           closable
           onClose={() => setVisibleAlert(initialErrorMessage)}

@@ -24,7 +24,6 @@ const AccountTable = ({ dataAccountRequest, checkRole, name, fetchData }) => {
     visible: false,
   };
 
-  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isApproveOpen, setIsApproveOpen] = useState(false);
   const [isRevertOpen, setIsRevertOpen] = useState(false);
@@ -92,8 +91,7 @@ const AccountTable = ({ dataAccountRequest, checkRole, name, fetchData }) => {
         fetchData();
       })
       .catch((error) => {
-        if(error?.response?.status === 400)
-        {
+        if (error?.response?.status === 400) {
           setVisibleAlert({ message: error?.response?.data?.message, visible: true });
         }
         setIsRevertOpen(false);
@@ -102,6 +100,7 @@ const AccountTable = ({ dataAccountRequest, checkRole, name, fetchData }) => {
 
   const handleCancelRevert = () => {
     setIsRevertOpen(false);
+    fetchData();
   };
 
   const handleCancelEdit = () => {
@@ -145,22 +144,20 @@ const AccountTable = ({ dataAccountRequest, checkRole, name, fetchData }) => {
   };
 
   const handleSubmitEdit = async (values) => {
-    try{
-
-    await updateRequest({requestId, values});
-    notification.success({
-      message: 'Request updated',
-      description: 'The request has been successfully updated.',
-    });
-    fetchData();
-    }catch(error)
-    {
-      console.error(error)
+    try {
+      await updateRequest({ requestId, values });
+      notification.success({
+        message: 'Request updated',
+        description: 'The request has been successfully updated.',
+      });
+      fetchData();
+    } catch (error) {
+      console.error(error);
       setIsEditOpen(false);
       notification.error({
         message: 'Error Message',
-        description: error.response.data.message
-      })
+        description: error.response.data.message,
+      });
       fetchData();
     }
   };
@@ -193,10 +190,7 @@ const AccountTable = ({ dataAccountRequest, checkRole, name, fetchData }) => {
               // to='/manager/dayoff/details'
               onClick={() => {
                 record._id,
-                  console.log(
-                    '🚀 ~ file: AccountTable.jsx:74 ~ AccountTable ~ record._id:',
-                    name,
-                  );
+                  console.log('🚀 ~ file: AccountTable.jsx:74 ~ AccountTable ~ record._id:', name);
                 navigate(`/staff/${name}/details/${record._id}`);
               }}
             >
@@ -265,32 +259,21 @@ const AccountTable = ({ dataAccountRequest, checkRole, name, fetchData }) => {
           console.log(record.time);
         };
         if (name === 'request') {
-          if(checkRole === 'Staff')
-          {
+          if (checkRole === 'Staff') {
             return (
               <>
                 <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleEditClick}>
                   <EditFilled />
                 </a>
-              </>
-            )
-          }
-          else if(checkRole === 'Manager')
-          {
-            return (
-              <>
-                <Space size='middle'>
                 <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleApproveClick}>
                   <CheckCircleFilled />
                 </a>
                 <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleRejectClick}>
                   <CloseCircleFilled />
                 </a>
-              </Space>
               </>
-            )
-          }
-          else {
+            );
+          } else {
             return (
               <Space size='middle'>
                 <a style={{ fontSize: '20px' }} title={isTitle} onClick={handleEditClick}>
@@ -305,7 +288,7 @@ const AccountTable = ({ dataAccountRequest, checkRole, name, fetchData }) => {
               </Space>
             );
           }
-        } else if (name === 'day-off' && record.status != 'Rejected' && record.user_id === user._id) {
+        } else if (name === 'day-off' && record.status != 'Rejected') {
           const handleRevertClick = () => {
             showRevert(record._id);
           };
@@ -334,7 +317,6 @@ const AccountTable = ({ dataAccountRequest, checkRole, name, fetchData }) => {
             onClose={() => setVisibleAlert(initialErrorMessage)}
           />
         )}
-        
       </Space>
       <Table
         rowKey={(record) => record._id}
